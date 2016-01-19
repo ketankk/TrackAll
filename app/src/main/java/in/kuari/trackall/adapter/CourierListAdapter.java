@@ -1,12 +1,17 @@
 package in.kuari.trackall.adapter;
 
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,10 +23,11 @@ import in.kuari.trackall.R;
 public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.ViewHolder> {
     ArrayList<String> unilist;
     ArrayList<String> list;
+private Context context;
+    public CourierListAdapter(Context context)
 
-    public CourierListAdapter()
-
-    {  unilist = new ArrayList<>();
+    {  this.context=context;
+        unilist = new ArrayList<>();
         list = new ArrayList<>();
         unilist.add("ff");
         unilist.add("nhff");
@@ -37,7 +43,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
         list.add("lccff");
         list.add("oeufff");
 
-
+//readSMS();
     }
 
 
@@ -55,6 +61,9 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
 String name=list.get(position);
         holder.courierName.setText(name);
+
+
+
     }
 
     @Override
@@ -63,10 +72,13 @@ String name=list.get(position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-TextView courierName;
+        private TextView courierName;
+        private ImageView courierLogo;
         public ViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
+            courierLogo= (ImageView) itemView.findViewById(R.id.courier_logo);
+
         }
 
     }
@@ -80,12 +92,25 @@ TextView courierName;
             for(String s:unilist){
                 if(s.contains(input)){
                     list.add(s);
-                    Log.d("hh",s);
+                  //  Log.d("hh",s);
                 }
             }
         }
-       Log.d("hh","s");
+//       Log.d("hh","s");
 
        notifyDataSetChanged();
+    }
+
+    void readSMS(){
+        Uri uri=Uri.parse("content://sms/inbox");
+        Cursor c=context.getContentResolver().query(uri,null,null,null,null);
+//        Log.d("outside","cusrsor");
+
+        while (c.moveToNext()){
+           // Log.d("inside","cusrsor");
+           unilist.add(c.getString(c.getColumnIndex("body")));
+            list.add(c.getString(c.getColumnIndex("body")));
+
+        }
     }
 }

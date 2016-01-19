@@ -30,11 +30,11 @@ public class ListAllCourier extends AppCompatActivity {
        recyclerView= (RecyclerView) findViewById(R.id.rc_all_courier);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adp=new CourierListAdapter();
+        adp=new CourierListAdapter(this);
 
         recyclerView.setAdapter(adp);
 
-search();
+        search();
 
 
     }

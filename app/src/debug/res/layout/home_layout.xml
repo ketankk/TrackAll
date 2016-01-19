@@ -10,12 +10,13 @@
         android:hint="Enter Tracking ID"
         android:layout_margin="10dp"
         />
-    <ImageView
+    <Button
         android:id="@+id/submit_trackID"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:src="@drawable/ic_menu_send"
+        android:background="@drawable/ic_menu_send"
+        android:clickable="true"
         android:layout_toEndOf="@+id/input_trackID"
         />
     <ListView

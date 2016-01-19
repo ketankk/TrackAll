@@ -3,6 +3,9 @@
     package="in.kuari.trackall">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
