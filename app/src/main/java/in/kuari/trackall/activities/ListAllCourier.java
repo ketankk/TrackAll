@@ -1,5 +1,7 @@
 package in.kuari.trackall.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,9 +19,10 @@ import in.kuari.trackall.adapter.CourierListAdapter;
 
 public class ListAllCourier extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    EditText corierName;
-    CourierListAdapter adp;
+    private RecyclerView recyclerView;
+    private EditText courierName;
+    private CourierListAdapter adp;
+    private String trackID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +30,15 @@ public class ListAllCourier extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent=getIntent();
+        if(intent!=null){
+           trackID= intent.getStringExtra("trackID");
+        }
+
        recyclerView= (RecyclerView) findViewById(R.id.rc_all_courier);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adp=new CourierListAdapter(this);
+        adp=new CourierListAdapter(this,trackID);
 
         recyclerView.setAdapter(adp);
 
@@ -41,8 +49,8 @@ public class ListAllCourier extends AppCompatActivity {
 
     void search(){
 
-        corierName= (EditText) findViewById(R.id.input_courier_name);
-        corierName.addTextChangedListener(new TextWatcher() {
+        courierName= (EditText) findViewById(R.id.input_courier_name);
+        courierName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -57,7 +65,7 @@ public class ListAllCourier extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
 
-                adp.filter(corierName.getText().toString().toLowerCase());
+                adp.filter(courierName.getText().toString().toLowerCase());
 
             }
         });

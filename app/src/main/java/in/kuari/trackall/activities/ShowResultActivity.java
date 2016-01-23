@@ -1,6 +1,8 @@
 package in.kuari.trackall.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.controller.CourierController;
@@ -21,20 +24,29 @@ public class ShowResultActivity extends AppCompatActivity {
 
 
     private WebView webView;
-  ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.resultwebview);
+        setContentView(R.layout.webviewresult);
+        Intent intent=getIntent();
+        String s="";
+        if(intent!=null) {
+           s+= intent.getStringExtra("trackId");
+           s+= intent.getStringExtra("courierID");
+        }
+
+      /*//  Button btn= (Button) findViewById(R.id.dummy_button);
+        btn.setText(s);
         webView=(WebView)findViewById(R.id.webview);
-        onclick();
+       // onclick();*/
     }
 
 
     void initilizeWebview(){
-        webView = (WebView) findViewById(R.id.webview);
+        webView = (WebView) findViewById(R.id.resultwebview);
         webView.setVisibility(View.INVISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);

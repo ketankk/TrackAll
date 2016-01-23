@@ -11,4 +11,5 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_list_all_courier">ListAllCourier</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_courier">Courier</string>
 </resources>

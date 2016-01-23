@@ -1,7 +1,10 @@
 package in.kuari.trackall.adapter;
 
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.activities.MainActivity;
+import in.kuari.trackall.activities.ShowResultActivity;
 
 /**
  * Created by sultan_mirza on 1/18/16.
@@ -24,6 +29,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
     ArrayList<String> unilist;
     ArrayList<String> list;
 private Context context;
+    private String trackID;
     public CourierListAdapter(Context context)
 
     {  this.context=context;
@@ -45,12 +51,17 @@ private Context context;
 
 //readSMS();
     }
+public CourierListAdapter(Context context,String trackID){
+    this.context=(context);
 
+    this.trackID=trackID;
+}
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.courier_row,parent,false);
        ViewHolder vh=new ViewHolder(v);
+
 
         return vh;
     }
@@ -59,9 +70,18 @@ private Context context;
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-String name=list.get(position);
+final String name=list.get(position);
         holder.courierName.setText(name);
 
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(trackID!=null)
+                     CourierSelected(name);
+                else
+                     CourierDetailPage();
+            }
+        });
 
 
     }
@@ -72,12 +92,15 @@ String name=list.get(position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
+
         private TextView courierName;
         private ImageView courierLogo;
+        private View view;
         public ViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
             courierLogo= (ImageView) itemView.findViewById(R.id.courier_logo);
+            this.view=itemView;
 
         }
 
@@ -113,4 +136,15 @@ String name=list.get(position);
 
         }
     }
+    void CourierSelected(String cId){
+        Intent intent=new Intent(context, ShowResultActivity.class);
+        intent.putExtra("trackId",trackID);
+        intent.putExtra("courierID",cId);
+        context.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
+
+    }
+    void CourierDetailPage(){
+
+    }
+
 }

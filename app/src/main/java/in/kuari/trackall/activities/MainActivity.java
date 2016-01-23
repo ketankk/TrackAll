@@ -1,5 +1,6 @@
 package in.kuari.trackall.activities;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.webkit.WebView;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.controller.DrawerController;
+import in.kuari.trackall.fragments.Courier;
 import in.kuari.trackall.fragments.Home;
 
 public class MainActivity extends AppCompatActivity
@@ -96,13 +98,13 @@ displayFragment(1);    }
         } else if (id == R.id.list_all_courier) {
 displayFragment(2);
         } else if (id == R.id.nav_slideshow) {
-            displayFragment(2);
+            displayFragment(3);
 
         } else if (id == R.id.nav_manage) {
-            displayFragment(2);
+            displayFragment(4);
 
         } else if (id == R.id.nav_share) {
-            displayFragment(2);
+            displayFragment(5);
 
         } else if (id == R.id.nav_send) {
 
@@ -121,11 +123,11 @@ switch (id) {
     case 1:fragment = new Home();
         break;
 
-    case 2://fragment = new Home();
-        Intent intent=new Intent(this,ListAllCourier.class);
-        startActivity(intent);
+    case 2:fragment = new Courier();
+       /* Intent intent=new Intent(this,ListAllCourier.class);
+        startActivity(intent);*/
         break;
-    case 3:fragment = new Home();
+    case 3:fragment = new Courier();
         break;
 
     case 4:fragment = new Home();
