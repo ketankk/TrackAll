@@ -66,6 +66,7 @@ public CourierListAdapter(Context context,String trackID){
     public void onBindViewHolder(ViewHolder holder, int position) {
     courier = filteredCouriers.get(position);
 
+
     holder.courierName.setText(courier.getCourierName());
 //holder.courierLogo.setImageDrawable(R.drawable.(courier.getCourierImagePath()));
     holder.view.setOnClickListener(new View.OnClickListener() {
