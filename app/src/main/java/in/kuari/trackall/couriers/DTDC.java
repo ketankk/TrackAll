@@ -8,12 +8,13 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import in.kuari.trackall.utils.CourierDao;
 import in.kuari.trackall.utils.ConstantValues;
 
 /**
  * Created by sultan_mirza on 1/17/16.
  */
-public class DTDC {
+public class DTDC implements CourierDao{
     private Context context;
     private WebView webView;
     String url1 = "http://dtdc.in/tracking/tracking_results.asp";
@@ -25,8 +26,8 @@ public class DTDC {
         this.webView = webView;
         this.context=context;
     }
-
-    WebView hideShowContent() {
+@Override
+   public WebView hideShowContent() {
 
        /* webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].strCnno2.value='v27213156'");
 
@@ -95,8 +96,8 @@ public class DTDC {
 
     }
 
-
-    private void fillForm(){
+@Override
+    public void fillForm(){
         webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].strCnno2.value='"+ ConstantValues.TRACKID+"'");
 
         webView.loadUrl("javascript:(function(){document.getElementsByClassName('submit-button')[0].click();})()");

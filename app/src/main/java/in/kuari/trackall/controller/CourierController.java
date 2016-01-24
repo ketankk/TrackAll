@@ -1,23 +1,20 @@
 package in.kuari.trackall.controller;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.couriers.DTDC;
+import in.kuari.trackall.utils.CourierDao;
 
 /**
  * Created by sultan_mirza on 1/17/16.
  */
 public class CourierController {
     private WebView webView;
-
+    private long courierID;
     private Context context;
+
     public CourierController(Context context,WebView webView){
         this.context=context;
         this.webView=webView;
@@ -25,9 +22,23 @@ public class CourierController {
     }
 
 
-    public void populateView(int id){
-DTDC obj= new DTDC(webView,context);
-        Log.d("popuktaview","kkk");
+    public void populateView(long id){
+        CourierDao obj=null;
+        int i=(int)id;
+        switch (i){
+            case 1:
+            obj=new DTDC(webView,context);
+
+            Log.d("popuktaview","kkk");
+                break;
+            case 2:
+break;
+            default:
+                obj=new DTDC(webView,context);
+
+                break;
+        }
+
 
 obj.load();;
 

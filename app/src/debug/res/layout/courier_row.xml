@@ -6,17 +6,21 @@
 <ImageView
     android:id="@+id/courier_logo"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_menu_home"
+    />
     <TextView
         android:id="@+id/courier_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="Gg"
+        android:layout_toEndOf="@+id/courier_logo"
         />
     <View
         android:layout_below="@+id/courier_name"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#FFF"
+        android:layout_height="120dp"
+        android:padding="5dp"
+        android:background="#fcdf1818"
         />
 </RelativeLayout>

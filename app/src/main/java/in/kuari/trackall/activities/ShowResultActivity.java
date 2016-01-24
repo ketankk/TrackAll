@@ -24,24 +24,26 @@ public class ShowResultActivity extends AppCompatActivity {
 
 
     private WebView webView;
-
-
+    private String trackID;
+    private String trackURL;
+    private long courierID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.webviewresult);
         Intent intent=getIntent();
-        String s="";
         if(intent!=null) {
-           s+= intent.getStringExtra("trackId");
-           s+= intent.getStringExtra("courierID");
+          trackID= intent.getStringExtra("trackId");
+         // trackURL= intent.getStringExtra("trackURL");
+          courierID=intent.getLongExtra("courierID",1) ;
         }
 
       /*//  Button btn= (Button) findViewById(R.id.dummy_button);
         btn.setText(s);
         webView=(WebView)findViewById(R.id.webview);
-       // onclick();*/
+       */
+        onclick();
     }
 
 
@@ -54,8 +56,8 @@ public class ShowResultActivity extends AppCompatActivity {
     }
     public void onclick(){
         initilizeWebview();
-        ConstantValues.TRACKID="v27213156";
+        ConstantValues.TRACKID=trackID;
         CourierController controller=new CourierController(this,webView);
-        controller.populateView(1);
+        controller.populateView(courierID);
     }
 }

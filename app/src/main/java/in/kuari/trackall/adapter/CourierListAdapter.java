@@ -17,44 +17,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.activities.ShowResultActivity;
+import in.kuari.trackall.entity.CourierEntity;
+import in.kuari.trackall.fragments.Courier;
+import in.kuari.trackall.utils.ReadData;
 
 /**
  * Created by sultan_mirza on 1/18/16.
  */
 public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.ViewHolder> {
-    ArrayList<String> unilist;
-    ArrayList<String> list;
-private Context context;
+    private List<CourierEntity> couriers;
+    private List<CourierEntity> filteredCouriers;
+
+    private Context context;
     private String trackID;
+    private CourierEntity courier;
     public CourierListAdapter(Context context)
 
     {  this.context=context;
-        unilist = new ArrayList<>();
-        list = new ArrayList<>();
-        unilist.add("ff");
-        unilist.add("nhff");
-        unilist.add("qff");
-        unilist.add("asaff");
-        unilist.add("lccff");
-        unilist.add("oeufff");
-
-        list.add("ff");
-        list.add("nhff");
-        list.add("qff");
-        list.add("asaff");
-        list.add("lccff");
-        list.add("oeufff");
+        populatelists();
 
 //readSMS();
     }
+    void populatelists(){
+        ReadData readData=new ReadData(context);
+       List<CourierEntity> courier1= readData.getAllCourier();
+
+        couriers=courier1;
+        filteredCouriers=courier1;
+
+    }
 public CourierListAdapter(Context context,String trackID){
     this.context=(context);
-
     this.trackID=trackID;
+    populatelists();
 }
 
     @Override
@@ -70,14 +70,15 @@ public CourierListAdapter(Context context,String trackID){
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-final String name=list.get(position);
-        holder.courierName.setText(name);
+        courier=couriers.get(position);
+
+        holder.courierName.setText(courier.getCourierName());
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(trackID!=null)
-                     CourierSelected(name);
+                     CourierSelected(courier);
                 else
                      CourierDetailPage();
             }
@@ -88,7 +89,7 @@ final String name=list.get(position);
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return couriers.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -106,15 +107,15 @@ final String name=list.get(position);
 
     }
    public void filter(String input){
-    list.clear();
+    filteredCouriers.clear();
         int i=0;
         if(input.length()==0)
-            list.addAll(unilist);
+            filteredCouriers.addAll(couriers);
         else
         {
-            for(String s:unilist){
-                if(s.contains(input)){
-                    list.add(s);
+            for(CourierEntity s:couriers){
+                if(s.getCourierName().contains(input)){
+                    filteredCouriers.add(s);
                   //  Log.d("hh",s);
                 }
             }
@@ -124,7 +125,7 @@ final String name=list.get(position);
        notifyDataSetChanged();
     }
 
-    void readSMS(){
+    /*void readSMS(){
         Uri uri=Uri.parse("content://sms/inbox");
         Cursor c=context.getContentResolver().query(uri,null,null,null,null);
 //        Log.d("outside","cusrsor");
@@ -135,11 +136,13 @@ final String name=list.get(position);
             list.add(c.getString(c.getColumnIndex("body")));
 
         }
-    }
-    void CourierSelected(String cId){
+    }*/
+    void CourierSelected(CourierEntity courier){
         Intent intent=new Intent(context, ShowResultActivity.class);
         intent.putExtra("trackId",trackID);
-        intent.putExtra("courierID",cId);
+        intent.putExtra("trackURL",courier.getCourierTrackLink());
+        intent.putExtra("courierID",courier.getCourierID());
+
         context.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
     }

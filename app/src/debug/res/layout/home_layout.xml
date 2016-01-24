@@ -2,13 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:id="@+id/lin_home"
+    >
 
     <EditText
         android:id="@+id/input_trackID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Enter Tracking ID"
-        android:layout_margin="10dp"
+        android:layout_weight="70"
         />
     <Button
         android:id="@+id/submit_trackID"
@@ -19,11 +25,13 @@
         android:clickable="true"
         android:layout_toEndOf="@+id/input_trackID"
         />
+</LinearLayout>
+
     <ListView
         android:id="@+id/list_courier_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/input_trackID"
+        android:layout_below="@+id/lin_home"
         android:layout_margin="10dp"
         >
 
