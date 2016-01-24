@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
 
-<ImageView
-    android:id="@+id/courier_logo"
+    >
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/courier_logo"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:src="@drawable/dtdc"
+        android:scaleType="fitCenter"
+        app:riv_corner_radius="40dip"
+        app:riv_border_width="2dip"
+        app:riv_border_color="#333333"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+
+        />
+
+    <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/ic_menu_home"
-    />
+    android:layout_toEndOf="@+id/courier_logo"
+
+    >
     <TextView
         android:id="@+id/courier_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:text="Gg"
-        android:layout_toEndOf="@+id/courier_logo"
+        android:layout_margin="5dp"
         />
     <View
         android:layout_below="@+id/courier_name"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:padding="5dp"
-        android:background="#fcdf1818"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:padding="2dp"
+        android:layout_margin="2dp"
+        android:background="#dc0707"/>
+</RelativeLayout>
 </RelativeLayout>

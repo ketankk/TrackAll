@@ -19,12 +19,12 @@ import in.kuari.trackall.activities.ListAllCourier;
 /**
  * Created by sultan_mirza on 1/18/16.
  */
-public class Home extends Fragment{
+public class HomeFragment extends Fragment{
 
     private EditText trackID;
     private Button submitButton;
 
-    public Home() {
+    public HomeFragment() {
     }
 
     @Nullable

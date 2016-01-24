@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -32,6 +33,8 @@ public class ShowResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.webviewresult);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent=getIntent();
         if(intent!=null) {
           trackID= intent.getStringExtra("trackId");
@@ -39,14 +42,19 @@ public class ShowResultActivity extends AppCompatActivity {
           courierID=intent.getLongExtra("courierID",1) ;
         }
 
-      /*//  Button btn= (Button) findViewById(R.id.dummy_button);
-        btn.setText(s);
-        webView=(WebView)findViewById(R.id.webview);
-       */
+
         onclick();
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     void initilizeWebview(){
         webView = (WebView) findViewById(R.id.resultwebview);
         webView.setVisibility(View.INVISIBLE);

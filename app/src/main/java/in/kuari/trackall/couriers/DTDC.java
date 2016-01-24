@@ -8,7 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import in.kuari.trackall.utils.CourierDao;
+import in.kuari.trackall.interfaces.CourierDao;
 import in.kuari.trackall.utils.ConstantValues;
 
 /**

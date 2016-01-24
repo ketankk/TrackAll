@@ -1,29 +1,21 @@
 package in.kuari.trackall.adapter;
 
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.entity.CourierEntity;
-import in.kuari.trackall.fragments.Courier;
+import in.kuari.trackall.utils.MLRoundedImageView;
 import in.kuari.trackall.utils.ReadData;
 
 /**
@@ -39,16 +31,18 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
     public CourierListAdapter(Context context)
 
     {  this.context=context;
+        couriers = new ArrayList<>();
+        filteredCouriers=new ArrayList<>();
+
         populatelists();
 
 //readSMS();
     }
     void populatelists(){
         ReadData readData=new ReadData(context);
-       List<CourierEntity> courier1= readData.getAllCourier();
 
-        couriers=courier1;
-        filteredCouriers=courier1;
+        couriers=readData.getAllCourier();
+        filteredCouriers=readData.getAllCourier();
 
     }
 public CourierListAdapter(Context context,String trackID){
@@ -70,26 +64,26 @@ public CourierListAdapter(Context context,String trackID){
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        courier=couriers.get(position);
+    courier = filteredCouriers.get(position);
 
-        holder.courierName.setText(courier.getCourierName());
+    holder.courierName.setText(courier.getCourierName());
+//holder.courierLogo.setImageDrawable(R.drawable.(courier.getCourierImagePath()));
+    holder.view.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (trackID != null)
+                CourierSelected(courier);
+            else
+                CourierDetailPage();
+        }
+    });
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(trackID!=null)
-                     CourierSelected(courier);
-                else
-                     CourierDetailPage();
-            }
-        });
+}
 
-
-    }
 
     @Override
     public int getItemCount() {
-        return couriers.size();
+        return filteredCouriers.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -97,30 +91,45 @@ public CourierListAdapter(Context context,String trackID){
         private TextView courierName;
         private ImageView courierLogo;
         private View view;
+        private  MLRoundedImageView circularImageView;
         public ViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
             courierLogo= (ImageView) itemView.findViewById(R.id.courier_logo);
             this.view=itemView;
+            // circularImageView = (MLRoundedImageView)itemView.findViewById(R.id.courier_logo);
+
+           /* circularImageView.setBorderColor(context.getResources().getColor(R.color.GrayLight));
+           circularImageView.setBorderWidth(10);
+            circularImageView.setSelectorColor(getResources().getColor(R.color.BlueLightTransparent));
+            circularImageView.setSelectorStrokeColor(getResources().getColor(R.color.BlueDark));
+            circularImageView.setSelectorStrokeWidth(10);
+            circularImageView.addShadow();*/
 
         }
 
     }
    public void filter(String input){
-    filteredCouriers.clear();
+      // Log.d("inside input",input+filteredCouriers.size()+"c"+couriers.size());
+
+       filteredCouriers.clear();
         int i=0;
-        if(input.length()==0)
+       //Log.d("inside input2",input+"c"+couriers.size());
+
+       if(input.length()==0)
             filteredCouriers.addAll(couriers);
         else
         {
             for(CourierEntity s:couriers){
-                if(s.getCourierName().contains(input)){
+               // Log.d("courierName",s.toString());
+
+                if((s.getCourierName().toLowerCase()).contains(input)){
                     filteredCouriers.add(s);
-                  //  Log.d("hh",s);
+                  //  Log.d("courierName2",s.toString());
+
                 }
             }
         }
-//       Log.d("hh","s");
 
        notifyDataSetChanged();
     }

@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:layout_margin="50dp"
-    tools:context="in.kuari.trackall.fragments.Courier">
+    android:layout_margin="10dp"
+    tools:context=".fragments.CourierFragment">
 
 
 

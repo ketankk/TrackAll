@@ -5,7 +5,7 @@ import android.util.Log;
 import android.webkit.WebView;
 
 import in.kuari.trackall.couriers.DTDC;
-import in.kuari.trackall.utils.CourierDao;
+import in.kuari.trackall.interfaces.CourierDao;
 
 /**
  * Created by sultan_mirza on 1/17/16.
@@ -29,7 +29,6 @@ public class CourierController {
             case 1:
             obj=new DTDC(webView,context);
 
-            Log.d("popuktaview","kkk");
                 break;
             case 2:
 break;

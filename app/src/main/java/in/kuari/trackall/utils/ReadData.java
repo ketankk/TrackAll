@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import in.kuari.trackall.R;
@@ -32,17 +33,17 @@ public class ReadData {
              is=context.getResources().openRawResource(R.raw.courierdetail);
 
             BufferedReader reader=new BufferedReader(new InputStreamReader(is));
-
-            while((str=reader.readLine())!=null){Log.d("reader",str);
+int count=0;
+            while((str=reader.readLine())!=null){//Log.d("reader",str);
                 String[] rows=str.split(",");
 
             CourierEntity courier=new CourierEntity();
-                courier.setCourierID(Long.parseLong(rows[0]));
-                courier.setCourierName(rows[1]);
-                courier.setCourierImagePath(rows[2]);
+                courier.setCourierID(count++);
+                courier.setCourierName(rows[0]);
+                /*courier.setCourierImagePath(rows[2]);
                 courier.setCourierTrackLink(rows[3]);
                 courier.setCourierWebsite(rows[4]);
-                couriers.add(courier);
+                */couriers.add(courier);
 
             } is.close();
         }
@@ -50,6 +51,8 @@ public class ReadData {
             e.printStackTrace();
 
         }
+        //Sort according to name of courier
+        Collections.sort(couriers,CourierEntity.courierNameComp);
     return couriers;
     }
 

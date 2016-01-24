@@ -11,10 +11,9 @@
 
     >
 
-
 <EditText
     android:id="@+id/input_courier_name"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:hint="Enter Courier Name"
     android:layout_gravity="center_horizontal"
@@ -23,8 +22,8 @@
     android:id="@+id/rc_all_courier"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:padding="20dp"
+    android:layout_marginTop="10dp"
+    android:padding="2dp"
     android:layout_gravity="center_horizontal"
     android:layout_below="@+id/input_courier_name"
     >

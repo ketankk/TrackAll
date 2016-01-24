@@ -1,13 +1,16 @@
 package in.kuari.trackall.entity;
 
+import java.util.Comparator;
+
 /**
  * Created by sultan_mirza on 1/20/16.
  */
-public class CourierEntity {
+public class CourierEntity  {
     private long courierID;
     private String courierName;
     private String  courierImagePath;
     private String  courierWebsite;
+    private String  courierTrackLink;
 
     public String getCourierTrackLink() {
         return courierTrackLink;
@@ -49,6 +52,28 @@ public class CourierEntity {
         this.courierWebsite = courierWebsite;
     }
 
-    private String  courierTrackLink;
+    @Override
+    public String toString() {
+        return "CourierEntity{" +
+                "courierID=" + courierID +
+                ", courierName='" + courierName + '\'' +
+                ", courierImagePath='" + courierImagePath + '\'' +
+                ", courierWebsite='" + courierWebsite + '\'' +
+                ", courierTrackLink='" + courierTrackLink + '\'' +
+                '}';
+    }
+    //For sorting the list according to name of company
+    public static Comparator<CourierEntity> courierNameComp=new Comparator<CourierEntity>() {
+        @Override
+        public int compare(CourierEntity lhs, CourierEntity rhs) {
+            String name1 = lhs.getCourierName().toUpperCase();
+            String name2 = rhs.getCourierName().toUpperCase();
+
+            return name1.compareTo(name2);
+        }
+    };
+
+
+
 
 }

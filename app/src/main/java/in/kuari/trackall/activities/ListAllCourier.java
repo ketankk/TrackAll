@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,6 +31,7 @@ public class ListAllCourier extends AppCompatActivity {
         setContentView(R.layout.list_all_courier);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent=getIntent();
         if(intent!=null){
@@ -47,9 +50,20 @@ public class ListAllCourier extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     void search(){
 
         courierName= (EditText) findViewById(R.id.input_courier_name);
+        Log.d("ss",courierName.getText().toString().toLowerCase());
         courierName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,6 +72,8 @@ public class ListAllCourier extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("ssqq",courierName.getText().toString().toLowerCase());
+                adp.filter(courierName.getText().toString().toLowerCase());
 
             }
 
@@ -65,7 +81,6 @@ public class ListAllCourier extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
 
-                adp.filter(courierName.getText().toString().toLowerCase());
 
             }
         });

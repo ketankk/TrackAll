@@ -1,4 +1,4 @@
-package in.kuari.trackall.utils;
+package in.kuari.trackall.interfaces;
 
 import android.webkit.WebView;
 

@@ -1,9 +1,7 @@
 package in.kuari.trackall.activities;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,9 +18,8 @@ import android.view.View;
 import android.webkit.WebView;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.controller.DrawerController;
-import in.kuari.trackall.fragments.Courier;
-import in.kuari.trackall.fragments.Home;
+import in.kuari.trackall.fragments.CourierFragment;
+import in.kuari.trackall.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -76,7 +73,7 @@ displayFragment(1);    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the HomeFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -120,20 +117,20 @@ displayFragment(2);
 void displayFragment(int id){
     Fragment fragment=null;
 switch (id) {
-    case 1:fragment = new Home();
+    case 1:fragment = new HomeFragment();
         break;
 
-    case 2:fragment = new Courier();
+    case 2:fragment = new CourierFragment();
        /* Intent intent=new Intent(this,ListAllCourier.class);
         startActivity(intent);*/
         break;
-    case 3:fragment = new Courier();
+    case 3:fragment = new CourierFragment();
         break;
 
-    case 4:fragment = new Home();
+    case 4:fragment = new HomeFragment();
         break;
     default:
-            fragment = new Home();
+            fragment = new HomeFragment();
 }
     if(fragment!=null){
         FragmentManager fragmentManager=getFragmentManager();
