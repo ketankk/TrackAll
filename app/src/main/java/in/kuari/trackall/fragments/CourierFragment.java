@@ -51,7 +51,8 @@ search(rootView);
     void search(View view){
 
         courierName= (EditText) view.findViewById(R.id.input_courier_name);
-        Log.d("ss",courierName.getText().toString().toLowerCase());
+        courierName.setFocusable(true);
+       // Log.d("ss",courierName.getText().toString().toLowerCase());
         courierName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -60,7 +61,7 @@ search(rootView);
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("ssqq",courierName.getText().toString().toLowerCase());
+                //Log.d("ssqq",courierName.getText().toString().toLowerCase());
                 adp.filter(courierName.getText().toString().toLowerCase());
 
             }

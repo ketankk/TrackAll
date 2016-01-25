@@ -26,7 +26,7 @@ public class ShowResultActivity extends AppCompatActivity {
 
     private WebView webView;
     private String trackID;
-    private String trackURL;
+    private String courierWebURL;
     private long courierID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +37,20 @@ public class ShowResultActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(intent!=null) {
-          trackID= intent.getStringExtra("trackId");
-         // trackURL= intent.getStringExtra("trackURL");
-          courierID=intent.getLongExtra("courierID",1) ;
+          int flag=  intent.getIntExtra("comingFrom",0);
+            if(flag==0) {
+                trackID = intent.getStringExtra("trackId");
+                courierID = intent.getLongExtra("courierID", 2);
+                onCourierTrack();
+            }else {
+                courierWebURL= intent.getStringExtra("trackURL");
+
+                onCourierDetail();
+
+            }
+
         }
 
-
-        onclick();
     }
 
     @Override
@@ -62,10 +69,16 @@ public class ShowResultActivity extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
 
     }
-    public void onclick(){
+    public void onCourierTrack(){
         initilizeWebview();
         ConstantValues.TRACKID=trackID;
         CourierController controller=new CourierController(this,webView);
         controller.populateView(courierID);
+    }
+    public void onCourierDetail(){
+        initilizeWebview();
+        webView.loadUrl(courierWebURL);
+
+
     }
 }

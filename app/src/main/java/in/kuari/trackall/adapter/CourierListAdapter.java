@@ -3,18 +3,26 @@ package in.kuari.trackall.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.entity.CourierEntity;
+import in.kuari.trackall.utils.CheckInternetConnectivity;
 import in.kuari.trackall.utils.MLRoundedImageView;
 import in.kuari.trackall.utils.ReadData;
 
@@ -27,7 +35,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
 
     private Context context;
     private String trackID;
-    private CourierEntity courier;
+  //  private CourierEntity courier;
     public CourierListAdapter(Context context)
 
     {  this.context=context;
@@ -55,27 +63,30 @@ public CourierListAdapter(Context context,String trackID){
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.courier_row,parent,false);
        ViewHolder vh=new ViewHolder(v);
-
-
-        return vh;
+     return vh;
     }
 
 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-    courier = filteredCouriers.get(position);
+   final CourierEntity courier = filteredCouriers.get(position);
 
-
+//final CourierEntity courier1=courier;
     holder.courierName.setText(courier.getCourierName());
-//holder.courierLogo.setImageDrawable(R.drawable.(courier.getCourierImagePath()));
+        Picasso.with(context).load(courier.getCourierImagePath()).into(holder.courierLogo);
     holder.view.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (trackID != null)
-                CourierSelected(courier);
-            else
-                CourierDetailPage();
+            if (!CheckInternetConnectivity.isConnected(context)) {
+                Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            } else {
+                if (trackID != null) {
+                    // Toast.makeText(context,courier1.toString(),Toast.LENGTH_LONG).show();
+                    CourierSelected(courier);
+                } else
+                    CourierDetailPage();
+            }
         }
     });
 
@@ -90,15 +101,13 @@ public CourierListAdapter(Context context,String trackID){
     static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView courierName;
-        private ImageView courierLogo;
         private View view;
-        private  MLRoundedImageView circularImageView;
+        private  RoundedImageView courierLogo;
         public ViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
-            courierLogo= (ImageView) itemView.findViewById(R.id.courier_logo);
+            courierLogo = (RoundedImageView)itemView.findViewById(R.id.courier_logo);
             this.view=itemView;
-            // circularImageView = (MLRoundedImageView)itemView.findViewById(R.id.courier_logo);
 
            /* circularImageView.setBorderColor(context.getResources().getColor(R.color.GrayLight));
            circularImageView.setBorderWidth(10);
@@ -135,22 +144,12 @@ public CourierListAdapter(Context context,String trackID){
        notifyDataSetChanged();
     }
 
-    /*void readSMS(){
-        Uri uri=Uri.parse("content://sms/inbox");
-        Cursor c=context.getContentResolver().query(uri,null,null,null,null);
-//        Log.d("outside","cusrsor");
 
-        while (c.moveToNext()){
-           // Log.d("inside","cusrsor");
-           unilist.add(c.getString(c.getColumnIndex("body")));
-            list.add(c.getString(c.getColumnIndex("body")));
-
-        }
-    }*/
     void CourierSelected(CourierEntity courier){
+        Log.d("gg",courier.toString());
         Intent intent=new Intent(context, ShowResultActivity.class);
         intent.putExtra("trackId",trackID);
-        intent.putExtra("trackURL",courier.getCourierTrackLink());
+        intent.putExtra("comingFrom",0);
         intent.putExtra("courierID",courier.getCourierID());
 
         context.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());

@@ -1,51 +1,13 @@
-q
-4PX,
-7 Horses Logistic,
-A-1 International,
-A3 Express,
-AFL,
-Air Star Xpress,
-Air State,
-Airborne Intl,
-AirWings,
-AJ Express,
-Akash Ganga
-Akr Express
-Alleppey Parcel,
-An Post,
-ANL,
-Antron Express,
-Aramex,
-Ashok Airways,
-Associated Road,
-Atlantic,
-ATS,
-AXL,
-Beacon,Bengal Force,
-Bhavna Roadways,
-Bibha,
-BlazeFlash,
-Blue Dart,
-BNL Air
-BOM-GIM
-Bombino Express
-Book My Packet,
-BSA Logistics,
-Bulgarian Post,
-Canada Post,
-Central Express,
-Ceska Posta
-China Post
-Chips International,
-Chronopost,
-Citipost,
-CJ Korea Express,
-CNZ Express,
-Concorde Express,
-Continental Courier BD,
-Delhivery,dtdc,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in
-DotZot
-DTDC,dtdc,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in
-DHL,dtdc,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in
-Professional,dtdc,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in
-Safe Express,dtdc,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in
+1,DTDC,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in/,http://dtdc.in/images/dtdc_logo_new.gif
+2,Bombino,www.bombinoexp.com/Tracking.aspx?txtAwb=,http://www.bombinoexp.com,http://www.bombinoexp.com/images/logob.png
+3,AFL,https://www.fedex.com/apps/fedextrack/?tracknumbers=,http://www.fedex.com/in,https://images.fedex.com/images/c/t1/gh/logo-header-fedex-express.png
+4,Air Star Xpress,http://www.airstarexpress.com/ASXTrackDocPage.aspx,http://www.airstarexpress.com,http://www.airstarexpress.com/Images/ASXBanner11.gif
+5,Air State,http://www.airstateindia.com/Tracking.aspx,http://www.airstateindia.com,http://www.airstateindia.com/images/logo1.jpg
+6,Airborne Intl,http://www.airborneinternational.in/tracking.aspx?txtawbno=,http://www.airborneinternational.in,http://www.airborneinternational.in/images/logo.png
+7,AirWings,http://www.airwingsindia.com/Awbtrack.asp,http://www.airwingsindia.com,http://www.airwingsindia.com/images/airwings25.png
+8,AJ Express,http://tracking.ajexpress.in/AJTrack.aspx,http://www.ajexpress.in,http://www.ajexpress.in/images/logo.png
+9,Akash Ganga,http://www.agconline.in/Doc_Tracking.aspx?No=,http://www.akashganga.info,http://www.akashganga.info/Images/Akash%20Ganga%20logo.png
+10,Akr Express,www.akrexpress.com/tracklr.php,http://akrexpress.com,http://akrexpress.com/akr/images/akr_ad.jpg
+11,Alleppey Parcel,http://www.apscargo.com/,http://www.apscargo.com,http://www.apscargo.com/images/logo2.gif
+12,ANL,http://anlexpress.in/,http://anlexpress.in,http://anlexpress.in/Images/anl_logo.jpg
+13,Antron Express,http://www.antronexpress.com/main/TrackingResult.aspx?AWBNos=,http://www.antronexpress.com,http://www.antronexpress.com/main/Image/Banner2.jpg

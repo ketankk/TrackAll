@@ -38,12 +38,12 @@ int count=0;
                 String[] rows=str.split(",");
 
             CourierEntity courier=new CourierEntity();
-                courier.setCourierID(count++);
-                courier.setCourierName(rows[0]);
-                /*courier.setCourierImagePath(rows[2]);
-                courier.setCourierTrackLink(rows[3]);
-                courier.setCourierWebsite(rows[4]);
-                */couriers.add(courier);
+                courier.setCourierID(Long.parseLong(rows[0]));
+                courier.setCourierName(rows[1]);
+                courier.setCourierTrackLink(rows[2]);
+                courier.setCourierWebsite(rows[3]);
+                courier.setCourierImagePath(rows[4]);
+                couriers.add(courier);
 
             } is.close();
         }

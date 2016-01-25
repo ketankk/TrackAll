@@ -153,3 +153,16 @@ Picasso.with(context)
     .into(imageView);
 
 */
+
+/*void readSMS(){
+        Uri uri=Uri.parse("content://sms/inbox");
+        Cursor c=context.getContentResolver().query(uri,null,null,null,null);
+//        Log.d("outside","cusrsor");
+
+        while (c.moveToNext()){
+           // Log.d("inside","cusrsor");
+           unilist.add(c.getString(c.getColumnIndex("body")));
+            list.add(c.getString(c.getColumnIndex("body")));
+
+        }
+    }*/

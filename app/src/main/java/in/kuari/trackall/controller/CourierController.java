@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.webkit.WebView;
 
+import in.kuari.trackall.couriers.Bombino;
 import in.kuari.trackall.couriers.DTDC;
 import in.kuari.trackall.interfaces.CourierDao;
 
@@ -24,6 +25,7 @@ public class CourierController {
 
     public void populateView(long id){
         CourierDao obj=null;
+        Log.d("idin popview",id+"");
         int i=(int)id;
         switch (i){
             case 1:
@@ -31,7 +33,8 @@ public class CourierController {
 
                 break;
             case 2:
-break;
+                obj=new Bombino(webView,context);
+            break;
             default:
                 obj=new DTDC(webView,context);
 
