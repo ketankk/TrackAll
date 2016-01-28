@@ -19,6 +19,7 @@ import android.webkit.WebView;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.fragments.CourierFragment;
+import in.kuari.trackall.fragments.FlightsFragment;
 import in.kuari.trackall.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -94,7 +95,7 @@ displayFragment(1);    }
             displayFragment(1);
         } else if (id == R.id.list_all_courier) {
 displayFragment(2);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.list_all_flights) {
             displayFragment(3);
 
         } else if (id == R.id.nav_manage) {
@@ -124,7 +125,7 @@ switch (id) {
        /* Intent intent=new Intent(this,ListAllCourier.class);
         startActivity(intent);*/
         break;
-    case 3:fragment = new CourierFragment();
+    case 3:fragment = new FlightsFragment();
         break;
 
     case 4:fragment = new HomeFragment();

@@ -3,18 +3,23 @@ package in.kuari.trackall.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.adapter.CourierHomeAdapter;
 import in.kuari.trackall.controller.CourierController;
+import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.utils.ConstantValues;
 
 /**
@@ -31,19 +36,19 @@ public class ShowResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         setContentView(R.layout.webviewresult);
 
-        setContentView(R.layout.webviewresult);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Intent intent=getIntent();
         if(intent!=null) {
-          int flag=  intent.getIntExtra("comingFrom",0);
+            int flag=  intent.getIntExtra("comingFrom",0);
             if(flag==0) {
                 trackID = intent.getStringExtra("trackId");
                 courierID = intent.getLongExtra("courierID", 2);
                 onCourierTrack();
             }else {
-                courierWebURL= intent.getStringExtra("trackURL");
+                courierWebURL= intent.getStringExtra("courierWeb");
+                Log.d("url",courierWebURL+"");
 
                 onCourierDetail();
 
@@ -51,7 +56,11 @@ public class ShowResultActivity extends AppCompatActivity {
 
         }
 
+            // setContentView(R.layout.webviewresult);
+
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -67,6 +76,8 @@ public class ShowResultActivity extends AppCompatActivity {
         webView.setVisibility(View.INVISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().getBuiltInZoomControls();
+        webView.getSettings().supportZoom();
 
     }
     public void onCourierTrack(){
@@ -77,7 +88,8 @@ public class ShowResultActivity extends AppCompatActivity {
     }
     public void onCourierDetail(){
         initilizeWebview();
-        webView.loadUrl(courierWebURL);
+        CourierHomeAdapter adp=new CourierHomeAdapter(this,webView);
+        adp.loadWebsite(courierWebURL);
 
 
     }

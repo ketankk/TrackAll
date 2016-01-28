@@ -1,11 +1,11 @@
-package in.kuari.trackall.entity;
+package in.kuari.trackall.bean;
 
 import java.util.Comparator;
 
 /**
  * Created by sultan_mirza on 1/20/16.
  */
-public class CourierEntity  {
+public class CourierBean {
     private long courierID;
     private String courierName;
     private String  courierImagePath;
@@ -54,7 +54,7 @@ public class CourierEntity  {
 
     @Override
     public String toString() {
-        return "CourierEntity{" +
+        return "CourierBean{" +
                 "courierID=" + courierID +
                 ", courierName='" + courierName + '\'' +
                 ", courierImagePath='" + courierImagePath + '\'' +
@@ -63,9 +63,9 @@ public class CourierEntity  {
                 '}';
     }
     //For sorting the list according to name of company
-    public static Comparator<CourierEntity> courierNameComp=new Comparator<CourierEntity>() {
+    public static Comparator<CourierBean> courierNameComp=new Comparator<CourierBean>() {
         @Override
-        public int compare(CourierEntity lhs, CourierEntity rhs) {
+        public int compare(CourierBean lhs, CourierBean rhs) {
             String name1 = lhs.getCourierName().toUpperCase();
             String name2 = rhs.getCourierName().toUpperCase();
 

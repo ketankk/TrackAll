@@ -9,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -21,21 +19,20 @@ import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
-import in.kuari.trackall.entity.CourierEntity;
+import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.utils.CheckInternetConnectivity;
-import in.kuari.trackall.utils.MLRoundedImageView;
 import in.kuari.trackall.utils.ReadData;
 
 /**
  * Created by sultan_mirza on 1/18/16.
  */
 public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.ViewHolder> {
-    private List<CourierEntity> couriers;
-    private List<CourierEntity> filteredCouriers;
+    private List<CourierBean> couriers;
+    private List<CourierBean> filteredCouriers;
 
     private Context context;
     private String trackID;
-  //  private CourierEntity courier;
+  //  private CourierBean courier;
     public CourierListAdapter(Context context)
 
     {  this.context=context;
@@ -70,9 +67,9 @@ public CourierListAdapter(Context context,String trackID){
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-   final CourierEntity courier = filteredCouriers.get(position);
+   final CourierBean courier = filteredCouriers.get(position);
 
-//final CourierEntity courier1=courier;
+//final CourierBean courier1=courier;
     holder.courierName.setText(courier.getCourierName());
         Picasso.with(context).load(courier.getCourierImagePath()).into(holder.courierLogo);
     holder.view.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +82,7 @@ public CourierListAdapter(Context context,String trackID){
                     // Toast.makeText(context,courier1.toString(),Toast.LENGTH_LONG).show();
                     CourierSelected(courier);
                 } else
-                    CourierDetailPage();
+                    CourierDetailPage(courier);
             }
         }
     });
@@ -130,7 +127,7 @@ public CourierListAdapter(Context context,String trackID){
             filteredCouriers.addAll(couriers);
         else
         {
-            for(CourierEntity s:couriers){
+            for(CourierBean s:couriers){
                // Log.d("courierName",s.toString());
 
                 if((s.getCourierName().toLowerCase()).contains(input)){
@@ -145,7 +142,7 @@ public CourierListAdapter(Context context,String trackID){
     }
 
 
-    void CourierSelected(CourierEntity courier){
+    void CourierSelected(CourierBean courier){
         Log.d("gg",courier.toString());
         Intent intent=new Intent(context, ShowResultActivity.class);
         intent.putExtra("trackId",trackID);
@@ -155,8 +152,14 @@ public CourierListAdapter(Context context,String trackID){
         context.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
     }
-    void CourierDetailPage(){
+    void CourierDetailPage(CourierBean courier){
+        Log.d("gg",courier.toString());
+        Intent intent=new Intent(context, ShowResultActivity.class);
 
+        intent.putExtra("comingFrom",1);
+        intent.putExtra("courierWeb",courier.getCourierWebsite());
+
+        context.startActivity(intent);
     }
 
 }
