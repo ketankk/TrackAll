@@ -16,13 +16,14 @@ import in.kuari.trackall.utils.ConstantValues;
  */
 public class DTDC implements CourierDao{
     private static final String COURIER_NAME="DTDC";
+    private String trackId;
+
     private Context context;
     private WebView webView;
     String url1 = "http://dtdc.in/tracking/tracking_results.asp";
     String url11 = "http://dtdc.in";
     private ProgressDialog dialog;
     private int COUNT;
-    private String trackId;
 
     public DTDC(WebView webView,Context context) {
         this.webView = webView;
@@ -30,7 +31,7 @@ public class DTDC implements CourierDao{
         trackId=ConstantValues.TRACKID;
     }
 @Override
-   public WebView hideShowContent() {
+   public void hideShowContent() {
 
        /* webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].strCnno2.value='v27213156'");
 
@@ -44,7 +45,6 @@ public class DTDC implements CourierDao{
 
         webView.loadUrl("javascript:(function(){document.getElementsByClassName('rightPanel_inpage')[0].style.width='100%';}())");
 
-        return webView;
     }
 
 
@@ -73,9 +73,8 @@ public class DTDC implements CourierDao{
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n"+COURIER_NAME+"-"+trackId, true, true,
+                    dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n"+COURIER_NAME+"-"+trackId.toUpperCase(), true, true,
                             null);
-                // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }
 
             @Override
@@ -83,15 +82,14 @@ public class DTDC implements CourierDao{
 
                 if (webViewPreviousState == PAGE_STARTED) {
                     if (COUNT == 1) {//stop page from reloading same page
-
                         fillForm();
                     }
                     dialog.dismiss();
                     dialog = null;
 
                     hideShowContent();
-                    webView.setVisibility(View.VISIBLE);
 
+                    webView.setVisibility(View.VISIBLE);
 
 
                 }
@@ -103,6 +101,7 @@ public class DTDC implements CourierDao{
 
 @Override
     public void fillForm(){
+    Log.d("fillform",trackId);
         webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].strCnno2.value='"+trackId +"'");
 
         webView.loadUrl("javascript:(function(){document.getElementsByClassName('submit-button')[0].click();})()");

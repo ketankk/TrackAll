@@ -14,7 +14,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class Bombino implements CourierDao{
-String url1="http://www.bombinoexp.com/Tracking.aspx?txtAwb=";
+    private static final String COURIER_NAME="Bombino";
+    private String trackId;
+
+    String url1="http://www.bombinoexp.com/Tracking.aspx?txtAwb=";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -24,14 +27,12 @@ String url1="http://www.bombinoexp.com/Tracking.aspx?txtAwb=";
         this.webView = webView;
         this.context=context;
     }
-    @Override
-    public WebView hideShowContent() {
-        return null;
-    }
+
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
+        trackId=ConstantValues.TRACKID;
+        webView.loadUrl(url1+trackId );
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
@@ -51,7 +52,7 @@ String url1="http://www.bombinoexp.com/Tracking.aspx?txtAwb=";
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Getting information from server", true, true,
+                    dialog = ProgressDialog.show(context, "", "Hang on Buddy\n"+COURIER_NAME+"-"+trackId, true, true,
                             null);
                 // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }
@@ -81,5 +82,11 @@ String url1="http://www.bombinoexp.com/Tracking.aspx?txtAwb=";
     @Override
     public void fillForm() {
 
+    }
+    @Override
+    public void hideShowContent() {
+        webView.loadUrl("javascript:(function(){document.getElementsByClassName('art-sidebar1').style.display='none';}())");
+
+         ;
     }
 }

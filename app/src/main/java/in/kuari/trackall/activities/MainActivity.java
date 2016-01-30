@@ -122,8 +122,7 @@ switch (id) {
         break;
 
     case 2:fragment = new CourierFragment();
-       /* Intent intent=new Intent(this,ListAllCourier.class);
-        startActivity(intent);*/
+
         break;
     case 3:fragment = new FlightsFragment();
         break;
@@ -135,7 +134,6 @@ switch (id) {
 }
     if(fragment!=null){
         FragmentManager fragmentManager=getFragmentManager();
-        Log.d("nn","frgmntNotNull");
         fragmentManager.beginTransaction().replace(R.id.inc,fragment).commit();
     }
 

@@ -14,7 +14,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class AlleppeyParcel implements CourierDao{
-String url1="http://www.apscargo.com";
+    private static final String COURIER_NAME="Alleppey Parcel";
+    private String trackId;
+
+    String url1="http://www.apscargo.com";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -25,13 +28,13 @@ String url1="http://www.apscargo.com";
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
     }
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
+        trackId=ConstantValues.TRACKID;
+        webView.loadUrl(url1);
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
@@ -51,7 +54,7 @@ String url1="http://www.apscargo.com";
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Getting information from server", true, true,
+                    dialog = ProgressDialog.show(context, "", "Getting information from server\n"+COURIER_NAME+trackId, true, true,
                             null);
                 // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }
@@ -81,5 +84,8 @@ String url1="http://www.apscargo.com";
     @Override
     public void fillForm() {
 
+        webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].wbrefno.value='"+trackId +"'");
+
+        webView.loadUrl("javascript:(function(){return trackingTrack();})()");
     }
 }

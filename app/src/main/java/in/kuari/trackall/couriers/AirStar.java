@@ -3,6 +3,7 @@ package in.kuari.trackall.couriers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,7 +15,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class AirStar implements CourierDao{
-String url1="http://www.airstarexpress.com/ASXTrackDocPage.aspx";
+    private static final String COURIER_NAME="Air Star";
+    private String trackId;
+
+    String url1="http://www.airstarexpress.com/ASXTrackDocPage.aspx";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -25,14 +29,14 @@ String url1="http://www.airstarexpress.com/ASXTrackDocPage.aspx";
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
     }
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
-
+        trackId= ConstantValues.TRACKID;
+        webView.loadUrl(url1);
+Log.d("Load..",COURIER_NAME+trackId);
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
             private final int PAGE_STARTED = 0x1;
@@ -51,7 +55,7 @@ String url1="http://www.airstarexpress.com/ASXTrackDocPage.aspx";
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Getting information from server", true, true,
+                    dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n"+COURIER_NAME+"-"+trackId, true, true,
                             null);
                 // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }
@@ -60,10 +64,12 @@ String url1="http://www.airstarexpress.com/ASXTrackDocPage.aspx";
             public void onPageFinished(WebView view, String url) {
 
                 if (webViewPreviousState == PAGE_STARTED) {
-                    if (COUNT == 1) {//stop page from reloading same page
-
+                       Log.d("COUNT",COUNT+"");
+                if (COUNT == 1) {//stop page from reloading same page
+                    Log.d("fillform",COURIER_NAME+trackId);
                         fillForm();
-                    }
+                    }        Log.d("fillform"+COURIER_NAME,trackId);
+
                     dialog.dismiss();
                     dialog = null;
 
@@ -80,6 +86,10 @@ String url1="http://www.airstarexpress.com/ASXTrackDocPage.aspx";
 
     @Override
     public void fillForm() {
+        Log.d("fillform"+COURIER_NAME,trackId);
+        webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_DOCREFNO').value='"+trackId +"'");
+
+        //webView.loadUrl("javascript:(function(){document.getElementsByTagName('form')[0].ctl00$ContentPlaceHolder1$PbTrack.submit();})()");
 
     }
 }

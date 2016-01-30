@@ -7,7 +7,7 @@ import android.webkit.WebView;
  */
 public interface CourierDao {
 
-    WebView hideShowContent();
+    void hideShowContent();
     void load();
     void fillForm();
 }

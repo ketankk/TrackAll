@@ -14,24 +14,26 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class AkashGanga implements CourierDao{
+    private static final String COURIERNAME="Akash Ganga";
 String url1="http://www.agconline.in/Doc_Tracking.aspx?No=";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
     private int COUNT;
-
+private String trackId;
     public AkashGanga(WebView webView, Context context) {
         this.webView = webView;
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
+
     }
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
+        trackId= ConstantValues.TRACKID;
+        webView.loadUrl(url1+trackId);
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
@@ -51,7 +53,7 @@ String url1="http://www.agconline.in/Doc_Tracking.aspx?No=";
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Getting information from server", true, true,
+                    dialog = ProgressDialog.show(context, "", "Hang on buddy..\n"+COURIERNAME+"-"+trackId, true, true,
                             null);
                 // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }

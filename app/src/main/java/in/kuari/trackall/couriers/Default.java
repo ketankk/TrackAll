@@ -13,8 +13,8 @@ public class Default implements CourierDao{
     }
 
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
+
     }
 
     @Override

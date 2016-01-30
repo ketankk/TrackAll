@@ -2,6 +2,7 @@ package in.kuari.trackall.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBar;
@@ -9,12 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.Toast;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierHomeAdapter;
@@ -55,7 +59,7 @@ public class ShowResultActivity extends AppCompatActivity {
             }
 
         }
-
+        Toast.makeText(this,trackID+"",Toast.LENGTH_LONG).show();
             // setContentView(R.layout.webviewresult);
 
 
@@ -78,11 +82,15 @@ public class ShowResultActivity extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().getBuiltInZoomControls();
         webView.getSettings().supportZoom();
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+
 
     }
     public void onCourierTrack(){
         initilizeWebview();
         ConstantValues.TRACKID=trackID;
+        Log.d("TrackID",trackID);
         CourierController controller=new CourierController(this,webView);
         controller.populateView(courierID);
     }
@@ -93,4 +101,5 @@ public class ShowResultActivity extends AppCompatActivity {
 
 
     }
+
 }

@@ -14,7 +14,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class ANL implements CourierDao{
-String url1="http://anlexpress.in?id=";
+    private static final String COURIER_NAME="ANL";
+    private String trackId;
+
+    String url1="http://anlexpress.in?id=";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -25,13 +28,14 @@ String url1="http://anlexpress.in?id=";
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
+
     }
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
+        trackId= ConstantValues.TRACKID;
+        webView.loadUrl(url1+trackId);
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;

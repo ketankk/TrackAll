@@ -3,6 +3,7 @@ package in.kuari.trackall.couriers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,13 +29,14 @@ public class AkrExpress implements CourierDao{
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
+
     }
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
+        trackId=ConstantValues.TRACKID;
+        webView.loadUrl(url1+ trackId);
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
@@ -45,6 +47,7 @@ public class AkrExpress implements CourierDao{
             public boolean shouldOverrideUrlLoading(WebView view, String urlNewString) {
                 webViewPreviousState = PAGE_REDIRECTED;
                 webView.loadUrl(urlNewString);
+                Log.d("urlnew",urlNewString);
                 return true;
             }
 
@@ -83,6 +86,9 @@ public class AkrExpress implements CourierDao{
 
     @Override
     public void fillForm() {
+        webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].txt_lrno.value='"+trackId +"'");
+
+        webView.loadUrl("javascript:(function(){return checkLRNo();})()");
 
     }
 }

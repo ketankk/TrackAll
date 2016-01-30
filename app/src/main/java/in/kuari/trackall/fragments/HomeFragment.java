@@ -2,19 +2,15 @@ package in.kuari.trackall.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.activities.ListAllCourier;
 
 /**
  * Created by sultan_mirza on 1/18/16.
@@ -37,14 +33,14 @@ public class HomeFragment extends Fragment{
            submitButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   clickSubmit();
+                   /*clickSubmit();*/
                }
            });
 
         return rootView;
     }
 
-    void clickSubmit(){
+    /*void clickSubmit(){
         String trackId=trackID.getText().toString();
         if(trackId.length()==0){
             trackID.setError("Enter Tracking ID");
@@ -54,5 +50,5 @@ public class HomeFragment extends Fragment{
             startActivity(intent);
         }
 
-    }
+    }*/
 }

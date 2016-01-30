@@ -1,15 +1,18 @@
 package in.kuari.trackall.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.activities.ShowFlightsWeb;
 import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.utils.Colors;
 
@@ -41,7 +44,7 @@ holder.mView.setBackgroundColor(Colors.getRandomColor());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFlightWeb();
+                loadFlightWeb(flight);
             }
         });
     }
@@ -61,7 +64,10 @@ holder.mView.setBackgroundColor(Colors.getRandomColor());
         }
 
     }
-    void loadFlightWeb(){
-
+    void loadFlightWeb(FlightBean flight){
+        Toast.makeText(context,flight.getFlightName(),Toast.LENGTH_LONG).show();
+        Intent intent=new Intent(context, ShowFlightsWeb.class);
+        intent.putExtra("webURL",flight.getFlightWebsite());
+        context.startActivity(intent);
     }
 }

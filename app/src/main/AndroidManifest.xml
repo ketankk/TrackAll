@@ -36,7 +36,7 @@
             android:label="@string/title_activity_show_result"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".activities.ListAllCourier"
+            android:name=".useless.ListAllCourier"
             android:label="@string/title_activity_list_all_courier"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--

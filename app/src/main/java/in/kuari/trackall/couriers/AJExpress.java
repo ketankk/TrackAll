@@ -14,7 +14,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class AJExpress implements CourierDao{
-String url1="http://tracking.ajexpress.in/AJTrack.aspx";
+    private static final String COURIER_NAME="AJ Express";
+    private String trackId;
+
+    String url1="http://tracking.ajexpress.in/AJTrack.aspx";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -25,13 +28,14 @@ String url1="http://tracking.ajexpress.in/AJTrack.aspx";
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
+
     }
 
     @Override
     public void load() {
-        webView.loadUrl(url1+ ConstantValues.TRACKID);
+        trackId=ConstantValues.TRACKID;
+        webView.loadUrl(url1+ trackId );
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
@@ -51,7 +55,7 @@ String url1="http://tracking.ajexpress.in/AJTrack.aspx";
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Getting information from server", true, true,
+                    dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n"+COURIER_NAME+"-"+trackId, true, true,
                             null);
                 // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }
@@ -80,6 +84,9 @@ String url1="http://tracking.ajexpress.in/AJTrack.aspx";
 
     @Override
     public void fillForm() {
+        webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].txtTrackID.value='"+trackId +"'");
+
+        webView.loadUrl("javascript:(function(){document.getElementsByTagName('form')[0].btnTrack.submit();})()");
 
     }
 }

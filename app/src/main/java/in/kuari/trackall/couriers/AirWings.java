@@ -14,7 +14,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class AirWings implements CourierDao{
-String url1="http://www.airwingsindia.com/Awbtrack.asp";
+    private static final String COURIER_NAME="AirWings";
+    private String trackId;
+
+    String url1="http://www.airwingsindia.com/Awbtrack.asp";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -25,8 +28,7 @@ String url1="http://www.airwingsindia.com/Awbtrack.asp";
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
     }
 
     @Override

@@ -10,7 +10,7 @@
     >
 
     <EditText
-        android:id="@+id/input_trackID"
+        android:id="@+id/input_trackID_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Enter Tracking ID"

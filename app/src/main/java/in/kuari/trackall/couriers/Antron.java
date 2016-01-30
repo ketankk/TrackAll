@@ -14,7 +14,10 @@ import in.kuari.trackall.utils.ConstantValues;
  * Created by root on 1/25/16.
  */
 public class Antron implements CourierDao{
-String trackURL="http://www.antronexpress.com/main/TrackingResult.aspx?AWBNos=";
+    private static final String COURIER_NAME="Antron";
+    private String trackId;
+
+    String trackURL="http://www.antronexpress.com/main/TrackingResult.aspx?AWBNos=";
     private Context context;
     private WebView webView;
      private ProgressDialog dialog;
@@ -25,13 +28,14 @@ String trackURL="http://www.antronexpress.com/main/TrackingResult.aspx?AWBNos=";
         this.context=context;
     }
     @Override
-    public WebView hideShowContent() {
-        return null;
+    public void hideShowContent() {
+
     }
 
     @Override
     public void load() {
-        webView.loadUrl(trackURL+ ConstantValues.TRACKID);
+        trackId= ConstantValues.TRACKID;
+        webView.loadUrl(trackURL+trackId);
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;

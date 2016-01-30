@@ -1,4 +1,4 @@
-package in.kuari.trackall.activities;
+package in.kuari.trackall.useless;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,7 +41,7 @@ public class ListAllCourier extends AppCompatActivity {
        recyclerView= (RecyclerView) findViewById(R.id.rc_all_courier);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adp=new CourierListAdapter(this,trackID);
+        adp=new CourierListAdapter(this,courierName);
 
         recyclerView.setAdapter(adp);
 
@@ -74,7 +74,7 @@ public class ListAllCourier extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Log.d("ssqq",courierName.getText().toString().toLowerCase());
-                adp.filter(courierName.getText().toString().toLowerCase());
+             //   adp.filter(courierName.getText().toString().toLowerCase());
 
             }
 
