@@ -25,6 +25,8 @@ import java.util.List;
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.CourierBean;
+import in.kuari.trackall.bean.SearchHistory;
+import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.utils.CheckInternetConnectivity;
 import in.kuari.trackall.utils.ReadData;
@@ -140,6 +142,8 @@ public CourierListAdapter(Activity activity,EditText trackingID){
         Toast.makeText(activity,trackID+"hh",Toast.LENGTH_LONG).show();
 
         Log.d("trackId",trackID+"");
+        if(trackID.length()>0)
+            SaveSearchHistory(courier,trackID);
         Intent intent=new Intent(activity, ShowResultActivity.class);
         intent.putExtra("trackId",trackID);
         intent.putExtra("comingFrom",0);
@@ -158,6 +162,15 @@ public CourierListAdapter(Activity activity,EditText trackingID){
         activity.startActivity(intent);
     }
 
+    void SaveSearchHistory(CourierBean courier,String trackID){
+        SQLiteDBHandler handler=new SQLiteDBHandler(activity);
+        SearchHistory history=new SearchHistory();
+        history.setName(courier.getCourierName());
+        history.setTrackId(trackID);
+        history.setCourierID(courier.getCourierID()+"");
 
+        handler.addSearch(history);
+
+    }
 
 }

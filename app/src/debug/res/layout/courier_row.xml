@@ -8,11 +8,11 @@
     >
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/courier_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/progress_animation"
         android:scaleType="fitCenter"
-        app:riv_corner_radius="80dip"
+        app:riv_corner_radius="10dip"
         app:riv_border_width="2dip"
         app:riv_border_color="#333333"
         app:riv_mutate_background="true"
@@ -31,7 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Gg"
-        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="50dp"
         />
     <View
         android:layout_below="@+id/courier_name"
