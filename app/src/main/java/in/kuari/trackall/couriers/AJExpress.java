@@ -35,7 +35,7 @@ public class AJExpress implements CourierDao{
     @Override
     public void load() {
         trackId=ConstantValues.TRACKID;
-        webView.loadUrl(url1+ trackId );
+        webView.loadUrl(url1 );
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;
@@ -86,7 +86,7 @@ public class AJExpress implements CourierDao{
     public void fillForm() {
         webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].txtTrackID.value='"+trackId +"'");
 
-        webView.loadUrl("javascript:(function(){document.getElementsByTagName('form')[0].btnTrack.submit();})()");
+        webView.loadUrl("javascript:(function(){document.getElementsByTagName('form')[0].btnTrack.click();})()");
 
     }
 }

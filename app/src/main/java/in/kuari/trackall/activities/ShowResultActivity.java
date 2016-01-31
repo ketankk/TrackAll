@@ -1,7 +1,9 @@
 package in.kuari.trackall.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +18,7 @@ import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierHomeAdapter;
 import in.kuari.trackall.controller.CourierController;
 import in.kuari.trackall.utils.ConstantValues;
+import in.kuari.trackall.utils.FunctionTools;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -27,18 +30,17 @@ public class ShowResultActivity extends AppCompatActivity {
     private String trackID;
     private String courierWebURL;
     private long courierID;
+    private Activity activity;
+    private FloatingActionButton screenShot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          setContentView(R.layout.webviewresult);
-
+activity=this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent=getIntent();
-        webView = (WebView) findViewById(R.id.resultwebview);
-       // webView.setVisibility(View.INVISIBLE);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
+        initilizeWebview();
+                screenShot= (FloatingActionButton) findViewById(R.id.res_screenshot);
 
         if(intent!=null) {
             int flag=  intent.getIntExtra("comingFrom",0);
@@ -75,19 +77,17 @@ public class ShowResultActivity extends AppCompatActivity {
         webView.setVisibility(View.INVISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
 
-        /*webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setSupportZoom(true);
 
 
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
-*/
 
     }
     public void onCourierTrack(){
-       // initilizeWebview();
         ConstantValues.TRACKID=trackID;
         Log.d("TrackID",trackID);
         CourierController controller=new CourierController(this,webView);
@@ -127,5 +127,9 @@ public class ShowResultActivity extends AppCompatActivity {
             webView.getSettings().setDisplayZoomControls(false);
         }
         return super.onTouchEvent(event);
+    }
+    public void takeScreenShot(View view){
+        FunctionTools b=new FunctionTools(activity);
+        b.takeScreenShot("abc");
     }
 }

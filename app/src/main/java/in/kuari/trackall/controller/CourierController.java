@@ -14,9 +14,12 @@ import in.kuari.trackall.couriers.AirWings;
 import in.kuari.trackall.couriers.AkashGanga;
 import in.kuari.trackall.couriers.AkrExpress;
 import in.kuari.trackall.couriers.AlleppeyParcel;
+import in.kuari.trackall.couriers.Antron;
 import in.kuari.trackall.couriers.Bombino;
 import in.kuari.trackall.couriers.DTDC;
 import in.kuari.trackall.couriers.Default;
+import in.kuari.trackall.couriers.IndianPost;
+import in.kuari.trackall.couriers.SafeExpress;
 import in.kuari.trackall.interfaces.CourierDao;
 
 /**
@@ -74,6 +77,15 @@ public class CourierController {
                 break;
             case 12:
                 obj=new ANL(webView,context);
+                break;
+            case 13:
+                obj=new Antron(webView,context);
+                break;
+            case 14:
+                obj=new SafeExpress(webView,context);
+                break;
+            case 15:
+                obj=new IndianPost(webView,context);
                 break;
 
             default:

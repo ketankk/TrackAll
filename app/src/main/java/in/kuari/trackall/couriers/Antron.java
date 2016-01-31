@@ -55,9 +55,8 @@ public class Antron implements CourierDao{
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Getting information from server", true, true,
+                    dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n"+COURIER_NAME+"-"+trackId.toUpperCase(), true, true,
                             null);
-                // webView.loadUrl("javascript:(function(){document.getElementById('leftPanel').style.display='none';}())");
             }
 
             @Override

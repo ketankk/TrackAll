@@ -1,5 +1,6 @@
 package in.kuari.trackall.activities;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,25 +21,27 @@ import in.kuari.trackall.R;
 import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
 import in.kuari.trackall.fragments.HomeFragment;
+import in.kuari.trackall.utils.FunctionTools;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private WebView webView;
-
+Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+activity=this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                getScreenShot();
             }
         });
 
@@ -138,6 +140,10 @@ switch (id) {
     }
 
 }
+    void getScreenShot(){
+        FunctionTools b=new FunctionTools(activity);
+    b.takeScreenShot("abc");
+    }
 
 }
 

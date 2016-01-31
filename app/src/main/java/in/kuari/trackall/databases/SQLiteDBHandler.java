@@ -81,7 +81,7 @@ return true;
     hist.setTrackId(cursor.getString(1));
     hist.setName(cursor.getString(2));
     hist.setCourierID(cursor.getString(3));
-        Log.d("hist",hist.toString());
+       // Log.d("hist",hist.toString());
     searchHistories.add(hist);
 }
        return searchHistories;

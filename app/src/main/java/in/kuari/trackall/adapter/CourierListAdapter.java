@@ -2,12 +2,9 @@ package in.kuari.trackall.adapter;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +24,7 @@ import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.SearchHistory;
 import in.kuari.trackall.databases.SQLiteDBHandler;
-import in.kuari.trackall.fragments.CourierFragment;
-import in.kuari.trackall.utils.CheckInternetConnectivity;
+import in.kuari.trackall.utils.FunctionTools;
 import in.kuari.trackall.utils.ReadData;
 
 /**
@@ -79,11 +75,11 @@ public CourierListAdapter(Activity activity,EditText trackingID){
    final CourierBean courier = filteredCouriers.get(position);
 
     holder.courierName.setText(courier.getCourierName());
-        Picasso.with(activity).load(courier.getCourierImagePath()).into(holder.courierLogo);
+        Picasso.with(activity).load(courier.getCourierImagePath()).error(R.drawable.ic_courier).into(holder.courierLogo);
     holder.view.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!CheckInternetConnectivity.isConnected(activity)) {
+            if (!FunctionTools.isConnected(activity)) {
                 Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
             } else {
                 if (trackingID != null)

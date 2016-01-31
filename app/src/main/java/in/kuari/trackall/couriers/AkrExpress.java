@@ -36,7 +36,7 @@ public class AkrExpress implements CourierDao{
     @Override
     public void load() {
         trackId=ConstantValues.TRACKID;
-        webView.loadUrl(url1+ trackId);
+        webView.loadUrl(url1);
 
         webView.setWebViewClient(new WebViewClient() {
             private int webViewPreviousState;

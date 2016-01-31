@@ -1,5 +1,6 @@
 package in.kuari.trackall.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -30,10 +31,11 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     private List<SearchHistory> searchHistories;
     private List<SearchHistory> filterdeSearchHistories;
 
-    private Context context;
+    private Activity activity;
+     static View rootView;
 
-    public SearchHistoryAdapter(Context context, List<SearchHistory> searchHistories) {
-        this.context=context;
+    public SearchHistoryAdapter(Activity activity, List<SearchHistory> searchHistories) {
+        this.activity=activity;
         this.searchHistories=searchHistories;
         filterdeSearchHistories=new ArrayList<>();
         filterdeSearchHistories.addAll(searchHistories);
@@ -64,11 +66,11 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
             public void onClick(View v) {
                 boolean flag=deleteHistory(searchHistory);
                 if(flag) {
-
-                    Toast.makeText(context,"delete"+position,Toast.LENGTH_LONG).show();
+                        Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content),searchHistory.getTrackId()+"Deleted ",Snackbar.LENGTH_SHORT).setAction("UNDO",null).show();
+                    Toast.makeText(activity,"delete"+position,Toast.LENGTH_LONG).show();
                     filterdeSearchHistories.remove(position);
                     notifyDataSetChanged();
-                }else                     Toast.makeText(context,"Cdelete"+position,Toast.LENGTH_LONG).show();
+                }else                     Toast.makeText(activity,"Cdelete"+position,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -88,6 +90,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
          public SearchViewHolder(View itemView) {
              super(itemView);
              view=itemView;
+             rootView=view;
              trackId= (TextView) itemView.findViewById(R.id.hist_id);
              name= (TextView) itemView.findViewById(R.id.hist_name);
              deletebtn= (ImageView) itemView.findViewById(R.id.searchHistDel);
@@ -96,16 +99,16 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
      }
    void OnClickHistoryitem(SearchHistory searchHistory)
    {
-       String trackID=searchHistory.getCourierID();
+       String trackID=searchHistory.getTrackId();
         long courierID=Long.parseLong(searchHistory.getCourierID());
-       Toast.makeText(context,trackID+"hh"+courierID,Toast.LENGTH_LONG).show();
+       Toast.makeText(activity,trackID+"hh"+courierID,Toast.LENGTH_LONG).show();
 
-          Intent intent=new Intent(context, ShowResultActivity.class);
+          Intent intent=new Intent(activity, ShowResultActivity.class);
            intent.putExtra("trackId",trackID);
            intent.putExtra("comingFrom",0);
            intent.putExtra("courierID",courierID);
 
-           context.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
+       activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
 
     }
@@ -129,7 +132,7 @@ public void filter(String input){
     notifyDataSetChanged();
 }
     private boolean deleteHistory(SearchHistory searchHistory){
-        SQLiteDBHandler handler=new SQLiteDBHandler(context);
+        SQLiteDBHandler handler=new SQLiteDBHandler(activity);
 
         return handler.deleteHistory(searchHistory.getId()+"");
     }
