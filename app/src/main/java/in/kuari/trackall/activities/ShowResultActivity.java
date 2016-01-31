@@ -1,29 +1,20 @@
 package in.kuari.trackall.activities;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierHomeAdapter;
 import in.kuari.trackall.controller.CourierController;
-import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.utils.ConstantValues;
 
 /**
@@ -31,7 +22,6 @@ import in.kuari.trackall.utils.ConstantValues;
  * status bar and navigation/system bar) with user interaction.
  */
 public class ShowResultActivity extends AppCompatActivity {
-
 
     private WebView webView;
     private String trackID;
@@ -44,6 +34,12 @@ public class ShowResultActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent=getIntent();
+        webView = (WebView) findViewById(R.id.resultwebview);
+       // webView.setVisibility(View.INVISIBLE);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+
         if(intent!=null) {
             int flag=  intent.getIntExtra("comingFrom",0);
             if(flag==0) {
@@ -62,7 +58,6 @@ public class ShowResultActivity extends AppCompatActivity {
         Toast.makeText(this,trackID+"",Toast.LENGTH_LONG).show();
             // setContentView(R.layout.webviewresult);
 
-
     }
 
 
@@ -80,15 +75,19 @@ public class ShowResultActivity extends AppCompatActivity {
         webView.setVisibility(View.INVISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().getBuiltInZoomControls();
-        webView.getSettings().supportZoom();
+        webView.getSettings().setBuiltInZoomControls(true);
+
+        /*webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setSupportZoom(true);
+
+
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
-
+*/
 
     }
     public void onCourierTrack(){
-        initilizeWebview();
+       // initilizeWebview();
         ConstantValues.TRACKID=trackID;
         Log.d("TrackID",trackID);
         CourierController controller=new CourierController(this,webView);
@@ -100,6 +99,33 @@ public class ShowResultActivity extends AppCompatActivity {
         adp.loadWebsite(courierWebURL);
 
 
-    }
+    }/*private class TouchHandler implements View.OnTouchListener
+    {
+        @Override
+        public boolean onTouch(View view, MotionEvent event)
+        {
+            if (event.getAction() == MotionEvent.ACTION_DOWN)
+            {
+                params.leftMargin = Math.round(event.getX() * 160f / getBaseContext().getResources().getDisplayMetrics().densityDpi);
+                params.topMargin = Math.round(event.getY() * 160f / getBaseContext().getResources().getDisplayMetrics().densityDpi);
+                webView.setPivotX(event.getX());
+                webView.setPivotY(event.getY());
+                webView.setScaleX(2f);
+                webView.setScaleY(2f);
+            }
+            return true;
+        }
+    }*/
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction()>MotionEvent.ACTION_POINTER_1_DOWN){
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setBuiltInZoomControls(true);
+            webView.getSettings().setSupportZoom(true);
+            webView.getSettings().setDisplayZoomControls(false);
+        }
+        return super.onTouchEvent(event);
+    }
 }

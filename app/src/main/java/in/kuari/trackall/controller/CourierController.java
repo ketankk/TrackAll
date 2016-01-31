@@ -36,7 +36,7 @@ public class CourierController {
 
     public void populateView(long id){
         CourierDao obj=null;
-        Log.d("idin popview",id+"");
+       // Log.d("idin popview",id+"");
         int i=(int)id;
         switch (i){
             case 1:
