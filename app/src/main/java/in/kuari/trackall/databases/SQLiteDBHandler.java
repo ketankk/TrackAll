@@ -60,6 +60,15 @@ db.execSQL(CREATE_TABLE);
 db.close();
 return true;
  }
+    public boolean   deleteHistory(String id){
+        db=this.getReadableDatabase();
+
+          int count=db.delete(TABLE_NAME,SEARCH_ID+"="+id,null);
+        db.close();
+        if(count>0)
+         return true;
+        return false;
+    }
    public List<SearchHistory> getAllSearches(){
        List<SearchHistory> searchHistories=new ArrayList<>();
        db=this.getReadableDatabase();

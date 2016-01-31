@@ -11,8 +11,15 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.hudomju.swipe.OnItemClickListener;
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.SwipeableItemClickListener;
+import com.hudomju.swipe.adapter.RecyclerViewAdapter;
 
 import java.util.List;
 
@@ -76,4 +83,6 @@ private RecyclerView  recyclerView;
             }
         });
     }
+
+
 }

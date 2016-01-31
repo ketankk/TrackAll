@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="50dp"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
     android:layout_margin="3dp">
 
     <TextView
@@ -25,9 +25,18 @@
         android:layout_toEndOf="@+id/hist_name"
 
         />
+    <ImageView
+        android:id="@+id/searchHistDel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/delete"
+        android:layout_alignParentEnd="true"
+        android:translationZ="200dp"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_marginTop="2dp"
         android:layout_below="@+id/hist_id"
         android:background="#000"
         />
