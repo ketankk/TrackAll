@@ -36,7 +36,7 @@ public class ReadData {
              is=context.getResources().openRawResource(R.raw.courierdetail);
 
             BufferedReader reader=new BufferedReader(new InputStreamReader(is));
-int count=0;
+            int count=0;
             while((str=reader.readLine())!=null){//Log.d("reader",str);
                 String[] rows=str.split(",");
 
@@ -85,6 +85,15 @@ int count=0;
         return flights;
     }
 
+   public CourierBean getCourierByID(int id){
+        List<CourierBean>couriers=getAllCourier();
+       for(CourierBean courier:couriers)
+       {
+           if(courier.getCourierID()==id)
+               return courier;
+       }
+   return new CourierBean();
+   }
 }
  /*// TODO: Customize parameter initialization
     @SuppressWarnings("unused")

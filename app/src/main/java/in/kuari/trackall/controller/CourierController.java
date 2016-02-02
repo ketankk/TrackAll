@@ -3,6 +3,7 @@ package in.kuari.trackall.controller;
 import android.content.Context;
 import android.util.Log;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import in.kuari.trackall.couriers.AFL;
 import in.kuari.trackall.couriers.AJExpress;
@@ -89,12 +90,12 @@ public class CourierController {
                 break;
 
             default:
-                obj=new Default(webView,context);
+                obj=new Default(webView,context,i);
 
                 break;
         }
 
-
+        Toast.makeText(context,"CouC"+i,Toast.LENGTH_SHORT).show();
 obj.load();;
 
     }
