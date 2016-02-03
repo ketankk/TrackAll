@@ -38,7 +38,7 @@ Activity activity;
 
         return false;
     }
-   public String getTextFromCipBoard(){
+   public String getTextFromClipBoard(){
        ClipboardManager clipboard=(ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
        ClipData clip=clipboard.getPrimaryClip();
        String str=clip.toString();

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,11 +102,11 @@ public CourierListAdapter(Activity activity,EditText trackingID){
 
         private TextView courierName;
         private View view;
-        private  RoundedImageView courierLogo;
+        private  ImageView courierLogo;
         public ViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
-            courierLogo = (RoundedImageView)itemView.findViewById(R.id.courier_logo);
+            courierLogo = (ImageView)itemView.findViewById(R.id.courier_logo);
             this.view=itemView;
 
 
@@ -135,7 +136,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
 
     void CourierSelected(CourierBean courier){
         String trackID=trackingID.getText().toString();
-        Toast.makeText(activity,trackID+"hh",Toast.LENGTH_LONG).show();
+        //Toast.makeText(activity,trackID+"hh",Toast.LENGTH_LONG).show();
 
         Log.d("trackId",trackID+"");
         if(trackID.length()>0)
@@ -148,7 +149,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
         activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
     }
-    void CourierDetailPage(CourierBean courier){
+    /*void CourierDetailPage(CourierBean courier){
         Log.d("gg",courier.toString());
         Intent intent=new Intent(activity, ShowResultActivity.class);
 
@@ -157,7 +158,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
 
         activity.startActivity(intent);
     }
-
+*/
     void SaveSearchHistory(CourierBean courier,String trackID){
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
         SearchHistory history=new SearchHistory();
