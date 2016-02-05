@@ -42,8 +42,10 @@ public class CourierController{
         final int i = (int) id;
         initializeURL(i);
 //        Toast.makeText(context, URL + "-" + i + "--" + id + COURIER_NAME, Toast.LENGTH_LONG).show();
-        if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23) {
-            fillForm(i);
+        if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32|| i == 35|| i == 42|| i == 43|| i == 47) {
+           // fillForm(i);
+            webView.loadUrl(URL+trackId);
+            ProgressDialog();
         } else {
             webView.loadUrl(URL);
 
@@ -262,6 +264,122 @@ ProgressDialog();                break;
                 webView.loadUrl("javascript:var x=document.getElementById('textinput').value='"+trackId +"'");
               //chk
                  webView.loadUrl("javascript:var x=document.getElementByTagName('form').elements['submit'].click();");
+            //Professional
+            case 31:
+                webView.loadUrl(URL+trackId);
+                ProgressDialog();
+                break;
+           //dotzot
+            case 32:
+                webView.loadUrl(URL+trackId);
+                ProgressDialog();
+                break;
+
+                    //Delhivery
+            case 33:
+                webView.loadUrl("javascript:var x=document.getElementById('search_ids').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('ref_type')[0].value='waybill'");
+
+
+                webView.loadUrl("javascript:var x=document.getElementById('bulk_search_submit').click();");
+                break;
+            //Continental
+            case 34:
+                webView.loadUrl("javascript:var x=document.getElementsByName('awbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnTrack').click();");
+                break;
+            //  Concorde Express
+
+            case 35:
+                webView.loadUrl("javascript:var x=document.getElementsByName('awbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnTrack').click();");
+                break;
+            //CNZ Express
+            case 36:
+                webView.loadUrl("javascript:var x=document.getElementById('TrackNums').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnSubmit').click();");
+                break;
+            //BookMypacket
+            case 37:
+                webView.loadUrl("javascript:var x=document.getElementById('txtTracking').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnSubmitReg').click();");
+                break;
+            //BSA Logistics
+            case 38:
+                webView.loadUrl("javascript:var x=document.getElementById('txtPodNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('imgBtnTrack').click();");
+                break;
+            //bulgerian post
+            case 39:
+                webView.loadUrl("http://www.bgpost.bg/IPSWebTracking/IPSWeb_item_events.asp?itemid="+trackId+"&Submit=Submit");
+                break;
+            //Canada post
+            case 40:
+                webView.loadUrl("javascript:var x=document.getElementById('tapByTrackSearch:trackSearch:trackNumbers').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('tapByTrackSearch:trackSearch:submit_button').click();");
+                break;
+            //Central Express
+            case 41:
+                webView.loadUrl("javascript:var x=document.getElementById('textfield').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('button').click();");
+                break;
+            //Ceska Posta
+            case 42:
+                webView.loadUrl("javascript:var x=document.getElementById('txtTracking').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnSubmitReg').click();");
+                break;
+            //chips tracking
+            case 44:
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_btnTrack').click();");
+                break;
+            //First flight
+            case 45:
+                webView.loadUrl("javascript:var x=document.getElementById('consNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('Submit')[0].click();");
+                break;
+            //Citipost
+            case 46:
+                webView.loadUrl("javascript:var x=document.getElementById('track_no').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('lpform-submit').click();");
+                break;
+            //CJ Korea Express
+            case 47:
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_btnTrack').click();");
+                break;
+            //Overnite
+            case 48:
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_btnTrack').click();");
+                break;
+            //ondot
+            case 49:
+                webView.loadUrl("javascript:var x=document.getElementById('txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('imgsubmit').click();");
+                break;
+                //Gati
+            case 50:
+                webView.loadUrl("javascript:var x=document.getElementById('docket_id').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('track').click();");
+                break;
+
 
             default:
                 webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");
