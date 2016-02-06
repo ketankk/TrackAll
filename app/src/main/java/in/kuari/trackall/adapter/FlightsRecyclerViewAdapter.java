@@ -65,7 +65,7 @@ holder.mView.setBackgroundColor(Colors.getRandomColor());
 
     }
     void loadFlightWeb(FlightBean flight){
-        Toast.makeText(context,flight.getFlightName(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,flight.getFlightName(),Toast.LENGTH_LONG).show();
         Intent intent=new Intent(context, ShowFlightsWeb.class);
         intent.putExtra("webURL",flight.getFlightWebsite());
         context.startActivity(intent);

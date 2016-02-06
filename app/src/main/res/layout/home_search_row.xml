@@ -23,17 +23,15 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:layout_toEndOf="@+id/hist_name"
+        android:layout_toRightOf="@+id/hist_name"
 
         />
     <ImageView
         android:id="@+id/searchHistDel"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="match_parent"
         android:src="@drawable/delete"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/hist_id"
-        android:translationZ="200dp"
+        android:layout_alignParentRight="true"
         />
     <View
         android:layout_width="match_parent"

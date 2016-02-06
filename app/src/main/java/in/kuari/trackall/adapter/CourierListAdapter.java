@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
    final CourierBean courier = filteredCouriers.get(position);
 
     holder.courierName.setText(courier.getCourierName());
-        Picasso.with(activity).load(courier.getCourierImagePath()).error(R.drawable.ic_courier).into(holder.courierLogo);
+        Picasso.with(activity).load(courier.getCourierImagePath()).error(R.drawable.ic_menu_courier).into(holder.courierLogo);
     holder.view.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

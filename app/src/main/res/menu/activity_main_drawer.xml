@@ -8,11 +8,11 @@
             android:title="Home" />
         <item
             android:id="@+id/list_all_courier"
-            android:icon="@drawable/ic_courier"
+            android:icon="@drawable/ic_menu_courier"
             android:title="Couriers" />
         <item
             android:id="@+id/list_all_flights"
-            android:icon="@drawable/ic_flight"
+            android:icon="@drawable/ic_menu_flight"
             android:title="Flights/Trains" />
         <item
             android:id="@+id/nav_manage"

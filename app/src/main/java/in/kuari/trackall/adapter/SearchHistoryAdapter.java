@@ -67,10 +67,11 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
                 boolean flag=deleteHistory(searchHistory);
                 if(flag) {
                         Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content),searchHistory.getTrackId()+"Deleted ",Snackbar.LENGTH_SHORT).setAction("UNDO",null).show();
-                    Toast.makeText(activity,"delete"+position,Toast.LENGTH_LONG).show();
+                   //
+                    // Toast.makeText(activity,"delete"+position,Toast.LENGTH_LONG).show();
                     filterdeSearchHistories.remove(position);
                     notifyDataSetChanged();
-                }else                     Toast.makeText(activity,"Cdelete"+position,Toast.LENGTH_LONG).show();
+                }//else                    // Toast.makeText(activity,"Cdelete"+position,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -101,7 +102,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
    {
        String trackID=searchHistory.getTrackId();
         long courierID=Long.parseLong(searchHistory.getCourierID());
-       Toast.makeText(activity,trackID+"hh"+courierID,Toast.LENGTH_LONG).show();
+       //Toast.makeText(activity,trackID+"hh"+courierID,Toast.LENGTH_LONG).show();
 
           Intent intent=new Intent(activity, ShowResultActivity.class);
            intent.putExtra("trackId",trackID);

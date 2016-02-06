@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -47,6 +48,9 @@ private RecyclerView  recyclerView;
 
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
         List<SearchHistory> searchHistories=handler.getAllSearches();
+        /*for(SearchHistory s:searchHistories){
+            Toast.makeText(activity,"g"+s.getTrackId()+s.getName(),Toast.LENGTH_SHORT);
+        }*/
         SearchHistory h=new SearchHistory();
           adp=new SearchHistoryAdapter(activity,searchHistories);
         recyclerView.setAdapter(adp);
@@ -55,7 +59,6 @@ private RecyclerView  recyclerView;
     }
 
     void search(Activity activity){
-
         trackID.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

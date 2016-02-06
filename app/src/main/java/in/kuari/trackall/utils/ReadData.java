@@ -74,7 +74,9 @@ public class ReadData {
                 flight.setFlightWebsite(rows[2]);
                 flights.add(flight);
 
-            } is.close();
+            }
+            reader.close();
+            is.close();
         }
         catch (IOException e) {
             e.printStackTrace();

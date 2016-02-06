@@ -54,7 +54,8 @@ activity=this;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
        navigationView.setNavigationItemSelectedListener(this);
 if(savedInstanceState==null)
-displayFragment(1);    }
+displayFragment(1);
+    }
 
     @Override
     public void onBackPressed() {

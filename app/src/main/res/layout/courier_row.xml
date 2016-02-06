@@ -10,14 +10,14 @@
         android:id="@+id/courier_logo"
         android:layout_width="100dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_courier"
+        android:src="@drawable/ic_menu_courier"
         android:scaleType="fitCenter"
         />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/courier_logo"
+        android:layout_toRightOf="@+id/courier_logo"
 
         >
         <TextView

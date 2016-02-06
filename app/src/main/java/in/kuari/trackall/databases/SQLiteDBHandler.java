@@ -83,7 +83,7 @@ return true;
     hist.setCourierID(cursor.getString(3));
        // Log.d("hist",hist.toString());
     searchHistories.add(hist);
-}
+}db.close();
        return searchHistories;
     }
 }
