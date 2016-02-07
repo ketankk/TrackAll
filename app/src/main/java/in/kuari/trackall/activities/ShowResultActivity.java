@@ -68,7 +68,7 @@ activity=this;
         }
         return super.onOptionsItemSelected(item);
     }
-    void initilizeWebview(){
+    private void initilizeWebview(){
         webView = (WebView) findViewById(R.id.resultwebview);
        // webView.setVisibility(View.INVISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);

@@ -42,11 +42,13 @@ public class CourierController{
         final int i = (int) id;
         initializeURL(i);
 //        Toast.makeText(context, URL + "-" + i + "--" + id + COURIER_NAME, Toast.LENGTH_LONG).show();
+        //Couriers which directly gives result from URL+trackID,like posting on php page
         if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32|| i == 35|| i == 42|| i == 43|| i == 47) {
            // fillForm(i);
             webView.loadUrl(URL+trackId);
             ProgressDialog();
         } else {
+            //Couriers whose forms needed to be filled
             webView.loadUrl(URL);
 
             webView.setWebViewClient(new WebViewClient() {
@@ -69,7 +71,7 @@ public class CourierController{
                     COUNT++;
                     webViewPreviousState = PAGE_STARTED;
                     if (dialog == null || !dialog.isShowing())
-                        dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n" + COURIER_NAME + "-" + trackId.toUpperCase(), true, true,
+                        dialog = ProgressDialog.show(context, COURIER_NAME + "-" + trackId.toUpperCase(), "Hang on buddy..retrieving\n", true, true,
                                 null);
                 }
 
@@ -86,7 +88,7 @@ public class CourierController{
 
                         //hideShowContent();
 
-                        webView.setVisibility(View.VISIBLE);
+                       // webView.setVisibility(View.VISIBLE);
 
 
                     }
