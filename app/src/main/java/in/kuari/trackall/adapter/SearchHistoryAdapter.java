@@ -30,25 +30,31 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     private List<SearchHistory> searchHistories;
     private List<SearchHistory> filterdeSearchHistories;
-
+private View imgView;
     private Activity activity;
-     static View rootView;
 
     public SearchHistoryAdapter(Activity activity, List<SearchHistory> searchHistories) {
         this.activity=activity;
         this.searchHistories=searchHistories;
         filterdeSearchHistories=new ArrayList<>();
+       // this.imgView=imgView;
         filterdeSearchHistories.addAll(searchHistories);
     }
 
     @Override
     public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.home_search_row,parent,false);
+//if(getItemCount()==0)
+   // imgView.setVisibility(View.VISIBLE);
+
         return new SearchViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final SearchViewHolder holder, final int position) {
+        /*if(getItemCount()==0)
+            imgView.setVisibility(View.VISIBLE);
+*/
        final SearchHistory searchHistory= filterdeSearchHistories.get(position);
         holder.name.setText(searchHistory.getName());
         holder.trackId.setText(searchHistory.getTrackId());
@@ -79,7 +85,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     @Override
     public int getItemCount() {
-        return filterdeSearchHistories.size();
+               return filterdeSearchHistories.size();
     }
 
      static class SearchViewHolder extends RecyclerView.ViewHolder{
@@ -91,7 +97,6 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
          public SearchViewHolder(View itemView) {
              super(itemView);
              view=itemView;
-             rootView=view;
              trackId= (TextView) itemView.findViewById(R.id.hist_id);
              name= (TextView) itemView.findViewById(R.id.hist_name);
              deletebtn= (ImageView) itemView.findViewById(R.id.searchHistDel);

@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -28,9 +29,9 @@ import in.kuari.trackall.databases.SQLiteDBHandler;
 public class HomeFragment extends Fragment{
 
     private EditText trackID;
-    private Button submitButton;
-private RecyclerView  recyclerView;
+    private RecyclerView  recyclerView;
     private SearchHistoryAdapter adp;
+    TextView noHist;
     public HomeFragment() {
     }
 
@@ -42,6 +43,7 @@ private RecyclerView  recyclerView;
         trackID = (EditText) rootView.findViewById(R.id.input_trackID_or_name);
 
        recyclerView= (RecyclerView) rootView.findViewById(R.id.list_search_history);
+        noHist= (TextView)rootView.findViewById(R.id.no_hist_img);
 
         RecyclerView.LayoutManager manager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
@@ -51,9 +53,23 @@ private RecyclerView  recyclerView;
         /*for(SearchHistory s:searchHistories){
             Toast.makeText(activity,"g"+s.getTrackId()+s.getName(),Toast.LENGTH_SHORT);
         }*/
-        SearchHistory h=new SearchHistory();
-          adp=new SearchHistoryAdapter(activity,searchHistories);
+
+        if(searchHistories.size()==0)
+            noHist.setVisibility(View.VISIBLE);
+        adp=new SearchHistoryAdapter(activity,searchHistories);
         recyclerView.setAdapter(adp);
+
+        /*Log.d("Bind1",searchHistories.size()+"");
+        img.setVisibility(View.VISIBLE);
+        if(searchHistories.size()==0){
+            Log.d("Bind",searchHistories.size()+"");
+            Toast.makeText(activity,searchHistories.size()+"gg",Toast.LENGTH_SHORT).show();
+
+
+        }*/
+
+
+
         search(activity);
         return rootView;
     }
