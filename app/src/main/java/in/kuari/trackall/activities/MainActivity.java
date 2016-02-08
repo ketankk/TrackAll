@@ -3,6 +3,8 @@ package in.kuari.trackall.activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,12 +12,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.EditText;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.fragments.CourierFragment;
@@ -35,13 +40,15 @@ Activity activity;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 activity=this;
+        CheckSharedPreferance();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Suggestion/Feedback coming soon..", Snackbar.LENGTH_LONG)
+              /*  Snackbar.make(view, "Suggestion/Feedback coming soon..", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-               // getScreenShot();
+               */FeedBackSuggestions();
             }
         });
 
@@ -55,6 +62,8 @@ activity=this;
        navigationView.setNavigationItemSelectedListener(this);
 if(savedInstanceState==null)
 displayFragment(1);
+        CheckSharedPreferance();
+
     }
 
     @Override
@@ -146,5 +155,62 @@ switch (id) {
     b.takeScreenShot("abc");
     }
 
+    void  FeedBackSuggestions(){
+        final EditText suggestion=new EditText(activity);
+
+        new AlertDialog.Builder(activity)
+                .setTitle("FeedBack/Suggestions")
+                .setView(suggestion)
+                .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg=suggestion.getText().toString();
+                        if(msg.length()==0)
+                            suggestion.setError("Type your message here");
+                        else
+                        SendFeedback();
+                    }
+                })
+                .setNegativeButton("Cancel",null)
+                .show();
+    }
+    //Call MySql sync
+void SendFeedback(){
+
+}
+void CheckSharedPreferance(){
+
+    SharedPreferences pref=getSharedPreferences("TRACKALL",MODE_PRIVATE);
+    boolean frsttime=pref.getBoolean("FirstTime",true);
+    if(frsttime) {
+        SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
+        editor.putBoolean("FirstTime",false);
+        LoadLogoDialog();
+    }
+    Log.d("loj",frsttime+"");
+}
+    private void LoadLogoDialog(){
+        new AlertDialog.Builder(activity)
+                .setTitle("Select if you want to load Logos also")
+                .setMessage("You can also change the settings later")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
+                        editor.putBoolean("LoadLogo",true);
+
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
+                        editor.putBoolean("LoadLogo",false);
+
+                    }
+                })
+                .show();
+    }
 }
 

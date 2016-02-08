@@ -2,8 +2,15 @@ package in.kuari.trackall.adapter;
 
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,12 +83,19 @@ public CourierListAdapter(Activity activity,EditText trackingID){
    final CourierBean courier = filteredCouriers.get(position);
 
     holder.courierName.setText(courier.getCourierName());
+        SharedPreferences pref=activity.getSharedPreferences("TRACKALL",Context.MODE_PRIVATE);
+        boolean loadLogo=pref.getBoolean("LoadLogo",true);
+        Log.d("logo",loadLogo+"");
+    if(loadLogo)
         Picasso.with(activity).load(courier.getCourierImagePath()).error(R.drawable.ic_menu_courier).into(holder.courierLogo);
     holder.view.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (!FunctionTools.isConnected(activity)) {
                 Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                String trck=trackingID.getText().toString();
+                if(trck.length()>0)
+                Popup(courier,trck);
             } else {
                 if (trackingID != null)
                     CourierSelected(courier);
@@ -145,6 +160,10 @@ public CourierListAdapter(Activity activity,EditText trackingID){
         intent.putExtra("comingFrom",0);
         intent.putExtra("courierID",courier.getCourierID());
 
+        ClipboardManager manager= (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip=ClipData.newPlainText("TrackingID",trackID);
+        manager.setPrimaryClip(clip);
+        Toast.makeText(activity,trackID+" Copied to ClipBoard",Toast.LENGTH_SHORT).show();
         activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
     }
@@ -169,4 +188,19 @@ public CourierListAdapter(Activity activity,EditText trackingID){
 
     }
 
+    void Popup(final CourierBean courierBean, final String trackingID){
+        new AlertDialog.Builder(activity)
+                .setTitle("No Internet Connection")
+                .setMessage("BookMark -"+trackingID.toUpperCase()+" with "+courierBean.getCourierName())
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        SaveSearchHistory(courierBean,trackingID);
+                    }
+                }).setNegativeButton("No",null)
+                .show();
+    }
 }

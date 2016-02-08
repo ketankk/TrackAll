@@ -58,7 +58,9 @@ private View imgView;
        final SearchHistory searchHistory= filterdeSearchHistories.get(position);
         holder.name.setText(searchHistory.getName());
         holder.trackId.setText(searchHistory.getTrackId());
+        holder.histDate.setText(searchHistory.getTime());
         holder.view.setBackgroundColor(Colors.getRandomColor());
+
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +96,14 @@ private View imgView;
          TextView name;
          View view;
          ImageView deletebtn;
+         TextView histDate;
          public SearchViewHolder(View itemView) {
              super(itemView);
              view=itemView;
              trackId= (TextView) itemView.findViewById(R.id.hist_id);
              name= (TextView) itemView.findViewById(R.id.hist_name);
              deletebtn= (ImageView) itemView.findViewById(R.id.searchHistDel);
+             histDate= (TextView) itemView.findViewById(R.id.hist_date);
 
          }
      }

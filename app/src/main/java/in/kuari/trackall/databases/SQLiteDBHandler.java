@@ -18,20 +18,22 @@ import in.kuari.trackall.bean.SearchHistory;
  */
 public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME="track_all";
-    private static final int DB_VERSION=1;
+    private static final int DB_VERSION=3;
 
     private static final String TABLE_NAME="search_history";
     private static final String SEARCH_ID="_id";
     private static final String TRACK_ID="track_id";
     private static final String COMPANY_NAME="comp_name";
     private static final String COURIER_ID="url";
+    private static final String TIMING="time";
 
 
     private static final String CREATE_TABLE="CREATE TABLE "+TABLE_NAME+
             "("+SEARCH_ID + " integer primary key autoincrement,"+
-               TRACK_ID+" varchar(20),"+
+                TRACK_ID+" varchar(20),"+
                 COMPANY_NAME+" varchar(20),"+
-            COURIER_ID+" varchar(200))";
+                COURIER_ID+" varchar(200)," +
+                TIMING+" DATE DEFAULT CURRENT_TIMESTAMP)";
 private SQLiteDatabase db;
 
 
@@ -46,7 +48,7 @@ db.execSQL(CREATE_TABLE);
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
@@ -73,7 +75,7 @@ return true;
        List<SearchHistory> searchHistories=new ArrayList<>();
        db=this.getReadableDatabase();
 
-       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID},null,null,null,null,null);
+       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,TIMING},null,null,null,null,null);
     while (cursor.moveToNext()){
     SearchHistory hist=new SearchHistory();
 
@@ -81,6 +83,7 @@ return true;
     hist.setTrackId(cursor.getString(1));
     hist.setName(cursor.getString(2));
     hist.setCourierID(cursor.getString(3));
+    hist.setTime(cursor.getString(4));
        // Log.d("hist",hist.toString());
     searchHistories.add(hist);
 }db.close();

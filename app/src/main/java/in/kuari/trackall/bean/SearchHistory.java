@@ -9,6 +9,16 @@ public class SearchHistory {
     private String trackId;
     private String courierID;
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    private String time;
+
     public String getCourierID() {
         return courierID;
     }
