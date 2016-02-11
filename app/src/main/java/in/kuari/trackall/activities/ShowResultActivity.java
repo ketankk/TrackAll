@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.webkit.WebView;
 import java.util.Date;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.adapter.CourierHomeAdapter;
 import in.kuari.trackall.controller.CourierController;
 import in.kuari.trackall.utils.ConstantValues;
 import in.kuari.trackall.utils.FunctionTools;

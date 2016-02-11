@@ -85,7 +85,8 @@ public CourierListAdapter(Activity activity,EditText trackingID){
     holder.courierName.setText(courier.getCourierName());
         SharedPreferences pref=activity.getSharedPreferences("TRACKALL",Context.MODE_PRIVATE);
         boolean loadLogo=pref.getBoolean("LoadLogo",true);
-        Log.d("logo",loadLogo+"");
+        boolean ff=pref.getBoolean("FirstTime",true);
+        //Log.d("logo",loadLogo+" "+ff);
     if(loadLogo)
         Picasso.with(activity).load(courier.getCourierImagePath()).error(R.drawable.ic_menu_courier).into(holder.courierLogo);
     holder.view.setOnClickListener(new View.OnClickListener() {

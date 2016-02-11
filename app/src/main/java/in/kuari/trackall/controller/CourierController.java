@@ -1,7 +1,9 @@
 package in.kuari.trackall.controller;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.utils.ConstantValues;
 import in.kuari.trackall.utils.ReadData;
@@ -33,7 +36,7 @@ public class CourierController{
     public CourierController(WebView webView, Context context) {
         this.webView = webView;
         this.context=context;
-        trackId= ConstantValues.TRACKID;
+        trackId= ConstantValues.TRACKID.toUpperCase();
     }
 
 
@@ -43,8 +46,14 @@ public class CourierController{
         initializeURL(i);
 //        Toast.makeText(context, URL + "-" + i + "--" + id + COURIER_NAME, Toast.LENGTH_LONG).show();
         //Couriers which directly gives result from URL+trackID,like posting on php page
-        if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32|| i == 35|| i == 42|| i == 43|| i == 47) {
+        if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32
+                ||i==33|| i == 35|| i == 42|| i == 43|| i == 47|| i == 51|| i == 56|| i == 58) {
            // fillForm(i);
+            if(i==56){
+                //Vichare courier
+                trackId=trackId+"&Type=1";
+            }
+
             webView.loadUrl(URL+trackId);
             ProgressDialog();
         } else {
@@ -97,7 +106,11 @@ public class CourierController{
 
                 @Override
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                    webView.loadUrl("http://trackall.kuari.in");
+                    Activity activity= (Activity) context;
+                    //activity.onBackPressed();
+                    Intent intent=new Intent(activity, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    activity.startActivity(intent);
                 }
             });
 
@@ -279,12 +292,14 @@ ProgressDialog();                break;
 
                     //Delhivery
             case 33:
-                webView.loadUrl("javascript:var x=document.getElementById('search_ids').value='"+trackId +"'");
+                webView.loadUrl(URL+trackId);
+                /*webView.loadUrl("javascript:var x=document.getElementById('search_ids').value='"+trackId +"'");
                 //chk
-                webView.loadUrl("javascript:var x=document.getElementsByName('ref_type')[0].value='waybill'");
 
 
+                webView.loadUrl("javascript:var x=document.getElementsByName('ref_type')[0].checked=true;");
                 webView.loadUrl("javascript:var x=document.getElementById('bulk_search_submit').click();");
+*/
                 break;
             //Continental
             case 34:
@@ -381,8 +396,87 @@ ProgressDialog();                break;
                 //chk
                 webView.loadUrl("javascript:var x=document.getElementById('track').click();");
                 break;
+            //V-Express
+            case 52:
+                webView.loadUrl("javascript:var x=document.getElementById('txtDocket').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('submit')[0].click();");
 
+              //  webView.loadUrl("javascript:function(){GetDocketData();};");
+                break;
 
+            //V-Trans
+            case 53:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_cpabout_txtGCNO').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_cpabout_btnGC').click();");
+                break;
+//Vayuseva
+            case 54:
+                webView.loadUrl("javascript:var x=document.getElementById('txtAwbNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnShow').click();");
+                break;
+            //USPS
+            case 55:
+                webView.loadUrl("javascript:var x=document.getElementById('tLabels').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('trackNumFindBtnRedesign').click();");
+                break;
+//VRL
+            case 57:
+                webView.loadUrl("javascript:var x=document.getElementsById('txtlrno').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('cmdolder').click();");
+                break;
+            //Zodiac
+            case 59:
+                webView.loadUrl("javascript:var x=document.getElementsByName('trackId').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByClass('btn-system')[0].click();");
+                break;
+//YogaYog
+            case 60:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_txtawb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_btnTrack').click();");
+                break;
+            //Yanwen
+            case 61:
+                webView.loadUrl("javascript:var x=document.getElementById('InputTrackNumbers').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_btnTrack').click();");
+                break;
+            //Xpressbees
+            case 62:
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_txtShippingIds').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_btnTrackShipment').click();");
+                break;
+            //Xfas
+            case 63:
+                webView.loadUrl("javascript:var x=document.getElementById('txtTracking').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnTrack').click();");
+                break;
+            //WowExpress
+            case 64:
+                webView.loadUrl("javascript:var x=document.getElementById('tracking-no').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('track-now').click();");
+                break;
+            //WorldNet
+            case 65:
+                webView.loadUrl("javascript:var x=document.getElementById('txtAWBNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnGo').click();");
+                break;
+            //WorldFirst
+            case 66:
+                webView.loadUrl("javascript:var x=document.getElementById('txtRefNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('lkbtnTrack').click();");
+                break;
             default:
                 webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");
                // webView.loadUrl("javascript:(function(){document.getElementsByClassName('tracking-button')[0].click();})()");

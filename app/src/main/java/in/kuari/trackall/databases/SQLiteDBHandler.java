@@ -33,7 +33,7 @@ public class SQLiteDBHandler extends SQLiteOpenHelper{
                 TRACK_ID+" varchar(20),"+
                 COMPANY_NAME+" varchar(20),"+
                 COURIER_ID+" varchar(200)," +
-                TIMING+" DATE DEFAULT CURRENT_TIMESTAMP)";
+                TIMING+" DATE DEFAULT CURRENT_TIMESTAMP)";//Change on upgrade for alteration..not deletion
 private SQLiteDatabase db;
 
 
@@ -48,6 +48,7 @@ db.execSQL(CREATE_TABLE);
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }

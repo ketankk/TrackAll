@@ -7,23 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowFlightsWeb;
+import in.kuari.trackall.bean.ECommerce;
 import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.utils.Colors;
 
 
-public class FlightsRecyclerViewAdapter extends RecyclerView.Adapter<FlightsRecyclerViewAdapter.ViewHolder> {
+public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.ViewHolder> {
 
-    private final List<FlightBean> flights;
+    private final List<ECommerce> eCommerces;
     private final Context context;
 
-    public FlightsRecyclerViewAdapter(List<FlightBean> flights, Context context) {
-        this.flights = flights;
+    public ECommerceAdapter(List<ECommerce> eCommerces, Context context) {
+        this.eCommerces = eCommerces;
         this.context =context;
     }
 
@@ -37,21 +37,21 @@ public class FlightsRecyclerViewAdapter extends RecyclerView.Adapter<FlightsRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final FlightBean flight=flights.get(position);
+        final ECommerce eCommerce=eCommerces.get(position);
 holder.mView.setBackgroundColor(Colors.getRandomColor());
-        holder.flightName.setText(flight.getFlightName());
+        holder.flightName.setText(eCommerce.getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFlightWeb(flight);
+                loadFlightWeb(eCommerce);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return flights.size();
+        return eCommerces.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -64,11 +64,11 @@ holder.mView.setBackgroundColor(Colors.getRandomColor());
         }
 
     }
-    void loadFlightWeb(FlightBean flight){
+    void loadFlightWeb(ECommerce eCommerce){
         //Toast.makeText(context,flight.getFlightName(),Toast.LENGTH_LONG).show();
         Intent intent=new Intent(context, ShowFlightsWeb.class);
-        intent.putExtra("webURL",flight.getFlightWebsite());
-        intent.putExtra("flightName",flight.getFlightName());
+        intent.putExtra("webURL",eCommerce.getURL());
+        intent.putExtra("flightName",eCommerce.getName());
 
         context.startActivity(intent);
     }

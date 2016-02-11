@@ -21,8 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.databases.MYSQLHandler;
 import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
 import in.kuari.trackall.fragments.HomeFragment;
@@ -62,7 +64,6 @@ activity=this;
        navigationView.setNavigationItemSelectedListener(this);
 if(savedInstanceState==null)
 displayFragment(1);
-        CheckSharedPreferance();
 
     }
 
@@ -168,15 +169,24 @@ switch (id) {
                         if(msg.length()==0)
                             suggestion.setError("Type your message here");
                         else
-                        SendFeedback();
+                        SendFeedback(msg);
                     }
                 })
                 .setNegativeButton("Cancel",null)
                 .show();
     }
     //Call MySql sync
-void SendFeedback(){
+void SendFeedback(String msg){
+    if(!FunctionTools.isConnected(activity))
+    {
+        Toast.makeText(activity,"No Internet Connection",Toast.LENGTH_SHORT).show();
+        //Change toast to option for switching internet connection
+    }
+    else {
+        MYSQLHandler handler = new MYSQLHandler(activity);
+        handler.SendMail(msg);
 
+    }
 }
 void CheckSharedPreferance(){
 
@@ -185,7 +195,10 @@ void CheckSharedPreferance(){
     if(frsttime) {
         SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
         editor.putBoolean("FirstTime",false);
-        LoadLogoDialog();
+        editor.commit();
+        /*pref=getSharedPreferences("TRACKALL",MODE_PRIVATE);
+        frsttime=pref.getBoolean("FirstTime",true);
+       */ LoadLogoDialog();
     }
     Log.d("loj",frsttime+"");
 }
@@ -198,6 +211,7 @@ void CheckSharedPreferance(){
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
                         editor.putBoolean("LoadLogo",true);
+                        editor.commit();
 
 
                     }
@@ -207,6 +221,7 @@ void CheckSharedPreferance(){
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
                         editor.putBoolean("LoadLogo",false);
+                        editor.commit();
 
                     }
                 })

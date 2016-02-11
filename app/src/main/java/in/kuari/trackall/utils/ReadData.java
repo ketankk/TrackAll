@@ -1,6 +1,7 @@
 package in.kuari.trackall.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.bean.CourierBean;
+import in.kuari.trackall.bean.ECommerce;
 import in.kuari.trackall.bean.FlightBean;
 
 /**
@@ -65,7 +67,8 @@ public class ReadData {
 
             BufferedReader reader=new BufferedReader(new InputStreamReader(is));
             int count=0;
-            while((str=reader.readLine())!=null){//Log.d("reader",str);
+            while((str=reader.readLine())!=null){
+                Log.d("reader",str);
                 String[] rows=str.split(",");
 
                 FlightBean flight=new FlightBean();
@@ -85,6 +88,35 @@ public class ReadData {
         //Sort according to name of ic_courier
         Collections.sort(flights, FlightBean.flightNameComp);
         return flights;
+    }
+    public List<ECommerce> getECommerce(){
+        List<ECommerce> eCommerces=new ArrayList();
+        try {
+            is=context.getResources().openRawResource(R.raw.ecommercedetail);
+
+            BufferedReader reader=new BufferedReader(new InputStreamReader(is));
+            int count=0;
+            while((str=reader.readLine())!=null){
+                Log.d("reader",str);
+                String[] rows=str.split(",");
+
+                ECommerce eCommerce=new ECommerce();
+                eCommerce.setId(Long.parseLong(rows[0]));
+                eCommerce.setName(rows[1]);
+                eCommerce.setURL(rows[2]);
+                eCommerces.add(eCommerce);
+
+            }
+            reader.close();
+            is.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        //Sort according to name of ic_courier
+        Collections.sort(eCommerces, ECommerce.eCommerceComp);
+        return eCommerces;
     }
 
    public CourierBean getCourierByID(int id){

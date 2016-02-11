@@ -30,7 +30,7 @@
 30,Bengal Force,http://bengalforce.com/,http://bengalforce.com/bengalforce,http://bengalforce.com/bengalforce/images/logo3.png
 31,Professional,http://www.tpcindia.com/Tracking2014.aspx?id=,http://www.tpcindia.com/Default.aspx,http://www.tpcindia.com/images/tpc-logo2.png
 32,DotZot,http://dotzot.azurewebsites.net/GUI/Tracking_New/WebSite/TrackConsignment_new.Aspx?track_flag=A&CONSIGNMENT=,http://dotzot.in/index-web.html,http://dotzot.in/images/logo.jpg
-33,Delhivery,https://track.delhivery.com/accounts/login/?next=/,https://track.delhivery.com,https://s3-ap-southeast-1.amazonaws.com/static.delhivery.com/images/logo.png
+33,Delhivery,https://track.delhivery.com/p/,https://track.delhivery.com,https://s3-ap-southeast-1.amazonaws.com/static.delhivery.com/images/logo.png
 34,Continental Courier,http://www.ccs-uae.com/Tracking.asp,http://www.ccs-uae.com/index.html,http://www.ccs-uae.com/images/ccs.jpg
 35,Concorde Express,http://www.concordeexpress.com/Tracking.aspx?txtawbno=,http://www.concordeexpress.com/index.aspx,http://www.concordeexpress.com/images/logo.png
 36,CNZ Express,http://www.cnzexpress.com/track.php,http://www.cnzexpress.com,http://www.cnzexpress.com/images/logo1.png
@@ -48,3 +48,19 @@
 48,Overnite,http://www.overnitenet.com/Web-Track.aspx,http://www.overnitenet.com/Default.aspx,http://www.overnitenet.com/images/oel-logo.jpg
 49,OnDot,http://ondotonline.in:9090/index.asp,http://ondotonline.in:9090/index.asp,http://ondotonline.in:9090/images/1.gif
 50,Gati,http://www.gati.com/,http://www.gati.com,http://www.gati.com/wp-content/themes/gati/images/logo.png
+51,gojavas,http://gojavas.com/docket_details.php?pop=docno&docno=,http://gojavas.com,http://gojavas.com/images/gojavas.png
+52,V-Express,http://www.vxpress.in/track-your-order-result.php,http://www.vxpress.in,http://vxpress.in/wp-content/uploads/2015/05/V-Xpress_logo_for_site.jpg
+53,V-Trans,http://www.vtransgroup.com/helpdeskmain.aspx,http://www.vtransgroup.com,http://www.vtransgroup.com/images/v-group_logo.jpg
+54,Vayu Seva,http://www.vayusevaindia.in/MyTrack.aspx,http://www.vayusevaindia.in,https://s3.amazonaws.com/zaubatrademarks/30af9dc1-4cce-4c63-b3e2-f4312143ec2f.png
+55,USPS,https://tools.usps.com/go/TrackConfirmAction_input,https://usps.com,https://tools.usps.com/global-elements/header/images/logo-sb.png
+56,Vichare,http://www.vichare.info/tracking-results.aspx?Pincode=,http://www.vichare.info,http://www.vichare.info/images/logo.png
+57,VRL,http://www.vrlgroup.in/search_vrl_consignment_number.aspx,http://www.vrlgroup.in,http://www.vrlgroup.in/site_images/vrllogiol.png
+58,Vulcan Express,http://vulcanxpress.com/Trackorder.aspx?awb=,http://vulcanxpress.com,http://vulcanxpress.com/Vulcanxpress3_files/logo.png
+59,Zodiac Express,http://www.zodiacexpress.com/service,http://www.zodiacexpress.com,http://www.zodiacexpress.com/common/images/logo.png
+60,Yogayog,http://www.yogayog.com/tracking.aspx,http://www.yogayog.com,http://www.yogayog.com/images/logo24.jpg
+61,Yanwen Express,http://track.yw56.com.cn/en-US/,http://www.yw56.com.cn,http://track.yw56.com.cn/img/logo.png
+62,Xpressbees,http://www.xpressbees.com/track-shipment.aspx,http://www.xpressbees.com,http://www.xpressbees.com/images/logo.png
+63,Xfas Logistic,http://xfas.in/Default.aspx,http://xfas.in/Default.aspx,http://xfas.in/images/Logo.jpg
+64,Wow Express,http://wowexpress.in/#TrackOrder,http://wowexpress.in,http://wowexpress.in/images/badge.png
+65,WorldNet Express,http://www.worldnetexpress.com/utility-tools/web-tracking-result.aspx,http://www.worldnetexpress.com,http://www.worldnetexpress.com/images/world-net-express-logo.jpg
+66,World First,http://www.worldfirst.in,http://www.worldfirst.in,http://103.16.140.154/worldfirst/Images/worldfirst_logo.png

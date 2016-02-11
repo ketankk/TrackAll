@@ -2,8 +2,10 @@ package in.kuari.trackall.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.SearchHistory;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.Colors;
+import in.kuari.trackall.utils.FunctionTools;
 
 /**
  * Created by root on 1/31/16.
@@ -65,26 +68,52 @@ private View imgView;
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnClickHistoryitem(searchHistory);
+                if (!FunctionTools.isConnected(activity)) {
+                    Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                }else
+                    OnClickHistoryitem(searchHistory);
             }
         });
 
         holder.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean flag=deleteHistory(searchHistory);
-                if(flag) {
-                        Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content),searchHistory.getTrackId()+"Deleted ",Snackbar.LENGTH_SHORT).setAction("UNDO",null).show();
-                   //
-                    // Toast.makeText(activity,"delete"+position,Toast.LENGTH_LONG).show();
-                    filterdeSearchHistories.remove(position);
-                    notifyDataSetChanged();
-                }//else                    // Toast.makeText(activity,"Cdelete"+position,Toast.LENGTH_LONG).show();
+
+                bookMarkDeleteConf(searchHistory,position);
+               //else                    // Toast.makeText(activity,"Cdelete"+position,Toast.LENGTH_LONG).show();
             }
         });
 
     }
+//Alert Dialog for confirming if user want to delete BookMark
+    private void bookMarkDeleteConf(final SearchHistory searchHistory, final int pos){
+        String id=searchHistory.getTrackId();
+        String name=searchHistory.getName();
+        new AlertDialog.Builder(activity)
+                .setTitle("Delete BookMark "+name+"-"+id)
+                .setMessage("Are you sure want to delete this Bookmark?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteBookMark(searchHistory,pos);
+                    }
+                })
+                .setNegativeButton("No",null)
+                .show();
+    }
+private void deleteBookMark(SearchHistory searchHistory,int position) {
+    String id=searchHistory.getTrackId();
+    String name=searchHistory.getName();
 
+    boolean flag = deleteHistory(searchHistory);
+    if (flag) {
+        Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content), id + "-" + name + " Deleted ", Snackbar.LENGTH_SHORT).setAction("UNDO", null).show();
+        //
+        // Toast.makeText(activity,"delete"+position,Toast.LENGTH_LONG).show();
+        filterdeSearchHistories.remove(position);
+        notifyDataSetChanged();
+    }
+}
     @Override
     public int getItemCount() {
                return filterdeSearchHistories.size();
