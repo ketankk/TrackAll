@@ -25,14 +25,14 @@ import in.kuari.trackall.utils.FunctionTools;
 /**
  * Created by root on 1/31/16.
  */
-public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchViewHolder>{
+public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.SearchViewHolder>{
 
     private List<SearchHistory> searchHistories;
     private List<SearchHistory> filterdeSearchHistories;
 private View imgView;
     private Activity activity;
 
-    public SearchHistoryAdapter(Activity activity, List<SearchHistory> searchHistories) {
+    public BookMarkAdapter(Activity activity, List<SearchHistory> searchHistories) {
         this.activity=activity;
         this.searchHistories=searchHistories;
         filterdeSearchHistories=new ArrayList<>();

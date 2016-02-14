@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.databases.MYSQLHandler;
+import in.kuari.trackall.fragments.AppSettings;
 import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.ECommerceFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
@@ -108,7 +110,7 @@ displayFragment(1);
         if (id == R.id.nav_home) {
             displayFragment(1);
         } else if (id == R.id.list_all_courier) {
-displayFragment(2);
+            displayFragment(2);
         } else if (id == R.id.list_all_flights) {
             displayFragment(3);
 
@@ -116,16 +118,13 @@ displayFragment(2);
             displayFragment(4);
 
         }
-        else if (id == R.id.nav_share) {
-            displayFragment(5);
 
-        } else if (id == R.id.nav_share) {
-            displayFragment(5);
-
-        } else if (id == R.id.nav_send) {
-
+         else if (id == R.id.nav_share) {
+            displayFragment(6);
         }
-
+        else if (id == R.id.nav_set) {
+            displayFragment(7);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         item.setChecked(true);
         setTitle(item.getTitle());
@@ -147,7 +146,11 @@ switch (id) {
 
     case 4:fragment = new ECommerceFragment();
         break;
-    case 5:fragment = new ECommerceFragment();
+
+    case 6:ShareApp();
+        break;
+
+    case 7:fragment=new AppSettings();
         break;
     default:
             fragment = new HomeFragment();
@@ -163,37 +166,36 @@ switch (id) {
     b.takeScreenShot("abc");
     }
 
-    void  FeedBackSuggestions(){
-        final EditText suggestion=new EditText(activity);
-
-        new AlertDialog.Builder(activity)
-                .setTitle("FeedBack/Suggestions")
-                .setView(suggestion)
-                .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String msg=suggestion.getText().toString();
-                        if(msg.length()==0)
-                            suggestion.setError("Type your message here");
-                        else
-                        SendFeedback(msg);
-                    }
-                })
-                .setNegativeButton("Cancel",null)
-                .show();
+    void  FeedBackSuggestions() {
+        final EditText suggestion = new EditText(activity);
+        if (!FunctionTools.isConnected(activity)) {
+            Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            //Change toast to option for switching internet connection
+        } else {
+            new AlertDialog.Builder(activity)
+                    .setTitle("FeedBack/Suggestions")
+                    .setView(suggestion)
+                    .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String msg = suggestion.getText().toString();
+                            if (msg.length() == 0) {
+                                suggestion.setError("Type your message here");
+                                Toast.makeText(activity, "Message not sent", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                SendFeedback(msg);
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        }
     }
     //Call MySql sync
 void SendFeedback(String msg){
-    if(!FunctionTools.isConnected(activity))
-    {
-        Toast.makeText(activity,"No Internet Connection",Toast.LENGTH_SHORT).show();
-        //Change toast to option for switching internet connection
-    }
-    else {
+
         MYSQLHandler handler = new MYSQLHandler(activity);
         handler.SendMail(msg);
-
-    }
 }
 void CheckSharedPreferance(){
 
@@ -233,6 +235,15 @@ void CheckSharedPreferance(){
                     }
                 })
                 .show();
+    }
+
+    private void ShareApp(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Hey! Download this amazing app Track All and keep track of everything \n http://bit.ly/1R30Vtu";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Track All");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }
 

@@ -18,10 +18,7 @@
             android:id="@+id/nav_ecommerce"
             android:icon="@drawable/ic_menu_ecom"
             android:title="e-commerce" />
-        <item
-            android:id="@+id/nav_docs"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+
     </group>
 
     <item android:title="Communicate">
@@ -31,9 +28,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_set"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
         </menu>
     </item>
 

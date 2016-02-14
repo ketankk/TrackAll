@@ -2,6 +2,8 @@ package in.kuari.trackall.databases;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,11 +22,13 @@ import in.kuari.trackall.utils.AppController;
 public class MYSQLHandler {
     private String TAG="FEEDBACK";
     private Activity activity;
-    private String URL="";
+    private String URL="http://trackall.kuari.in/connection.php";
     public MYSQLHandler(Activity activity){
         this.activity=activity;
     }
     public void SendMail(final String msg){
+        Map<String,String>params=new HashMap<>();
+        params.put("msg",msg);
         final ProgressDialog dialog=new ProgressDialog(activity);
         dialog.setMessage("Sending Message....");
         dialog.show();
@@ -32,18 +36,23 @@ public class MYSQLHandler {
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
+                         Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
                         dialog.hide();
                     }
                 }, new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                    dialog.hide();
+                       Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
+
+                        dialog.hide();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String>params=new HashMap<>();
+                Map<String,String>params=new HashMap<String, String>();
                 params.put("msg",msg);
+               // Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
+                Log.d("g",msg);
                 return params;
             }
         };

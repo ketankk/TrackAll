@@ -78,7 +78,9 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
                 if (!FunctionTools.isConnected(activity)) {
                     Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }else {
-                        ECSelected(eCommerce);
+                    Snackbar.make(v, "This Section is not functional now", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+
+                    //ECSelected(eCommerce);
 
                 }
             }
@@ -135,14 +137,15 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
           //  SaveSearchHistory(courier,trackID);
         Intent intent=new Intent(activity, ShowResultActivity.class);
 //        intent.putExtra("trackId",trackID);
-        intent.putExtra("comingFrom",3);
+        intent.putExtra("comingFrom",2);
+        Toast.makeText(context, "c"+eCommerce.getId(), Toast.LENGTH_SHORT).show();
+
         intent.putExtra("EcID",eCommerce.getId());
 
         ClipboardManager manager= (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip=ClipData.newPlainText("TrackingID","trackID");
         manager.setPrimaryClip(clip);
 
-       Toast.makeText(activity,"trackID"+" Copied to ClipBoard",Toast.LENGTH_SHORT).show();
         activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
     }

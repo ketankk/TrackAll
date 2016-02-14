@@ -28,7 +28,7 @@ public class ShowResultActivity extends AppCompatActivity {
     private WebView webView;
     private String trackID;
     private String courierWebURL;
-    private String EcId;
+    private long EcId;
     private long courierID;
     private Activity activity;
     private FloatingActionButton screenShot;
@@ -52,9 +52,7 @@ activity=this;
                 courierID = intent.getLongExtra("courierID", 2);
                 onCourierTrack();}
             else if(flag==2){
-                trackID = intent.getStringExtra("trackId");
-                EcId = intent.getStringExtra("EcID");
-                Toast.makeText(this, "c"+flag, Toast.LENGTH_SHORT).show();
+                EcId = intent.getLongExtra("EcID",0);
                 onECTrack();
 
             }
@@ -102,7 +100,7 @@ activity=this;
     }
 private void onECTrack(){
     EcController controller=new EcController(webView,activity);
-    controller.PopulateView(trackID);
+    controller.PopulateView(EcId);
 }
 
 

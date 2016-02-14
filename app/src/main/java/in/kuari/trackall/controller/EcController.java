@@ -1,10 +1,14 @@
 package in.kuari.trackall.controller;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Layout;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import in.kuari.trackall.utils.ReadData;
 
@@ -24,9 +28,9 @@ public class EcController {
         this.webView=webView;
         this.context=context;
     }
-    public void PopulateView(String ECId){
-        this.trackId=trackId;
-        int id=Integer.parseInt(ECId);
+    public void PopulateView(long ECId){
+        Toast.makeText(context,ECId+"ju",Toast.LENGTH_SHORT).show();
+        int id=(int)(ECId);
         initializeURL(id);
         getExtrainfo(id);
     }
@@ -51,21 +55,23 @@ private void initializeURL(int id){
         }
     }
     private void flipkart(){
+        LinearLayout layout=new LinearLayout(context);
         final EditText emailInput=new EditText(context);
-        final EditText ekartTracking=new EditText(context);
-
+        final EditText ekartTrackingID=new EditText(context);
+    layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(emailInput);
+        layout.addView(ekartTrackingID);
         emailInput.setHint("Enter Email id used for order");
-        ekartTracking.setHint("Enter Tracking id");
+        ekartTrackingID.setHint("Enter Tracking id");
 
         new AlertDialog.Builder(context)
                 .setMessage("Enter your email id for this order id")
-                .setView(emailInput)
-                .setView(ekartTracking)
+                .setView(layout)
                 .setPositiveButton("Go", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Email=emailInput.getText().toString();
-                        trackId=ekartTracking.getText().toString();
+                        trackId=ekartTrackingID.getText().toString();
                         if(Email.trim().length()>0&&trackId.trim().length()>0) {
                             webView.loadUrl(URL);
                             webView.loadUrl("javascript:var x=document.getElementById('trackingId').value=" + trackId);
@@ -73,11 +79,16 @@ private void initializeURL(int id){
                             webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].submit();");
                         }else{
                             emailInput.setError("Enter Email");
-                            ekartTracking.setError("Enter TrackId");
+                            ekartTrackingID.setError("Enter TrackId");
                         }
                     }
                 })
-                .setNegativeButton("Cancel",null)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        
+                    }
+                })
                 .show();
     }
 

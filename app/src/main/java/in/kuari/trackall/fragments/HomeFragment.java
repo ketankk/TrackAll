@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.adapter.SearchHistoryAdapter;
+import in.kuari.trackall.adapter.BookMarkAdapter;
 import in.kuari.trackall.bean.SearchHistory;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 
@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment{
 
     private EditText trackID;
     private RecyclerView  recyclerView;
-    private SearchHistoryAdapter adp;
+    private BookMarkAdapter adp;
     TextView noHist;
     public HomeFragment() {
     }
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment{
 
         if(searchHistories.size()==0)
             noHist.setVisibility(View.VISIBLE);
-        adp=new SearchHistoryAdapter(activity,searchHistories);
+        adp=new BookMarkAdapter(activity,searchHistories);
         recyclerView.setAdapter(adp);
 
         /*Log.d("Bind1",searchHistories.size()+"");

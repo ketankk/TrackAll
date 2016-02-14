@@ -2,9 +2,7 @@ package in.kuari.trackall.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,18 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import java.util.List;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.adapter.CourierListAdapter;
 import in.kuari.trackall.adapter.ECommerceAdapter;
-import in.kuari.trackall.adapter.SearchHistoryAdapter;
-import in.kuari.trackall.bean.ECommerce;
-import in.kuari.trackall.bean.SearchHistory;
-import in.kuari.trackall.databases.SQLiteDBHandler;
-import in.kuari.trackall.utils.ReadData;
 
 public class ECommerceFragment extends Fragment {
     private RecyclerView recyclerView;
