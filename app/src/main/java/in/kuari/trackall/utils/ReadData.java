@@ -89,7 +89,7 @@ public class ReadData {
         Collections.sort(flights, FlightBean.flightNameComp);
         return flights;
     }
-    public List<ECommerce> getECommerce(){
+    public List<ECommerce> getAllECommerce(){
         List<ECommerce> eCommerces=new ArrayList();
         try {
             is=context.getResources().openRawResource(R.raw.ecommercedetail);
@@ -104,6 +104,7 @@ public class ReadData {
                 eCommerce.setId(Long.parseLong(rows[0]));
                 eCommerce.setName(rows[1]);
                 eCommerce.setURL(rows[2]);
+                eCommerce.setImgPath(rows[3]);
                 eCommerces.add(eCommerce);
 
             }
@@ -128,6 +129,16 @@ public class ReadData {
        }
    return new CourierBean();
    }
+    public ECommerce getECommerceByID(int id){
+        List<ECommerce>eCommerces=getAllECommerce();
+        for(ECommerce eCommerce:eCommerces)
+        {
+            if(eCommerce.getId()==id)
+                return eCommerce;
+        }
+        return new ECommerce();
+    }
+
 }
  /*// TODO: Customize parameter initialization
     @SuppressWarnings("unused")

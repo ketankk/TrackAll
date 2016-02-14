@@ -9,11 +9,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import java.util.Date;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.controller.CourierController;
+import in.kuari.trackall.controller.EcController;
 import in.kuari.trackall.utils.ConstantValues;
 import in.kuari.trackall.utils.FunctionTools;
 
@@ -26,6 +28,7 @@ public class ShowResultActivity extends AppCompatActivity {
     private WebView webView;
     private String trackID;
     private String courierWebURL;
+    private String EcId;
     private long courierID;
     private Activity activity;
     private FloatingActionButton screenShot;
@@ -36,16 +39,26 @@ public class ShowResultActivity extends AppCompatActivity {
 activity=this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent=getIntent();
+        //Enable JS
         initilizeWebview();
                 screenShot= (FloatingActionButton) findViewById(R.id.res_screenshot);
 
         if(intent!=null) {
             int flag=  intent.getIntExtra("comingFrom",0);
+           // Toast.makeText(this, "c"+flag, Toast.LENGTH_SHORT).show();
+
             if(flag==0) {
                 trackID = intent.getStringExtra("trackId");
                 courierID = intent.getLongExtra("courierID", 2);
-                onCourierTrack();
-            }else {
+                onCourierTrack();}
+            else if(flag==2){
+                trackID = intent.getStringExtra("trackId");
+                EcId = intent.getStringExtra("EcID");
+                Toast.makeText(this, "c"+flag, Toast.LENGTH_SHORT).show();
+                onECTrack();
+
+            }
+            else {
                 courierWebURL= intent.getStringExtra("courierWeb");
 
             }
@@ -81,13 +94,16 @@ activity=this;
         webView.getSettings().setUseWideViewPort(true);
 
     }
-    public void onCourierTrack(){
+    private void onCourierTrack(){
         ConstantValues.TRACKID=trackID;
       //  Log.d("TrackID",trackID+"vv"+courierID);
         CourierController controller=new CourierController(webView,this);
         controller.PopulateView(courierID);
     }
-
+private void onECTrack(){
+    EcController controller=new EcController(webView,activity);
+    controller.PopulateView(trackID);
+}
 
 
     @Override

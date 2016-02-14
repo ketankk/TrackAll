@@ -45,7 +45,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
     private Activity activity;
     private EditText trackingID;
   //  private CourierBean ic_courier;
-    public CourierListAdapter(Activity activity)
+    /*public CourierListAdapter(Activity activity)
 
     {  this.activity=activity;
         couriers = new ArrayList<>();
@@ -54,7 +54,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
         populatelists();
 
 //readSMS();
-    }
+    }*/
     void populatelists(){
         ReadData readData=new ReadData(activity);
 

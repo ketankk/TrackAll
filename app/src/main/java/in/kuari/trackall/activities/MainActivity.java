@@ -26,6 +26,7 @@ import android.widget.Toast;
 import in.kuari.trackall.R;
 import in.kuari.trackall.databases.MYSQLHandler;
 import in.kuari.trackall.fragments.CourierFragment;
+import in.kuari.trackall.fragments.ECommerceFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
 import in.kuari.trackall.fragments.HomeFragment;
 import in.kuari.trackall.utils.FunctionTools;
@@ -111,8 +112,12 @@ displayFragment(2);
         } else if (id == R.id.list_all_flights) {
             displayFragment(3);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_ecommerce) {
             displayFragment(4);
+
+        }
+        else if (id == R.id.nav_share) {
+            displayFragment(5);
 
         } else if (id == R.id.nav_share) {
             displayFragment(5);
@@ -140,7 +145,9 @@ switch (id) {
     case 3:fragment = new FlightsFragment();
         break;
 
-    case 4:fragment = new HomeFragment();
+    case 4:fragment = new ECommerceFragment();
+        break;
+    case 5:fragment = new ECommerceFragment();
         break;
     default:
             fragment = new HomeFragment();

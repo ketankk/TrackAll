@@ -9,6 +9,23 @@ public class ECommerce {
     private long id;
     private String name;
     private String URL;
+    private String ImgPath;
+
+    public String getImgPath() {
+        return ImgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        ImgPath = imgPath;
+    }
+
+    public static Comparator<ECommerce> geteCommerceComp() {
+        return eCommerceComp;
+    }
+
+    public static void seteCommerceComp(Comparator<ECommerce> eCommerceComp) {
+        ECommerce.eCommerceComp = eCommerceComp;
+    }
 
     public long getId() {
         return id;

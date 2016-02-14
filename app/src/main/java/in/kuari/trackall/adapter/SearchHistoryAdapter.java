@@ -1,26 +1,22 @@
 package in.kuari.trackall.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
-import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.SearchHistory;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.Colors;
@@ -46,7 +42,7 @@ private View imgView;
 
     @Override
     public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.home_search_row,parent,false);
+      View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_row,parent,false);
 //if(getItemCount()==0)
    // imgView.setVisibility(View.VISIBLE);
 

@@ -37,7 +37,6 @@ public class CourierFragment extends Fragment {
     public  EditText  courierName;
     private EditText  trackingID;
     private String trackID;
-int mColumnCount=2;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
