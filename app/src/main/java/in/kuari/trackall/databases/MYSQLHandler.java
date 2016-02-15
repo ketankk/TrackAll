@@ -11,6 +11,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,16 +30,18 @@ public class MYSQLHandler {
         this.activity=activity;
     }
     public void SendMail(final String msg){
-        Map<String,String>params=new HashMap<>();
+        /*Map<String,String>params=new HashMap<>();
         params.put("msg",msg);
-        final ProgressDialog dialog=new ProgressDialog(activity);
+        */final ProgressDialog dialog=new ProgressDialog(activity);
         dialog.setMessage("Sending Message....");
         dialog.show();
-        StringRequest request=new StringRequest(Request.Method.GET,URL+"?msg="+msg,
+        StringRequest request=new StringRequest(Request.Method.POST,URL,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(activity,"kk"+msg,Toast.LENGTH_SHORT).show();
+                        Log.d("g",response);
+                      //  Toast.makeText(activity,response,Toast.LENGTH_SHORT).show();
+
                         dialog.hide();
                     }
                 }, new Response.ErrorListener(){
@@ -46,7 +51,12 @@ public class MYSQLHandler {
 
                         dialog.hide();
                     }
-                }){
+                }){@Override
+        protected Map<String,String> getParams(){
+            Map<String,String> params = new HashMap<String, String>();
+            params.put("msg", msg);
+            return params;
+        }
 
         };
 

@@ -31,6 +31,9 @@ public class ShowResultActivity extends AppCompatActivity {
     private long EcId;
     private long courierID;
     private Activity activity;
+    private String FLIGHT_NAME;
+    private String FLIGHT_URL;
+
     private FloatingActionButton screenShot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,10 @@ activity=this;
             else if(flag==2){
                 EcId = intent.getLongExtra("EcID",0);
                 onECTrack();
+
+            }else if(flag==3){
+                FLIGHT_URL=intent.getStringExtra("webURL");
+                FLIGHT_NAME=intent.getStringExtra("flightName");
 
             }
             else {

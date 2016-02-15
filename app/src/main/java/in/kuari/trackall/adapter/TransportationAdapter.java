@@ -37,7 +37,8 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final FlightBean flight=flights.get(position);
-holder.mView.setBackgroundColor(Colors.getRandomColor());
+
+        holder.mView.setBackgroundColor(Colors.getRandomColor());
         holder.flightName.setText(flight.getFlightName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +65,24 @@ holder.mView.setBackgroundColor(Colors.getRandomColor());
 
     }
     void loadFlightWeb(FlightBean flight){
+        String pnrTrain="";
         //Toast.makeText(context,flight.getFlightName(),Toast.LENGTH_LONG).show();
+        if(flight.getFlightID()==1){
+            pnrTrain=getPNR();
+        }
+
         Intent intent=new Intent(context, ShowFlightsWeb.class);
-        intent.putExtra("webURL",flight.getFlightWebsite());
+        intent.putExtra("webURL",flight.getFlightWebsite()+pnrTrain);
         intent.putExtra("flightName",flight.getFlightName());
+        intent.putExtra("comingFrom",3);
 
         context.startActivity(intent);
+    }
+    private String getPNR(){
+
+        String input="";
+
+
+        return input;
     }
 }

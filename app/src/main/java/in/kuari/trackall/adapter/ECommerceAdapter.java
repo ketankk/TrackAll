@@ -138,7 +138,7 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
         Intent intent=new Intent(activity, ShowResultActivity.class);
 //        intent.putExtra("trackId",trackID);
         intent.putExtra("comingFrom",2);
-        Toast.makeText(context, "c"+eCommerce.getId(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context, "c"+eCommerce.getId(), Toast.LENGTH_SHORT).show();
 
         intent.putExtra("EcID",eCommerce.getId());
 
