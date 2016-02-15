@@ -46,15 +46,15 @@ public class AppSettings extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     editor.putBoolean("LoadLogo",true);
-                    editor.commit();
+                    editor.apply();
 
                 }else {
                     editor.putBoolean("LoadLogo",false);
-                    editor.commit();
+                    editor.apply();
                 }
             }
         });
-        Toast.makeText(activity,"f"+loadLogo,Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(activity,"f"+loadLogo,Toast.LENGTH_SHORT).show();
         return rootView;
     }
 

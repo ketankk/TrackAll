@@ -32,29 +32,22 @@ public class MYSQLHandler {
         final ProgressDialog dialog=new ProgressDialog(activity);
         dialog.setMessage("Sending Message....");
         dialog.show();
-        StringRequest request=new StringRequest(Request.Method.POST,URL,
+        StringRequest request=new StringRequest(Request.Method.GET,URL+"?msg="+msg,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
-                         Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity,"kk"+msg,Toast.LENGTH_SHORT).show();
                         dialog.hide();
                     }
                 }, new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                       Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
+                     //  Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
 
                         dialog.hide();
                     }
                 }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String>params=new HashMap<String, String>();
-                params.put("msg",msg);
-               // Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
-                Log.d("g",msg);
-                return params;
-            }
+
         };
 
         AppController.getmInstance().addToRequestQueue(request,TAG);
