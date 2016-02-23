@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import in.kuari.trackall.bean.SearchHistory;
@@ -33,7 +35,7 @@ public class SQLiteDBHandler extends SQLiteOpenHelper{
                 TRACK_ID+" varchar(20),"+
                 COMPANY_NAME+" varchar(20),"+
                 COURIER_ID+" varchar(200)," +
-                TIMING+" DATE DEFAULT CURRENT_TIMESTAMP)";//Change on upgrade for alteration..not deletion
+                TIMING+" DATE DEFAULT CURRENT_DATE)";//Change on upgrade for alteration..not deletion
 private SQLiteDatabase db;
 
 
@@ -55,10 +57,14 @@ db.execSQL(CREATE_TABLE);
 
  public boolean   addSearch(SearchHistory searchHistory){
      db=this.getWritableDatabase();
+     SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+     String date=sdf.format(new Date());
+
      ContentValues values=new ContentValues();
      values.put(TRACK_ID,searchHistory.getTrackId());
      values.put(COMPANY_NAME,searchHistory.getName());
      values.put(COURIER_ID,searchHistory.getCourierID());
+     values.put(TIMING,date);
      db.insert(TABLE_NAME,null,values);
 db.close();
 return true;

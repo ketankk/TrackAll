@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class HomeFragment extends Fragment{
     private EditText trackID;
     private RecyclerView  recyclerView;
     private BookMarkAdapter adp;
-    TextView noHist;
+    private LinearLayout noHist;
     public HomeFragment() {
     }
 
@@ -41,7 +42,7 @@ public class HomeFragment extends Fragment{
         trackID = (EditText) rootView.findViewById(R.id.input_trackID_or_name);
 
        recyclerView= (RecyclerView) rootView.findViewById(R.id.list_search_history);
-        noHist= (TextView)rootView.findViewById(R.id.no_hist_img);
+        noHist= (LinearLayout)rootView.findViewById(R.id.no_bm_layout);
 
         RecyclerView.LayoutManager manager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
@@ -52,8 +53,10 @@ public class HomeFragment extends Fragment{
             Toast.makeText(activity,"g"+s.getTrackId()+s.getName(),Toast.LENGTH_SHORT);
         }*/
 
-        if(searchHistories.size()==0)
+        if(searchHistories.size()==0) {
             noHist.setVisibility(View.VISIBLE);
+            trackID.setVisibility(View.GONE);
+        }
         adp=new BookMarkAdapter(activity,searchHistories);
         recyclerView.setAdapter(adp);
 

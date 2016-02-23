@@ -83,7 +83,7 @@ displayFragment(1);
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -147,7 +147,7 @@ switch (id) {
     case 4:fragment = new ECommerceFragment();
         break;
 
-    case 6:ShareApp();
+    case 6:ShareAppDownloadLink();
         break;
 
     case 7:fragment=new AppSettings();
@@ -209,7 +209,7 @@ void CheckSharedPreferance(){
         frsttime=pref.getBoolean("FirstTime",true);
        */ LoadLogoDialog();
     }
-    Log.d("loj",frsttime+"");
+    //Log.d("loj",frsttime+"");
 }
     private void LoadLogoDialog(){
         new AlertDialog.Builder(activity)
@@ -237,7 +237,7 @@ void CheckSharedPreferance(){
                 .show();
     }
 
-    private void ShareApp(){
+    private void ShareAppDownloadLink(){
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Hey! Download this amazing app Track All and keep track of everything \n http://bit.ly/1R30Vtu";
