@@ -240,7 +240,7 @@ void CheckSharedPreferance(){
     private void ShareAppDownloadLink(){
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String shareBody = "Hey! Download this amazing app Track All and keep track of everything \n http://bit.ly/1R30Vtu";
+        String shareBody = "Hey! Download this amazing app trackAll and keep track of everything \n http://bit.ly/1R30Vtu";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Track All");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));

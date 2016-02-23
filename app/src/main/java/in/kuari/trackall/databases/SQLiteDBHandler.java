@@ -61,7 +61,7 @@ db.execSQL(CREATE_TABLE);
      String date=sdf.format(new Date());
 
      ContentValues values=new ContentValues();
-     values.put(TRACK_ID,searchHistory.getTrackId());
+     values.put(TRACK_ID,searchHistory.getTrackId().toUpperCase());
      values.put(COMPANY_NAME,searchHistory.getName());
      values.put(COURIER_ID,searchHistory.getCourierID());
      values.put(TIMING,date);

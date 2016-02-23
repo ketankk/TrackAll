@@ -188,7 +188,7 @@ menu.show();
     private void shareBookmark(SearchHistory searchHistory){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = "Track this AWB No.: "+searchHistory.getTrackId()+" of "+searchHistory.getName()+" on TrackAll!\nInstall TrackAll http://bit.ly/1R30Vtu";
+            String shareBody = "Track this AWB No.: "+searchHistory.getTrackId()+" of "+searchHistory.getName()+" on trackAll!\nInstall TrackAll http://bit.ly/1R30Vtu";
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "TrackAll");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             activity.startActivity(Intent.createChooser(sharingIntent, "Share via"));
