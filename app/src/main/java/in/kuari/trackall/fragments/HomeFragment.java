@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment{
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
         List<SearchHistory> searchHistories=handler.getAllSearches();
         /*for(SearchHistory s:searchHistories){
-            Toast.makeText(activity,"g"+s.getTrackId()+s.getName(),Toast.LENGTH_SHORT);
+            Toast.makeText(activity,"g"+s.getRating()+s.getName(), Toast.LENGTH_SHORT).show();
         }*/
 
         if(searchHistories.size()==0) {

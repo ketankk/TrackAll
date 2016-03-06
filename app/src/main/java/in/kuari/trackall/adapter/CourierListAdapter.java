@@ -38,7 +38,7 @@ import in.kuari.trackall.utils.ReadData;
 /**
  * Created by sultan_mirza on 1/18/16.
  */
-public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.ViewHolder> {
+public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.CourierViewHolder> {
     private List<CourierBean> couriers;
     private List<CourierBean> filteredCouriers;
 
@@ -55,31 +55,34 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
 
 //readSMS();
     }*/
-    void populatelists(){
+    void populatelists(List<CourierBean> couriers1){
         ReadData readData=new ReadData(activity);
 
-        couriers=readData.getAllCourier();
-        filteredCouriers=readData.getAllCourier();
+        couriers=new ArrayList<>();
+        couriers.addAll(couriers1);
+        filteredCouriers=new ArrayList<>();
+        filteredCouriers.addAll(couriers1);
+        /*for (CourierBean bean:couriers)
+        Log.d("cc",bean.toString());*/
 
     }
-public CourierListAdapter(Activity activity,EditText trackingID){
+public CourierListAdapter(Activity activity,EditText trackingID,List<CourierBean> couriers){
+
     this.activity=activity;
     this.trackingID=trackingID;
-    populatelists();
+    populatelists(couriers);
 
 }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.courier_row,parent,false);
-       ViewHolder vh=new ViewHolder(v);
-     return vh;
+    public CourierViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.courier_row,parent,false);
+        CourierListAdapter.CourierViewHolder vh= new CourierViewHolder(v);
+        return vh;
     }
 
-
-
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(CourierViewHolder holder, int position) {
    final CourierBean courier = filteredCouriers.get(position);
 
     holder.courierName.setText(courier.getCourierName());
@@ -113,12 +116,12 @@ public CourierListAdapter(Activity activity,EditText trackingID){
         return filteredCouriers.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class CourierViewHolder extends RecyclerView.ViewHolder{
 
         private TextView courierName;
         private View view;
         private  ImageView courierLogo;
-        public ViewHolder(View itemView) {
+        public CourierViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
             courierLogo = (ImageView)itemView.findViewById(R.id.courier_logo);
@@ -155,7 +158,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
 
         Log.d("trackId",trackID+"");
         if(trackID.length()>0)
-            SaveSearchHistory(courier,trackID);
+            bookMarkSearch(courier,trackID);
         Intent intent=new Intent(activity, ShowResultActivity.class);
         intent.putExtra("trackId",trackID);
         intent.putExtra("comingFrom",0);
@@ -178,7 +181,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
         activity.startActivity(intent);
     }
 */
-    void SaveSearchHistory(CourierBean courier,String trackID){
+   private void bookMarkSearch(CourierBean courier,String trackID){
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
         SearchHistory history=new SearchHistory();
         history.setName(courier.getCourierName());
@@ -199,7 +202,7 @@ public CourierListAdapter(Activity activity,EditText trackingID){
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        SaveSearchHistory(courierBean,trackingID);
+                        bookMarkSearch(courierBean,trackingID);
                     }
                 }).setNegativeButton("No",null)
                 .show();

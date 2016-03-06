@@ -2,33 +2,23 @@ package in.kuari.trackall.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierListAdapter;
-import in.kuari.trackall.utils.ConstantValues;
+import in.kuari.trackall.bean.CourierBean;
+import in.kuari.trackall.utils.ReadData;
 
 public class CourierFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -40,36 +30,39 @@ public class CourierFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.activity_courier,container,false);
+        View rootView=inflater.inflate(R.layout.fragment_courier,container,false);
 
         activity=getActivity();
 
         trackingID= (EditText) rootView.findViewById(R.id.input_trackID);
         courierName= (EditText) rootView.findViewById(R.id.input_courier_name);
-/*
-        if (rootView instanceof RecyclerView) {
-            Context context = rootView.getContext();
-            RecyclerView recyclerView = (RecyclerView) rootView;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }*/
-
-
 
             recyclerView= (RecyclerView) rootView.findViewById(R.id.rc_all_courier);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        search(activity);
 
-        adp=new CourierListAdapter(activity,trackingID);
+         List<CourierBean> couriers= populatelists();
+
+
+        adp=new CourierListAdapter(activity,trackingID,couriers);
         recyclerView.setAdapter(adp);
-
+        search();
         return rootView;
     }
 
- void search(Activity activity){
+    /**
+     *
+     * @return List<CourierBean>
+     *Function calls getAllCourier() func of ReadData class
+     *     */
+
+    private List<CourierBean> populatelists(){
+        ReadData readData=new ReadData(activity);
+
+        return readData.getAllCourier();
+
+    }
+ void search(){
 
 final EditText courierName1=courierName;
         courierName1.setFocusable(true);

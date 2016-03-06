@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,11 +19,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import in.kuari.trackall.R;
+import in.kuari.trackall.bean.UserProfile;
 import in.kuari.trackall.databases.MYSQLHandler;
 import in.kuari.trackall.fragments.AppSettings;
 import in.kuari.trackall.fragments.CourierFragment;
@@ -36,8 +39,16 @@ import in.kuari.trackall.utils.FunctionTools;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private WebView webView;
-Activity activity;
+private Activity activity;
+    private NavigationView navigationView;
+    private TextView loginBtn;
+    private static final int REQUEST_LOGIN=1000;
+    private String accName;
+    private String urlDP;
+    private TextView profileName;
+    private ImageView profileImage;
+    private TextView loginText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +56,28 @@ Activity activity;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 activity=this;
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         CheckSharedPreferance();
+
+//Calling after login/signup
+       Bundle bundle=getIntent().getExtras();
+        if(bundle!=null){
+            String comingFrom="";
+            comingFrom=bundle.getString("comingFrom");
+            Log.d("cmng",comingFrom+"c");
+            if(comingFrom!=null&&comingFrom.equals("login")){
+                accName= UserProfile.getDisplayName();
+                urlDP=UserProfile.getImageURL();
+                updateUiInfo();
+            }
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*  Snackbar.make(view, "Suggestion/Feedback coming soon..", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-               */FeedBackSuggestions();
+              FeedBackSuggestions();
             }
         });
 
@@ -63,10 +87,9 @@ activity=this;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
        navigationView.setNavigationItemSelectedListener(this);
-if(savedInstanceState==null)
-displayFragment(1);
+        if(savedInstanceState==null)
+        displayFragment(1);
 
     }
 
@@ -107,6 +130,8 @@ displayFragment(1);
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+       // Toast.makeText(activity,"j1j",Toast.LENGTH_SHORT).show();
+
         if (id == R.id.nav_home) {
             displayFragment(1);
         } else if (id == R.id.list_all_courier) {
@@ -132,7 +157,7 @@ displayFragment(1);
         return true;
 
     }
-void displayFragment(int id){
+    private void displayFragment(int id){
     Fragment fragment=null;
 switch (id) {
     case 1:fragment = new HomeFragment();
@@ -152,6 +177,7 @@ switch (id) {
 
     case 7:fragment=new AppSettings();
         break;
+
     default:
             fragment = new HomeFragment();
 }
@@ -161,12 +187,11 @@ switch (id) {
     }
 
 }
-    void getScreenShot(){
-        FunctionTools b=new FunctionTools(activity);
-    b.takeScreenShot("abc");
-    }
 
-    void  FeedBackSuggestions() {
+    /**
+     * A method to handle the feedback suggestion functionlity
+     */
+    private void  FeedBackSuggestions() {
         final EditText suggestion = new EditText(activity);
         if (!FunctionTools.isConnected(activity)) {
             Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -244,6 +269,33 @@ void CheckSharedPreferance(){
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Track All");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
+    public void loginSignup(View view){
+
+        String txt=((TextView)view).getText().toString();
+        if(txt!=null&&txt.equals("loginSignup")) {
+            Intent intent = new Intent(MainActivity.this, LoginSignUp.class);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * Update name and profile picture of logged in user
+     */
+    private void updateUiInfo(){
+       // Log.d("ff",accName+urlDP);
+
+        View inflatedView=navigationView.getHeaderView(0);
+        profileName = (TextView) inflatedView.findViewById(R.id.profileName);
+        profileImage = (ImageView)inflatedView.findViewById(R.id.profileImage);
+        loginText = (TextView)inflatedView.findViewById(R.id.login_txt);
+if(profileImage!=null&&profileName!=null&&loginText!=null) {
+    profileName.setText(accName);
+    loginText.setText("Signout");
+    Picasso.with(this).load(urlDP).into(profileImage);
+}
+       Log.d("UI","Updated");
+
     }
 }
 

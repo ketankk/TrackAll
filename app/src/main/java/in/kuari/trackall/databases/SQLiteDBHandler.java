@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,24 +21,26 @@ import in.kuari.trackall.bean.SearchHistory;
  */
 public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME="track_all";
-    private static final int DB_VERSION=3;
+    private static final int DB_VERSION=4;
 
     private static final String TABLE_NAME="search_history";
     private static final String SEARCH_ID="_id";
     private static final String TRACK_ID="track_id";
     private static final String COMPANY_NAME="comp_name";
     private static final String COURIER_ID="url";
-    private static final String TIMING="time";
+    private static final String DATE="date";
+    private static final String RATING="rating";
 
 
-    private static final String CREATE_TABLE="CREATE TABLE "+TABLE_NAME+
+    private static final String CREATE_TABLE="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+
             "("+SEARCH_ID + " integer primary key autoincrement,"+
                 TRACK_ID+" varchar(20),"+
                 COMPANY_NAME+" varchar(20),"+
                 COURIER_ID+" varchar(200)," +
-                TIMING+" DATE DEFAULT CURRENT_DATE)";//Change on upgrade for alteration..not deletion
+                RATING+" REAL, "+
+                DATE+" DATE DEFAULT CURRENT_DATE)";//Change on upgrade for alteration..not deletion
 private SQLiteDatabase db;
-
+private Context context;
 
     public SQLiteDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DB_VERSION);
@@ -45,13 +48,14 @@ private SQLiteDatabase db;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("create",CREATE_TABLE);
 db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("ALTER TABLE " + TABLE_NAME+" ADD COLUMN "+RATING+" REAL");
         onCreate(db);
     }
 
@@ -64,7 +68,9 @@ db.execSQL(CREATE_TABLE);
      values.put(TRACK_ID,searchHistory.getTrackId().toUpperCase());
      values.put(COMPANY_NAME,searchHistory.getName());
      values.put(COURIER_ID,searchHistory.getCourierID());
-     values.put(TIMING,date);
+     values.put(RATING,searchHistory.getRating());
+     values.put(DATE,date);
+
      db.insert(TABLE_NAME,null,values);
 db.close();
 return true;
@@ -82,7 +88,7 @@ return true;
        List<SearchHistory> searchHistories=new ArrayList<>();
        db=this.getReadableDatabase();
 
-       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,TIMING},null,null,null,null,null);
+       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,DATE,RATING},null,null,null,null,null);
     while (cursor.moveToNext()){
     SearchHistory hist=new SearchHistory();
 
@@ -91,7 +97,9 @@ return true;
     hist.setName(cursor.getString(2));
     hist.setCourierID(cursor.getString(3));
     hist.setTime(cursor.getString(4));
-       // Log.d("hist",hist.toString());
+        float r=cursor.getFloat(5);
+        hist.setRating("1.3");
+     //  Log.d("hist",hist.toString());
     searchHistories.add(hist);
 }db.close();
        return searchHistories;

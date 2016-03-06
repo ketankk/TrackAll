@@ -22,14 +22,23 @@
         <TextView
             android:id="@+id/courier_name"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="Gg"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginLeft="50dp"
             />
-        <View
+        <RatingBar
+            android:id="@+id/courier_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            style="?android:attr/ratingBarStyleIndicator"
             android:layout_below="@+id/courier_name"
+            android:layout_marginLeft="70dp"
+
+            />
+        <View
+            android:layout_below="@+id/courier_rating"
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:padding="2dp"

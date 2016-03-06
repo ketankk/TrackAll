@@ -1,6 +1,6 @@
 1,DTDC,http://dtdc.in/tracking/tracking_results.asp,http://dtdc.in/,http://dtdc.in/images/dtdc_logo_new.gif
 2,Bombino,www.bombinoexp.com/Tracking.aspx?txtAwb=,http://www.bombinoexp.com,http://www.bombinoexp.com/images/logob.png
-3,AFL,https://www.fedex.com/apps/fedextrack/?tracknumbers=,http://www.fedex.com/in,https://images.fedex.com/images/c/t1/gh/logo-header-fedex-express.png
+3,AFL/FedEx,https://www.fedex.com/apps/fedextrack/?tracknumbers=,http://www.fedex.com/in,https://images.fedex.com/images/c/t1/gh/logo-header-fedex-express.png
 4,Air Star Xpress,http://www.airstarexpress.com/ASXTrackDocPage.aspx,http://www.airstarexpress.com,http://www.airstarexpress.com/Images/ASXBanner11.gif
 5,Air State,http://www.airstateindia.com/Tracking.aspx,http://www.airstateindia.com,http://www.airstateindia.com/images/logo1.jpg
 6,Airborne Intl,http://www.airborneinternational.in/tracking.aspx?txtawbno=,http://www.airborneinternational.in,http://www.airborneinternational.in/images/logo.png
@@ -103,3 +103,32 @@
 103,Swiss Freight,http://www.swissfreight.com,http://www.swissfreight.com/,http://www.swissfreight.com/images/top1.jpg
 104,Swiss Post,https://service.post.ch/EasyTrack/start.do?#simpleSearch,,https://www.post.ch/-/media/framework/logos/post-logo-svg.svg?la=en&vs=1
 105,UCS,http://www.useucs.com/track-trace/,http://www.useucs.com/,http://www.useucs.com/wp-content/themes/ucs/library/images/header_logo.png
+106,Priority Express,http://www.priorityexp.com/tracking.html,http://www.priorityexp.com,http://www.priorityexp.com/images/topinner.jpg
+107,Pacific Express,http://www.pacificexp.net,http://www.pacificexp.net,http://www.pacificexp.net/images/logo.png
+108,Palande,http://www.palandecourier.com/,http://www.palandecourier.com/,http://www.palandecourier.com/images/Index_02.jpg
+109,Parcel Force,http://www.parcelforce.com/track-trace,http://www.parcelforce.com,http://www.parcelforce.com/profiles/pfwprofile/themes/parcelforce/logo.png
+110,Parcel2Go,https://www.parcel2go.com/tracking,https://www.parcel2go.com,https://www.parcel2go.com/images/logo.png
+111,Parcelled,http://parcelled.in/track,http://parcelled.in,http://parcelled.in
+112,Parveen Express,http://www.parveenexpress.com/track.aspx,http://www.parveenexpress.com,http://www.parveenexpress.com/images/Parveen_Logo.png
+113,Patel Roadways,http://patel-india.com/track-n-trace,http://patel-india.com,http://patel-india.com/wp-content/themes/resetcorporate/images/default/logo.png
+114,Pavan,http://pavancourier.com/tracking.aspx,http://pavancourier.com,http://pavancourier.com
+115,Pick Speed,http://ecom.pickspeed.co.in/Tracking.aspx,http://ecom.pickspeed.co.in,http://ecom.pickspeed.co.in/images/Logosmall.png
+116,Pickme Express,http://pickmexp.com/,http://pickmexp.com,http://pickmexp.com/wp-content/uploads/2015/12/LH-FIRST-FLIGHT-1.png
+117,Red Express,http://www.redexpressdelivery.com,http://www.redexpressdelivery.com/,http://www.redexpressdelivery.com/pics/delivery-logo.gif
+118,Pigeon Express,http://www.pigeonexpress.com/tracking.aspx,http://www.pigeonexpress.com/index.html,http://www.pigeonexpress.com/images/logo.jpg
+119,Pionexxco,http://www.pionexxco.net/tracking.asp,http://www.pionexxco.net,http://www.pionexxco.net/images/index_04.gif
+120,Polish Post,http://emonitoring.poczta-polska.pl/?lang=en,http://emonitoring.poczta-polska.pl/?lang=en,http://emonitoring.poczta-polska.pl/hermes/themes/poczta-polska/skin/logo.png
+121,Poonam,http://www.poonamcourier.com/tracking.aspx,http://www.poonamcourier.com,http://www.poonamcourier.com/images/poonamlogo_image.jpg
+122,POS Malaysia,http://www.poslaju.com.my/track-trace/#trackingIds=,http://www.poslaju.com.my,http://www.poslaju.com.my/media/logo.png
+123,PostNL,http://www.postnl.post,http://www.postnl.post,http://www.postnl.post/Content/img/new/logo.png
+124,PRG EXPRESS INDIA,http://www.prgexpress.com/prg.com.php,http://www.prgexpress.com/prg.com.php,http://www.prgexpress.com/css/images/prg.png
+125,Prime Express,http://www.primecrc.com/tracking.html,http://www.primecrc.com,http://www.primecrc.com/img/logo.png
+126,PrimeTrack/Trackon,http://www.primetrack.in,http://www.primetrack.in,http://www.primetrack.in/Images/Trackon.jpg
+127,Royal Mail,https://www.royalmail.com/track-your-item,https://www.royalmail.com,https://www.royalmail.com/sites/all/themes/royalmail2012/img/royalmail-logo.png
+128,Procure,http://122.160.84.191:8080/Awbsingle.aspx?AWB=,http://www.procurelogistics.com,http://www.procurelogistics.com/images/logo.png
+129,PSS,http://psscourier.com/track.php,http://psscourier.com,http://psscourier.com/images/pss_logo.jpg
+130,Purolator,https://www.purolator.com/purolator/ship-track/tracking-summary.page,https://www.purolator.com/en/home.page?,https://www.purolator.com/assets/img/logo-purolator.gif
+131,Pushpak,http://www.pushpakcourier.net/pc/index.php/tracking,,http://www.pushpakcourier.net/pc,http://www.pushpakcourier.net/pc/index.php/tracking
+132,Q Express,http://www.q-express.com/en/track,http://www.q-express.com,http://www.q-express.com/images/logo/qxl_logo_en.png
+133,Rapidconnect,http://www.gorapidconnect.com/track.php,http://www.gorapidconnect.com,http://www.gorapidconnect.com/index.htm
+134,Rajdhani Air Express,http://rajdhaniairexpress.com/MultiTracking.aspx,http://rajdhaniairexpress.com,http://rajdhaniairexpress.com/rajdhniimgs/rajdhanilogo.jpg

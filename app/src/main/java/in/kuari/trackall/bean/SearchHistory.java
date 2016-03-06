@@ -8,6 +8,15 @@ public class SearchHistory {
     private String name;
     private String trackId;
     private String courierID;
+    private String rating;
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
     public String getTime() {
         return time;
@@ -52,6 +61,7 @@ public class SearchHistory {
         this.trackId = trackId;
     }
 
+
     @Override
     public String toString() {
         return "SearchHistory{" +
@@ -59,6 +69,8 @@ public class SearchHistory {
                 ", name='" + name + '\'' +
                 ", trackId='" + trackId + '\'' +
                 ", courierID='" + courierID + '\'' +
+                ", rating=" + rating +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

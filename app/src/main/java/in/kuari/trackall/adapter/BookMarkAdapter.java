@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +63,11 @@ private View imgView;
         holder.name.setText(searchHistory.getName());
         holder.trackId.setText(searchHistory.getTrackId());
         holder.histDate.setText(searchHistory.getTime());
-       // holder.view.setBackgroundColor(Colors.getRandomColor());
+     //  holder.bmrating.setRating(Float.parseFloat(searchHistory.getRating()));
+        //Log.d("d",searchHistory.toString());
+       // Toast.makeText(activity,"g"+searchHistory.getRating(), Toast.LENGTH_SHORT).show();
+
+        // holder.view.setBackgroundColor(Colors.getRandomColor());
 
 
         holder.view.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +111,7 @@ menu.show();
         View view;
         ImageView menuBtn;
         TextView histDate;
+        RatingBar bmrating;
         public SearchViewHolder(View itemView) {
             super(itemView);
             view=itemView;
@@ -113,7 +119,7 @@ menu.show();
             name= (TextView) itemView.findViewById(R.id.hist_name);
             menuBtn= (ImageView) itemView.findViewById(R.id.bookmarkMenu);
             histDate= (TextView) itemView.findViewById(R.id.hist_date);
-
+           // bmrating= (RatingBar) itemView.findViewById(R.id.bm_rating);
         }
     }
     private  void SelectItem(int id,SearchHistory searchHistory,int pos){

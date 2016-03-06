@@ -48,7 +48,7 @@ public class CourierController{
         //Couriers which directly gives result from URL+trackID,like posting on php page
         if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32
                 ||i==33|| i == 35|| i == 42|| i == 43|| i == 47|| i == 51|| i == 56|| i == 58|| i == 72
-                || i == 75|| i == 86|| i == 88|| i == 95) {
+                || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -711,6 +711,172 @@ ProgressDialog();                break;
                 webView.loadUrl("javascript:var x=document.getElementById('filter_s').value='"+trackId +"'");
                 //chk
                 webView.loadUrl("javascript:var x=document.getElementById('trackingsubmit').click();");
+                break;
+            //Priority Express
+            case 106:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtawbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('imageField')[0].click();");
+                break;
+            //107,Pacific Express,
+            case 107:
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('Tracking1_btnTrack').click();");
+                break;
+                   // 108,Palande,
+            case 108:
+                webView.loadUrl("javascript:var x=document.getElementsByName('ctl00_txtTrackNumber')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('ctl00$btnTrack')[0].click();");
+                break;
+                   // 109,Parcel Force,
+            case 109:
+                webView.loadUrl("javascript:var x=document.getElementById('edit-parcel-tracking-number').value='"+trackId +"'");
+                //chk
+               // webView.loadUrl("javascript:var x=document.getElementsByName('imageField')[0].click();");
+                break;
+                   // 110,Parcel2Go,
+            case 110:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtawbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('imageField')[0].click();");
+                break;
+                   // 111,Parcelled,
+            case 111:
+                webView.loadUrl("javascript:var x=document.getElementById('booking_booking_id').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('imageField')[0].click();");
+                break;
+                    //112,Parveen Express,
+            case 112:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_Txt_WayBillNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_Btn_Search').click();");
+                break;
+                    //113,Patel Roadways,
+            case 113:
+                webView.loadUrl("javascript:var x=document.getElementById('dockno').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('Submit')[0].click();");
+                break;
+                    //114,Pavan,
+            case 114:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_Tracking1_txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_Tracking1_btnTrack').click();");
+                break;
+                    //115,Pick Speed,
+            case 115:
+                webView.loadUrl("javascript:var x=document.getElementById('txtAwbNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnSearch').click();");
+                break;
+                    //116,Pickme Express,
+            case 116:
+                webView.loadUrl("javascript:var x=document.getElementById('Consignment').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_btnTrack').click();");
+                break;
+                    //117,Red Express,
+            case 117:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtawbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('imageField')[0].click();");
+                break;
+                    //118,Pigeon Express,
+            case 118:
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_txtTrackNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_btnTrack').click();");
+                break;
+                    //119,Pionexxco,
+            case 119:
+                webView.loadUrl("javascript:var x=document.getElementsByName('awbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('Submit')[0].click();");
+                break;
+                    //120,Polish Post
+            case 120:
+                webView.loadUrl("javascript:var x=document.getElementById('numer').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('BSzukaj').click();");
+                break;
+            //121,Poonam,
+            case 121:
+                webView.loadUrl("javascript:var x=document.getElementsByName('ctl00$ContentHolder$txtTrack')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('ctl00$ContentHolder$btnSubmit')[0].click();");
+                break;
+              //      122,POS Malaysia,
+
+                //    123,PostNL,
+            case 123:
+                webView.loadUrl("javascript:var x=document.getElementById('ofq').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnZoek-revised').click();");
+                break;
+                  //  124,PRG EXPRESS,
+            case 124:
+                webView.loadUrl("http://www.prgexpress.com/tracking.php?trackid='"+trackId+"&submit=Track");
+                //k
+               // webView.loadUrl("javascript:var x=document.getElementsByName('submit')[0].click();");
+                break;
+                    //125,Prime Express,
+            case 125:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtawbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('imageField')[0].click();");
+                break;
+            // 126,Prime Track/Trackon,
+            case 126:
+                webView.loadUrl("javascript:var x=document.getElementById('txtConsgNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('btnTrack').click();");
+                break;
+               //     127,Royal mail,
+            case 127:
+                webView.loadUrl("javascript:var x=document.getElementById('edit-tracking-number').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('edit-tracking-submit').click();");
+                break;
+                 //   128,Procure,
+            //129,PSS,
+            case 129:
+                webView.loadUrl("javascript:var x=document.getElementById('awn').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('findno').click();");
+                break;
+              //      130,Purolator,
+            case 130:
+                webView.loadUrl("javascript:var x=document.getElementById('search').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('buttonTrackSearch').click();");
+                break;
+          //  131,Pushpak
+            case 131:
+                webView.loadUrl("javascript:var x=document.getElementById('txtDoc_No').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('Track')[0].click();");
+                break;
+            //  132,Q Express
+            case 132:
+                webView.loadUrl("javascript:var x=document.getElementById('ShipmentNumber').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('button').click();");
+                break;
+
+            //Rapid connect
+            case 133:
+                webView.loadUrl("javascript:var x=document.getElementsByName('T2')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('B2')[0].click();");
+                break;
+            //Rajdhani
+            case 134:
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_txtConsinmentNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_btnTrack').click();");
                 break;
             default:
                 webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");

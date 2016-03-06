@@ -12,23 +12,29 @@
     android:gravity="bottom">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/profileImage"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@android:drawable/sym_def_app_icon"
-        android:id="@+id/imageView" />
+         />
 
     <TextView
+        android:id="@+id/profileName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Hello Guest"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textStyle="bold"
+        android:padding="2dp"
+        android:layout_margin="2dp"
+        />
 
     <TextView
+        android:id="@+id/login_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Signup/Login"
-        android:id="@+id/textView" />
+        android:onClick="loginSignup"
+        />
 
 </LinearLayout>
