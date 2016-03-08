@@ -68,7 +68,7 @@ public class ReadData {
             BufferedReader reader=new BufferedReader(new InputStreamReader(is));
             int count=0;
             while((str=reader.readLine())!=null){
-               // Log.d("reader",str);
+               //Log.d("reader",str);
                 String[] rows=str.split(",");
 
                 FlightBean flight=new FlightBean();
