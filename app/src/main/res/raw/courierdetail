@@ -26,7 +26,7 @@
 26,Blue Dart,http://www.bluedart.com/maintracking.html,http://www.bluedart.com/index.html,http://www.bluedart.com/img/logonew.gif
 27,BNL Air,http://bnlair.in/tracking.html,http://bnlair.in/index.html,http://bnlair.in/index.html
 28,BOM-GIM,http://www.bomgim.com/tracking.html,http://www.bomgim.com/index.html,http://www.bomgim.com/images/bomgim_01.jpg
-29,DHL,http://www.dhl.co.in/en/express/tracking.html,http://www.dhl.co.in/en.html,http://www.dhl.co.in/img/meta/dhl_logo.gif
+29,DHL India,http://www.dhl.co.in/en/express/tracking.html,http://www.dhl.co.in/en.html,http://www.dhl.co.in/img/meta/dhl_logo.gif
 30,Bengal Force,http://bengalforce.com/,http://bengalforce.com/bengalforce,http://bengalforce.com/bengalforce/images/logo3.png
 31,Professional,http://www.tpcindia.com/Tracking2014.aspx?id=,http://www.tpcindia.com/Default.aspx,http://www.tpcindia.com/images/tpc-logo2.png
 32,DotZot,http://dotzot.azurewebsites.net/GUI/Tracking_New/WebSite/TrackConsignment_new.Aspx?track_flag=A&CONSIGNMENT=,http://dotzot.in/index-web.html,http://dotzot.in/images/logo.jpg
@@ -150,3 +150,12 @@
 150,MML Logistics,http://www.mmllog.net/#track,http://www.mmllog.net,http://www.mmllog.net/images/logo.jpg
 151,MSK Worldwide,http://www.mskworldwide.in/Multitracking.aspx,http://www.mskworldwide.in,http://www.mskworldwide.in/img/logo.png
 152,mypacco,http://www.mypacco.com,http://www.mypacco.com,http://www.mypacco.com/assets/images/mypacco-logo.png
+153,Daakiyaa,http://ecfy2.cloudapp.net/daakiyaa_live/GUI/Tracking_New/WebSite/TrackConsignment_new.Aspx?track_flag=R&CONSIGNMENT=,http://daakiyaa.com,http://daakiyaa.com/wp-content/uploads/2014/09/logo.png
+154,Dakiya,http://dakiyajunction.in/tracking,http://dakiyajunction.in,http://dakiyajunction.in/wp-content/uploads/2015/08/dakia_011.png
+155,DCS,http://dcsdelivery.com/oldsite/tracking/,http://dcsdelivery.com,http://dcsdelivery.com/oldsite/wp-content/uploads/logo.png
+156,Delex,http://www.delex.in/tracking_details.php,http://www.delex.in,http://www.delex.in/images/logo.png
+157,DPD,https://tracking.dpd.de/parcelstatus?query=,https://www.dpd.com,https://tracking.dpd.de/parcelstatus/images/design/DPD_logo_redgrad_rgb_transparent.png
+158,Delnet Express,http://www.delnetexpress.com/Track.aspx,http://www.delnetexpress.com,http://www.delnetexpress.com/images/logo1.png
+159,Deus India,http://www.deusgroups.com/track.aspx,http://www.deusgroups.com,http://www.deusgroups.com/images/logo12.png
+160,DHL Sameday,https://www.dhlsameday.com/SkyTracking/,https://www.dhlsameday.com,https://www.dhlsameday.com/images/global/header_DHL_logo2.gif
+161,Dreamco Express,http://dreamcoexpress.com.pk/track.html,http://dreamcoexpress.com.pk,http://dreamcoexpress.com.pk/images/logo.png

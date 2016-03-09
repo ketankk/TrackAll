@@ -62,7 +62,7 @@ public class CourierController{
         if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32
                 ||i==33|| i == 35|| i == 42|| i == 43|| i == 47|| i == 51|| i == 56|| i == 58|| i == 72
                 || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128||id==135||id==139||id==140
-                ||id==141||id==146 ||id==147) {
+                ||id==141||id==146 ||id==147||id==153||id==157) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -247,11 +247,8 @@ public class CourierController{
                 webView.loadUrl("javascript:var x=document.getElementById('form1').elements['AWBNO'].value='"+trackId +"'");
                 webView.loadUrl("javascript:var x=document.getElementById('form1').elements['Submit'].click();");
                 break;
-            //Bhavna Roadways-w
-            case 23:
-                webView.loadUrl("http://bhavna.cloudapp.net/Bhavna_Live/GUI/Tracking_New/Website/TrackConsignment.Aspx?CONSIGNMENT="+trackId +"'");
-                ProgressDialog();
-                break;
+            //23Bhavna Roadways-w
+
             //Bibha courier-w
             case 24:
                 webView.loadUrl("http://www.bibhacourier.com/trackingDetails.php?textfield="+trackId+"&textfield1="+trackId +"'");
@@ -959,6 +956,55 @@ public class CourierController{
                 //chk
                 webView.loadUrl("javascript:var x=document.getElementById('trackOrder').click();");
                 break;
+           // 153,Daakiyaa
+            //154,Dakiya
+            case 154:
+                webView.loadUrl("javascript:var x=document.getElementsByName('consignment_no')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('Track')[0].click();");
+                break;
+           // 155,DCS,
+            case 155:
+                webView.loadUrl("javascript:var x=document.getElementById('TrackingNumber').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('btnSubmit')[0].click();");
+                break;
+             //       156,Delex
+            case 156:
+                webView.loadUrl("javascript:document.getElementsByName('DocketType')[0].checked=true");
+
+
+                webView.loadUrl("javascript:var x=document.getElementById('samplees').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByName('Tracking_submit')[0].click();");
+                break;
+          //  157,DPD
+                 //   158,Delnet Express,
+            case 158:
+                webView.loadUrl("javascript:var x=document.getElementById('txtAwb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('BtnSearch').click();");
+                break;
+                  //  159,Deus India,
+            case 159:
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_text').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ContentPlaceHolder1_Button1').click();");
+                break;
+                   // 160 DHL Sameday,
+            case 160:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_MainContent_txtTicket').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_MainContent_ImageButton2').click();");
+                break;
+                   // 161Dreamco Express,
+            case 161:
+                webView.loadUrl("javascript:var x=document.getElementsByName('awbCodeList')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ShowCmd').click();");
+                break;
+
+//                    163,Direct
             default:
                 webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");
                // webView.loadUrl("javascript:(function(){document.getElementsByClassName('tracking-button')[0].click();})()");
