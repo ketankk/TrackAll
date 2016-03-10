@@ -62,7 +62,7 @@ public class CourierController{
         if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32
                 ||i==33|| i == 35|| i == 42|| i == 43|| i == 47|| i == 51|| i == 56|| i == 58|| i == 72
                 || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128||id==135||id==139||id==140
-                ||id==141||id==146 ||id==147||id==153||id==157) {
+                ||id==141||id==146 ||id==147||id==153||id==157||id==163||id==165||id==182||id==178) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -1003,8 +1003,133 @@ public class CourierController{
                 //chk
                 webView.loadUrl("javascript:var x=document.getElementById('ShowCmd').click();");
                 break;
+            //162,E-Vahan,http:
+            case 162:
+                webView.loadUrl("javascript:var x=document.getElementById('inputAWB').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:test();");
+                break;
+            //163,Ecom Express,
+            case 163:
+                webView.loadUrl("javascript:var x=document.getElementsByName('awbCodeList')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('ShowCmd').click();");
+                break;
+                   // 164,HighFly,
+            case 164:
+                webView.loadUrl("javascript:var x=document.getElementById('username').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[1].submit();");
+                break;
+                    //165,Elbex,
 
-//                    163,Direct
+                   // 166,Elta,
+            case 166:
+                webView.loadUrl("javascript:var x=document.getElementById('voucher').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:track();");
+                break;
+                    //167,Emirates Post,
+            case 167:
+                webView.loadUrl("javascript:var x=document.getElementById('txtMailID').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('form').submit();");
+                break;
+                  //  168,EMS Korea,
+            case 168:
+                webView.loadUrl("javascript:var x=document.getElementById('POST_CODE').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('kform').submit();");
+                break;
+                 //   169,eParcel,
+            case 169:
+                webView.loadUrl("javascript:var x=document.getElementsByName('tracking_numbers')[0] .value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementsByTag('download-form')[0] .submit()");
+                break;
+                 //   170,Excess,
+            case 170:
+                webView.loadUrl("javascript:var x=document.getElementById('search_term').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('search_button').click();");
+                break;
+                    //171,Expan,
+            case 171:
+                webView.loadUrl("javascript:var x=document.getElementById('txtfldawb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:var x=document.getElementById('Button1').click();");
+                break;
+                  //  172,Falcon,
+            case 172:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtawbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('frmtracking').submit();");
+                break;
+                    //173,Fardar,
+            case 173:
+                webView.loadUrl("javascript:var x=document.getElementById('AWBNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.form1.submit();");
+                break;
+                   // 174,Faspeed,
+            case 174:
+                webView.loadUrl("javascript:var x=document.getElementById('track_number').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:getOrderInfo();");
+                break;
+          ///  175,Fast & First,
+            case 175:
+                webView.loadUrl("javascript:var x=document.getElementById('txtTracking').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('btnTrackP').click();");
+                break;
+                  //  176,Good luck,
+            case 176:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtConsignment')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('btn').click();");
+                break;
+                   // 177,First Flight canada
+            case 177:
+                webView.loadUrl("javascript:var x=document.getElementsByName('track')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.sik.submit();");
+                break;
+
+// 178,Flight despatch,
+
+           // 179,Flyking,
+            case 179:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_txtCNoteNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('ctl00_ContentPlaceHolder1_btnSubmit_input').click();");
+                break;
+               //     180,Franch Express,
+            case 180:
+                webView.loadUrl("javascript:var x=document.getElementById('awbno').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('frmtracking').submit();");
+                break;
+                   // 181,FSC,
+
+                   // 182,Global Mail Express,
+            case 182:
+                webView.loadUrl("javascript:var x=document.getElementsByName('hawbno2')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('Go')[0].click();");
+                break;
+           // 183,GMS Worldwide,
+            case 183:
+                webView.loadUrl("javascript:var x=document.getElementById('message').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByClassName('fsSubmitButton1')[0].click()");
+                break;
+            // 184,ICC World,
+            case 184:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtawbno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('imageField').submit();");
+                break;
             default:
                 webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");
                // webView.loadUrl("javascript:(function(){document.getElementsByClassName('tracking-button')[0].click();})()");
