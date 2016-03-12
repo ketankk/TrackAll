@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:id="@+id/lin_home"
+        android:orientation="vertical"
+
+        >
+
+        <EditText
+            android:id="@+id/input_trackID_or_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Tracking ID/Name"
+            android:layout_weight="70"
+            android:layout_gravity="center_horizontal"
+
+            />
+        <LinearLayout
+            android:id="@+id/no_bm_layout"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:background="#d4c8c8"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="No Tracking ID in your BookMark"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textSize="30sp"
+            android:elevation="20dp"
+            android:layout_gravity="center_horizontal"
+            android:translationZ="200dp"
+
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click on Menu Button and Track Your Courier"
+                android:layout_gravity="end"
+                android:textColor="#d10808"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_search_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lin_home"
+        android:layout_margin="10dp"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

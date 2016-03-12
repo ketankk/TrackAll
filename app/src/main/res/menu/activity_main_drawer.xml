@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/list_all_courier"
+            android:icon="@drawable/ic_menu_courier"
+            android:title="Couriers" />
+        <item
+            android:id="@+id/list_all_flights"
+            android:icon="@drawable/ic_menu_flight"
+            android:title="Flights/Trains" />
+        <item
+            android:id="@+id/nav_ecommerce"
+            android:icon="@drawable/ic_menu_ecom"
+            android:title="e-commerce" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_set"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+        </menu>
+    </item>
+
+</menu>
