@@ -147,6 +147,8 @@ public class CourierController{
         switch (id) {
             //DTDC
             case 1:
+               // String postData="action=\"track\"&strCnno2=\"V27213156\"+strCnno=\"V27213156\"";
+                //webView.postUrl(URL,postData.getBytes());
                 webView.loadUrl("javascript:var x=document.getElementsByTagName('form')[0].strCnno2.value='"+trackId +"'");
                 webView.loadUrl("javascript:(function(){document.getElementsByClassName('submit-button')[0].click();})()");
                 break;

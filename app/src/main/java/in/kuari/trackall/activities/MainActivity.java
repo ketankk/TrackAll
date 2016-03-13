@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -28,10 +29,8 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.squareup.picasso.Picasso;
 
 import in.kuari.trackall.R;
@@ -46,12 +45,12 @@ import in.kuari.trackall.utils.CircularImage;
 import in.kuari.trackall.utils.FunctionTools;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-private Activity activity;
+    private Activity activity;
     private NavigationView navigationView;
     private TextView loginBtn;
-    private static final int REQUEST_LOGIN=1000;
+    private static final int REQUEST_LOGIN = 1000;
     private String accName;
     private String urlDP;
     private TextView profileName;
@@ -59,29 +58,45 @@ private Activity activity;
     private TextView loginText;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInAccount account;
-
+private int displayFragment=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //if coming from on clicking URL open directly courier fragment
+        Uri data=getIntent().getData();
+        if(data!=null){
+            displayFragment=2;
+           /* String scheme = data.getScheme();
+            String host = data.getHost();
+            List<String> params = data.getPathSegments();
+            String first = params.get(0);
+//            String second = params.get(1);
+            Log.d("s",scheme+"-"+host+"-"+first+"-");*/
+        }
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-activity=this;
+        activity = this;
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         CheckSharedPreferance();
 
 //Calling after login/signup
-       Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            String comingFrom="";
-            comingFrom=bundle.getString("comingFrom");
-            Log.d("cmng",comingFrom+"c");
-            if(comingFrom!=null&&comingFrom.equals("login")){
-                accName= UserProfile.getDisplayName();
-                urlDP=UserProfile.getImageURL();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String comingFrom = "";
+            comingFrom = bundle.getString("comingFrom");
+            Log.d("cmng", comingFrom + "c");
+            if (comingFrom != null && comingFrom.equals("login")) {
+                accName = UserProfile.getDisplayName();
+                urlDP = UserProfile.getImageURL();
                 updateUiInfo();
+            }else  if (comingFrom != null && comingFrom.equals("notification")) {
+                displayFragment=1;
             }
         }
 
@@ -89,7 +104,7 @@ activity=this;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              FeedBackSuggestions();
+                FeedBackSuggestions();
             }
         });
 
@@ -99,33 +114,33 @@ activity=this;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-       navigationView.setNavigationItemSelectedListener(this);
-        if(savedInstanceState==null)
-        displayFragment(1);
+        navigationView.setNavigationItemSelectedListener(this);
+        if (savedInstanceState == null)
+            displayFragment(displayFragment);
 
     }
 
-   /* @Override
-    protected void onStart() {
-        super.onStart();
-        initialize();
-        if(mGoogleApiClient!=null) {
-            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+    /* @Override
+     protected void onStart() {
+         super.onStart();
+         initialize();
+         if(mGoogleApiClient!=null) {
+             OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
 
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            // Log.d(TAG, "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            account = result.getSignInAccount();
-            if (account != null) {
-                UserProfile.setDisplayName(account.getDisplayName());
-                UserProfile.setImageURL(account.getPhotoUrl().toString());
-                //Log.d("img",account.getPhotoUrl()+"dd");
-            }
-        }
-        }
-    }*/
+         if (opr.isDone()) {
+             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+             // and the GoogleSignInResult will be available instantly.
+             // Log.d(TAG, "Got cached sign-in");
+             GoogleSignInResult result = opr.get();
+             account = result.getSignInAccount();
+             if (account != null) {
+                 UserProfile.setDisplayName(account.getDisplayName());
+                 UserProfile.setImageURL(account.getPhotoUrl().toString());
+                 //Log.d("img",account.getPhotoUrl()+"dd");
+             }
+         }
+         }
+     }*/
     private void initialize() {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -181,7 +196,7 @@ activity=this;
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-       // Toast.makeText(activity,"j1j",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(activity,"j1j",Toast.LENGTH_SHORT).show();
 
         if (id == R.id.nav_home) {
             displayFragment(1);
@@ -193,12 +208,9 @@ activity=this;
         } else if (id == R.id.nav_ecommerce) {
             displayFragment(4);
 
-        }
-
-         else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             displayFragment(6);
-        }
-        else if (id == R.id.nav_set) {
+        } else if (id == R.id.nav_set) {
             displayFragment(7);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -208,41 +220,49 @@ activity=this;
         return true;
 
     }
-    private void displayFragment(int id){
-    Fragment fragment=null;
-switch (id) {
-    case 1:fragment = new HomeFragment();
-        break;
 
-    case 2:fragment = new CourierFragment();
+    private void displayFragment(int id) {
+        Fragment fragment = null;
+        switch (id) {
+            case 1:
+                fragment = new HomeFragment();
+                break;
 
-        break;
-    case 3:fragment = new FlightsFragment();
-        break;
+            case 2:
+                fragment = new CourierFragment();
 
-    case 4:fragment = new ECommerceFragment();
-        break;
+                break;
+            case 3:
+                fragment = new FlightsFragment();
+                break;
 
-    case 6:ShareAppDownloadLink();
-        break;
+            case 4:
+                fragment = new ECommerceFragment();
+                break;
 
-    case 7:fragment=new AppSettings();
-        break;
+            case 6:
+                ShareAppDownloadLink();
+                break;
 
-    default:
-            fragment = new HomeFragment();
-}
-    if(fragment!=null){
-        FragmentManager fragmentManager=getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.inc,fragment).commit();
+            case 7:
+                fragment = new AppSettings();
+                break;
+
+            default:
+                fragment = new HomeFragment();
+        }
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.inc, fragment).commit();
+        }
+
     }
-
-}
 
     /**
      * A method to handle the feedback suggestion functionlity
      */
-    private void  FeedBackSuggestions() {
+    private void FeedBackSuggestions() {
+
         final EditText suggestion = new EditText(activity);
         if (!FunctionTools.isConnected(activity)) {
             Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -258,8 +278,7 @@ switch (id) {
                             if (msg.length() == 0) {
                                 suggestion.setError("Type your message here");
                                 Toast.makeText(activity, "Message not sent", Toast.LENGTH_SHORT).show();
-                            }
-                            else
+                            } else
                                 SendFeedback(msg);
                         }
                     })
@@ -267,27 +286,31 @@ switch (id) {
                     .show();
         }
     }
+
     //Call MySql sync
-void SendFeedback(String msg){
+    void SendFeedback(String msg) {
 
         MYSQLHandler handler = new MYSQLHandler(activity);
         handler.SendMail(msg);
-}
-void CheckSharedPreferance(){
+    }
 
-    SharedPreferences pref=getSharedPreferences("TRACKALL",MODE_PRIVATE);
-    boolean frsttime=pref.getBoolean("FirstTime",true);
-    if(frsttime) {
-        SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
-        editor.putBoolean("FirstTime",false);
-        editor.commit();
+    void CheckSharedPreferance() {
+
+        SharedPreferences pref = getSharedPreferences("TRACKALL", MODE_PRIVATE);
+        boolean frsttime = pref.getBoolean("FirstTime", true);
+        if (frsttime) {
+            SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
+            editor.putBoolean("FirstTime", false);
+            editor.commit();
         /*pref=getSharedPreferences("TRACKALL",MODE_PRIVATE);
         frsttime=pref.getBoolean("FirstTime",true);
-       */ LoadLogoDialog();
+       */
+            LoadLogoDialog();
+        }
+        //Log.d("loj",frsttime+"");
     }
-    //Log.d("loj",frsttime+"");
-}
-    private void LoadLogoDialog(){
+
+    private void LoadLogoDialog() {
         new AlertDialog.Builder(activity)
                 .setTitle("Select if you want to load Logos also")
                 .setMessage("You can also change the settings later")
@@ -295,7 +318,7 @@ void CheckSharedPreferance(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
-                        editor.putBoolean("LoadLogo",true);
+                        editor.putBoolean("LoadLogo", true);
                         editor.commit();
 
 
@@ -305,7 +328,7 @@ void CheckSharedPreferance(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
-                        editor.putBoolean("LoadLogo",false);
+                        editor.putBoolean("LoadLogo", false);
                         editor.commit();
 
                     }
@@ -313,7 +336,7 @@ void CheckSharedPreferance(){
                 .show();
     }
 
-    private void ShareAppDownloadLink(){
+    private void ShareAppDownloadLink() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Hey! Download this amazing app trackAll and keep track of everything \n http://bit.ly/1R30Vtu";
@@ -321,10 +344,11 @@ void CheckSharedPreferance(){
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
-    public void loginSignup(View view){
 
-        String txt=((TextView)view).getText().toString();
-        if(txt!=null&&txt.equals("Signup/Login")) {
+    public void loginSignup(View view) {
+
+        String txt = ((TextView) view).getText().toString();
+        if (txt != null && txt.equals("Signup/Login")) {
             Intent intent = new Intent(MainActivity.this, LoginSignUp.class);
             startActivity(intent);
         }
@@ -333,20 +357,20 @@ void CheckSharedPreferance(){
     /**
      * Update name and profile picture of logged in user
      */
-    private void updateUiInfo(){
-       // Log.d("ff",accName+urlDP);
+    private void updateUiInfo() {
+        // Log.d("ff",accName+urlDP);
 
-        View inflatedView=navigationView.getHeaderView(0);
+        View inflatedView = navigationView.getHeaderView(0);
         profileName = (TextView) inflatedView.findViewById(R.id.profileName);
-        profileImage = (ImageView)inflatedView.findViewById(R.id.profileImage);
-        loginText = (TextView)inflatedView.findViewById(R.id.login_txt);
-if(profileImage!=null&&profileName!=null&&loginText!=null) {
-    profileName.setText(accName);
-    loginText.setText("Signout");
-    loginText.setVisibility(View.INVISIBLE);
-    Picasso.with(this).load(urlDP).transform(new CircularImage()).into(profileImage);
-}
-       Log.d("UI","Updated");
+        profileImage = (ImageView) inflatedView.findViewById(R.id.profileImage);
+        loginText = (TextView) inflatedView.findViewById(R.id.login_txt);
+        if (profileImage != null && profileName != null && loginText != null) {
+            profileName.setText(accName);
+            loginText.setText("Signout");
+            loginText.setVisibility(View.INVISIBLE);
+            Picasso.with(this).load(urlDP).transform(new CircularImage()).into(profileImage);
+        }
+        Log.d("UI", "Updated");
 
     }
 }

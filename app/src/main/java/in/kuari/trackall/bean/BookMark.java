@@ -3,7 +3,7 @@ package in.kuari.trackall.bean;
 /**
  * Created by root on 1/31/16.
  */
-public class SearchHistory {
+public class BookMark {
     private long id;
     private String name;
     private String trackId;
@@ -64,7 +64,7 @@ public class SearchHistory {
 
     @Override
     public String toString() {
-        return "SearchHistory{" +
+        return "BookMark{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", trackId='" + trackId + '\'' +

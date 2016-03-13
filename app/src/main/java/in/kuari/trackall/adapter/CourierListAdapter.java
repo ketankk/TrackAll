@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +27,8 @@ import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
+import in.kuari.trackall.bean.BookMark;
 import in.kuari.trackall.bean.CourierBean;
-import in.kuari.trackall.bean.SearchHistory;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.FunctionTools;
 import in.kuari.trackall.utils.ReadData;
@@ -183,7 +181,7 @@ public CourierListAdapter(Activity activity,EditText trackingID,List<CourierBean
 */
    private void bookMarkSearch(CourierBean courier,String trackID){
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
-        SearchHistory history=new SearchHistory();
+        BookMark history=new BookMark();
         history.setName(courier.getCourierName());
         history.setTrackId(trackID);
         history.setCourierID(courier.getCourierID()+"");

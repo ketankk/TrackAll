@@ -2,8 +2,11 @@ package in.kuari.trackall.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -12,6 +15,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.jar.Manifest;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.controller.CourierController;
@@ -33,6 +37,9 @@ public class ShowResultActivity extends AppCompatActivity {
     private Activity activity;
     private String FLIGHT_NAME;
     private String FLIGHT_URL;
+    private String[] permissions={android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final int REQUST_WRITE_EXT_PERMISSION_CODE = 117;
+
 
     private FloatingActionButton screenShot;
     @Override
@@ -51,14 +58,19 @@ activity=this;
            // Toast.makeText(this, "c"+flag, Toast.LENGTH_SHORT).show();
 
             if(flag==0) {
+                //coming from courier fragmanet
+
                 trackID = intent.getStringExtra("trackId");
                 courierID = intent.getLongExtra("courierID", 2);
                 onCourierTrack();}
             else if(flag==2){
+                //coming from Ecoomerce fragmanet
                 EcId = intent.getLongExtra("EcID",0);
                 onECTrack();
 
             }else if(flag==3){
+                //coming from flights fragmanet
+
                 FLIGHT_URL=intent.getStringExtra("webURL");
                 FLIGHT_NAME=intent.getStringExtra("flightName");
 
@@ -123,9 +135,40 @@ private void onECTrack(){
         return super.onTouchEvent(event);
     }
     public void takeScreenShot(View view){
-        FunctionTools b=new FunctionTools(activity);
-        Date date=new Date();
-        long time=date.getTime();
-        b.takeScreenShot(courierID+"-"+trackID+"-"+time);
+
+        if(checkForPermission()) {
+            FunctionTools b = new FunctionTools(activity);
+            Date date = new Date();
+            long time = date.getTime();
+            b.takeScreenShot(courierID + "-" + trackID + "-" + time);
+        }else
+        Toast.makeText(this,"Permission denied",Toast.LENGTH_LONG).show();
     }
-}
+    private boolean checkForPermission( ) {
+
+        if(ContextCompat.checkSelfPermission(activity,permissions[0] )!= PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, permissions, REQUST_WRITE_EXT_PERMISSION_CODE);
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode){
+            case REQUST_WRITE_EXT_PERMISSION_CODE:
+                if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                break;
+        }
+
+
+
+
+
+
+
+
+    }
+}}
