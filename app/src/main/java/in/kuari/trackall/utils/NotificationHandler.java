@@ -42,6 +42,9 @@ public class NotificationHandler extends BroadcastReceiver{
 
 
     public void triggerActivity(BookMark bookMark){
+
+        courierName=bookMark.getName();
+        awb=bookMark.getTrackId();
         Intent intent=new Intent(context,MainActivity.class);
         intent.putExtra("comingFrom","notification");
         PendingIntent pendingIntent=PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
