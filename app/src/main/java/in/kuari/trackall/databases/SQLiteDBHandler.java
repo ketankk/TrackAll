@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -20,7 +21,7 @@ import in.kuari.trackall.bean.BookMark;
  */
 public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME="track_all";
-    private static final int DB_VERSION=4;
+    private static final int DB_VERSION=5;
 
     private static final String TABLE_NAME="search_history";
     private static final String SEARCH_ID="_id";
@@ -47,14 +48,24 @@ private Context context;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("create",CREATE_TABLE);
+     //   Log.d("create",CREATE_TABLE);
 db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+try {
+    db.execSQL("ALTER TABLE " + TABLE_NAME
+            + " ADD COLUMN " + RATING + " REAL,"
+            + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE");
+}catch (SQLiteException e1){
+    try{
+        db.execSQL("ALTER TABLE " + TABLE_NAME
+                + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE");
+    }catch (SQLiteException e2){
 
-        db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + RATING + " REAL");
+    }
+}
         onCreate(db);
     }
 
