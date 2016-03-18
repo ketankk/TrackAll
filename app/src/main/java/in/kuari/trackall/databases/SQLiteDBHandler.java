@@ -21,7 +21,7 @@ import in.kuari.trackall.bean.BookMark;
  */
 public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME="track_all";
-    private static final int DB_VERSION=5;
+    private static final int DB_VERSION=6;
 
     private static final String TABLE_NAME="search_history";
     private static final String SEARCH_ID="_id";
