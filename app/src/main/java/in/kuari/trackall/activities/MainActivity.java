@@ -29,8 +29,11 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.squareup.picasso.Picasso;
 
 import in.kuari.trackall.R;
@@ -117,13 +120,24 @@ private int displayFragment=1;
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null)
             displayFragment(displayFragment);
-
     }
 
-    /* @Override
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
      protected void onStart() {
-         super.onStart();
-         initialize();
+         if (mGoogleApiClient != null)
+             mGoogleApiClient.connect();
+initialize();
+      silentSignIn();
+        super.onStart();
+         /*initialize();
          if(mGoogleApiClient!=null) {
              OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
 
@@ -139,8 +153,8 @@ private int displayFragment=1;
                  //Log.d("img",account.getPhotoUrl()+"dd");
              }
          }
-         }
-     }*/
+         }*/
+     }
     private void initialize() {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -148,14 +162,8 @@ private int displayFragment=1;
                 .requestProfile()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Log.d("confild", connectionResult.toString());
-                    }
-                })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                                .build();
 
     }
 
@@ -354,23 +362,50 @@ private int displayFragment=1;
         }
     }
 
-    /**
-     * Update name and profile picture of logged in user
-     */
-    private void updateUiInfo() {
-        // Log.d("ff",accName+urlDP);
-
+    private void initializeUIComponent(){
         View inflatedView = navigationView.getHeaderView(0);
         profileName = (TextView) inflatedView.findViewById(R.id.profileName);
         profileImage = (ImageView) inflatedView.findViewById(R.id.profileImage);
         loginText = (TextView) inflatedView.findViewById(R.id.login_txt);
-        if (profileImage != null && profileName != null && loginText != null) {
+
+    }
+    /**
+     * Update name and profile picture of logged in user
+     */
+    private void updateUiInfo() {
+        Log.d("ff",accName+urlDP);
+
+        initializeUIComponent();
+         if (profileImage != null && profileName != null && loginText != null) {
             profileName.setText(accName);
             loginText.setText("Signout");
             loginText.setVisibility(View.INVISIBLE);
             Picasso.with(this).load(urlDP).transform(new CircularImage()).into(profileImage);
         }
         Log.d("UI", "Updated");
+
+    }
+    void silentSignIn(){
+Log.d("silent","sl");
+        OptionalPendingResult<GoogleSignInResult> pendingResult=Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+
+        if(pendingResult.isDone()){
+          account =pendingResult.get().getSignInAccount();
+
+        }else {
+            pendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    account=googleSignInResult.getSignInAccount();
+
+                }
+            });
+        }
+if(account!=null) {
+    accName = account.getDisplayName();
+    urlDP = account.getPhotoUrl().toString();
+    updateUiInfo();
+}
 
     }
 }

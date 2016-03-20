@@ -16,5 +16,6 @@
     <string name="title_activity_main2">Main2Activity</string>
 
     <string name="server_client_id">182815940105-qp7aae04411ge0pkmn09i9f7uumjqlas.apps.googleusercontent.com</string>
+    <string name="google_app_id">182815940105</string>
 
 </resources>

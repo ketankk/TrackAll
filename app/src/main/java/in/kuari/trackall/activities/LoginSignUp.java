@@ -62,11 +62,14 @@ public class LoginSignUp extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
             // Log.d(TAG, "Got cached sign-in");
+            Log.d("onstart","Loginsignup");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
         } else {
@@ -120,12 +123,6 @@ public class LoginSignUp extends AppCompatActivity {
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Log.d("confild", connectionResult.toString());
-                    }
-                })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -138,11 +135,7 @@ public class LoginSignUp extends AppCompatActivity {
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, GP_SIGN_IN);
-
-
-
-
-    }
+ }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -163,9 +156,11 @@ public class LoginSignUp extends AppCompatActivity {
         if (result.isSuccess()) {
             //SignedIn Successfully
             account = result.getSignInAccount();
-goBackToHomePage();            //Toast.makeText(activity,account.getDisplayName()+account.getId(),Toast.LENGTH_SHORT).show();
+            if(account!=null)
+                goBackToHomePage();            //Toast.makeText(activity,account.getDisplayName()+account.getId(),Toast.LENGTH_SHORT).show();
         } else {
             //Signed Out
+            if(signOut())
             goBackToHomePage();
         }
     }
@@ -191,15 +186,16 @@ goBackToHomePage();            //Toast.makeText(activity,account.getDisplayName(
                 }
             });
     }
-    private void goBackToHomePage(){
-        Intent intent=new Intent(this,MainActivity.class);
-        intent.putExtra("comingFrom","login");
-        if(account!=null) {
+    private void goBackToHomePage() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("comingFrom", "login");
+        if (account != null) {
             UserProfile.setDisplayName(account.getDisplayName());
             UserProfile.setImageURL(account.getPhotoUrl().toString());
-            //Log.d("img",account.getPhotoUrl()+"dd");
+            Log.d("img", account.getPhotoUrl() + "dd");
+
+            startActivity(intent);
         }
-        startActivity(intent);
     }
 
 }
