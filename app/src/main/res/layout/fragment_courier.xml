@@ -8,13 +8,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/input_trackID"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Tracking ID/AWB No."
             android:layout_gravity="center_horizontal"
+            android:drawablePadding="5dp"
             />
+            <Button
+                android:id="@+id/barcodeinput"
+                android:layout_width="36dp"
+                android:layout_height="26dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/barcode"
+                />
+        </FrameLayout>
         <EditText
             android:id="@+id/input_courier_name"
             android:layout_width="300dp"

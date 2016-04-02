@@ -2,16 +2,22 @@ package in.kuari.trackall.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
 
@@ -27,6 +33,7 @@ public class CourierFragment extends Fragment {
     public  EditText  courierName;
     private EditText  trackingID;
     private String trackID;
+    private Button barCodebtn;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +43,14 @@ public class CourierFragment extends Fragment {
 
         trackingID= (EditText) rootView.findViewById(R.id.input_trackID);
         courierName= (EditText) rootView.findViewById(R.id.input_courier_name);
+        barCodebtn= (Button) rootView.findViewById(R.id.barcodeinput);
+barCodebtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+        scanSomething();
+    }
+});
 
             recyclerView= (RecyclerView) rootView.findViewById(R.id.rc_all_courier);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
@@ -82,9 +97,26 @@ final EditText courierName1=courierName;
             public void afterTextChanged(Editable s) {
 
 
-
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+ switch (requestCode){
+            case IntentIntegrator.REQUEST_CODE:
+               IntentResult result=IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                if(result!=null)
+                    trackID=result.getContents();
+                Log.d("id",trackID+"cc");
+               trackingID.setText(trackID);
+                break;
+        }
+    }
+
+    public void scanSomething() {
+        IntentIntegrator.forFragment(this).initiateScan();
     }
 
 }

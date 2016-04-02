@@ -5,13 +5,25 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Base64;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.prefs.BackingStoreException;
 
 import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.bean.CourierBean;
@@ -35,6 +47,7 @@ public class CourierController{
     private ProgressDialog dialog;
     private int COUNT;
     private String URL;
+    private String resData;
 
     /**
      *
@@ -54,16 +67,50 @@ public class CourierController{
      *           it loads the url in webview
      */
 
+    private void postData(long id){
+
+        Log.d("post", "" + trackId);
+        String data="strCnno="+trackId+"&strCnno2="+trackId+"&TrkType2=awb_no"+"&Ttype:awb_no&action:track&sec=tr&ctlActiveVal:1";
+        webView.postUrl(URL, Base64.encode(data.getBytes(), Base64.DEFAULT));
+
+        StringRequest request=new StringRequest(Request.Method.POST,"http://dtdc.in/tracking/tracking_results.asp",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        resData=response;
+                        Log.d("res",response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    Log.d("err",error.toString());
+                    }
+                }){
+
+            /*@Override
+            public Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("strCnno",trackId);
+                params.put("strCnno2",trackId);
+                params.put("TrkType2","awb_no");
+                return params;
+            }*/
+        };
+        //Volley.newRequestQueue(context).add(request);
+    }
     public void PopulateView(long id) {
         final int i = (int) id;
-        initializeURL(i);
+       initializeURL(i);
+
 //        Toast.makeText(context, URL + "-" + i + "--" + id + COURIER_NAME, Toast.LENGTH_LONG).show();
         //Couriers which directly gives result from URL+trackID,like posting on php page
         if (i == 2 || i == 3 || i == 6|| i == 9 || i == 12 || i == 13 || i == 23|| i == 31|| i == 32
-                ||i==33|| i == 35|| i == 42|| i == 43|| i == 47|| i == 51|| i == 56|| i == 58|| i == 72
+                ||i==33|| i == 35|| i == 42|| i == 43|| i == 47|| i == 50||i == 51|| i == 56|| i == 58|| i == 72
                 || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128||id==135||id==139||id==140
                 ||id==141||id==146 ||id==147||id==153||id==157||id==163||id==165||id==182||id==178
-                ||id==186||id==188||id==193||id==196||id==199) {
+                ||id==186||id==188||id==193||id==196||id==199||id==203||id==205||id==206||id==207
+                ||id==208||id==209) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -385,11 +432,8 @@ public class CourierController{
                 webView.loadUrl("javascript:var x=document.getElementById('imgsubmit').click();");
                 break;
                 //Gati
-            case 50:
-                webView.loadUrl("javascript:var x=document.getElementById('docket_id').value='"+trackId +"'");
-                //chk
-                webView.loadUrl("javascript:var x=document.getElementById('track').click();");
-                break;
+
+
             //V-Express
             case 52:
                 webView.loadUrl("javascript:var x=document.getElementById('txtDocket').value='"+trackId +"'");
@@ -1215,7 +1259,39 @@ public class CourierController{
                 //chk
                 webView.loadUrl("javascript:document.getElementById('Submit_slr').click()");
                 break;
+//203,Smsa-Express,
+          //  204,KGM-Hub
+            case 204:
+                webView.loadUrl("javascript:var x=document.getElementById('txtSearchAgain').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('cmdSearchAgain').click();");
+                break;
+           // 205,AirSpeed intl Corp
+           // 206,Matkahuolto
+           // 207,InPost,
+            //208,Mondial relay,
+            //209,sure post
+           // 210,Old Dominion,
+            case 210:
+                webView.loadUrl("javascript:var x=document.getElementsByName('traceForm:j_idt31').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('traceForm:j_idt32').click();");
+                break;
 
+             //       211,echo,
+            case 211:
+                webView.loadUrl("javascript:var x=document.getElementById('tbTrackNum').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('showData').click();");
+                break;
+           // 213,BookAWheel,
+             //       214,City-Link Express,
+               //     215,Despatch Bay,
+                 //   216,Esskay Logistics,
+                   // 217,Motherland,
+                    //218,Roadrunner,
+                    //219,Send From China,
+           // 220,Sharp Century,
             default:
                 webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");
                // webView.loadUrl("javascript:(function(){document.getElementsByClassName('tracking-button')[0].click();})()");

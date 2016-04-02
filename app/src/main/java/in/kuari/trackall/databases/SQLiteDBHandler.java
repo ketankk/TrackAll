@@ -70,20 +70,23 @@ try {
     }
 
  public boolean   addSearch(BookMark bookMark){
-     db=this.getWritableDatabase();
-     SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
-     String date=sdf.format(new Date());
+     if(!ifBookMarkExist(bookMark)) {
+         db = this.getWritableDatabase();
+         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+         String date = sdf.format(new Date());
 
-     ContentValues values=new ContentValues();
-     values.put(TRACK_ID, bookMark.getTrackId().toUpperCase());
-     values.put(COMPANY_NAME, bookMark.getName());
-     values.put(COURIER_ID, bookMark.getCourierID());
-     values.put(RATING, bookMark.getRating());
-     values.put(DATE,date);
+         ContentValues values = new ContentValues();
+         values.put(TRACK_ID, bookMark.getTrackId().toUpperCase());
+         values.put(COMPANY_NAME, bookMark.getName());
+         values.put(COURIER_ID, bookMark.getCourierID());
+         values.put(RATING, bookMark.getRating());
+         values.put(DATE, date);
 
-     db.insert(TABLE_NAME, null, values);
-db.close();
-return true;
+         db.insert(TABLE_NAME, null, values);
+         db.close();
+         return true;
+     }
+     return false;
  }
     public boolean   deleteBookmark(String id){
         db=this.getReadableDatabase();
@@ -114,6 +117,20 @@ return true;
 }db.close();
        Collections.reverse(searchHistories);
        return searchHistories;
+    }
+    public  boolean ifBookMarkExist(BookMark bookMark){
+        db=this.getReadableDatabase();
+        String query="SELECT * FROM "+TABLE_NAME+" WHERE "+TRACK_ID+"='"+bookMark.getTrackId().toUpperCase()+"' and "+COURIER_ID+"='"+bookMark.getCourierID()+"'";
+
+        Cursor cursor=db.rawQuery(query,null);
+       // Cursor cursor=db.query(TABLE_NAME, new String[]{SEARCH_ID}, TRACK_ID+"='"+bookMark.getTrackId()+"'", null, null, null, null);
+
+        Log.d("qry",query+cursor.getCount());
+        while (cursor.moveToNext()){
+            Log.d("dbb",cursor.getColumnName(0));
+            return true;
+        }db.close();
+        return false;
     }
     public List<BookMark> getAllLatestBookMarks(){
         List<BookMark> bookMarks=getAllBookMarks();
