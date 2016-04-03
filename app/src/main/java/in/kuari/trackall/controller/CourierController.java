@@ -110,7 +110,7 @@ public class CourierController{
                 || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128||id==135||id==139||id==140
                 ||id==141||id==146 ||id==147||id==153||id==157||id==163||id==165||id==182||id==178
                 ||id==186||id==188||id==193||id==196||id==199||id==203||id==205||id==206||id==207
-                ||id==208||id==209) {
+                ||id==208||id==209||id==213||id==218) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -1284,18 +1284,56 @@ public class CourierController{
                 //chk
                 webView.loadUrl("javascript:document.getElementById('showData').click();");
                 break;
+           // 212,Alfaa Logistics,
+            case 212:
+                webView.loadUrl("javascript:var x=document.getElementById('txt_Awb').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('Track_Button').click();");
+                break;
            // 213,BookAWheel,
              //       214,City-Link Express,
+            case 214:
+
+                webView.loadUrl("javascript:var x=document.getElementById('track').value='"+trackId +"'");
+            //chk
+            webView.loadUrl("javascript:document.getElementsByName('Submit').click();");
+            break;
                //     215,Despatch Bay,
+            case 215:
+
+                webView.loadUrl("javascript:var x=document.getElementById('tracking-number').value='"+trackId +"'");
+            //chk
+            webView.loadUrl("javascript:document.getElementById('submit-tracking').click();");
+            break;
                  //   216,Esskay Logistics,
+            case 216:
+
+                webView.loadUrl("javascript:var x=document.getElementById('message').value='"+trackId +"'");
+            //chk
+            webView.loadUrl("javascript:document.getElementsByClass('btn-primary').click();");
+            break;
                    // 217,Motherland,
+            case 217:
+
+                webView.loadUrl("javascript:var x=document.getElementById('txttrack').value='"+trackId +"'");
+            //chk
+            webView.loadUrl("javascript:document.getElementById('btnsubmit').click();");
+            break;
                     //218,Roadrunner,
                     //219,Send From China,
+            case 219:
+
+                webView.loadUrl("javascript:var x=document.getElementsByName('tracknumbers').value='"+trackId +"'");
+            //chk
+            webView.loadUrl("javascript:document.getElementById('showData').click();");
+            break;
            // 220,Sharp Century,
-            default:
-                webView.loadUrl("javascript:var x=document.getElementById('AWB').value='"+trackId +"'");
-               // webView.loadUrl("javascript:(function(){document.getElementsByClassName('tracking-button')[0].click();})()");
+            case 220:
+                webView.loadUrl("javascript:var x=document.getElementById('orders').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:track();");
                 break;
+
 
 
         }
