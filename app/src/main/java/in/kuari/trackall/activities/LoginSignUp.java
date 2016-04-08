@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -26,6 +27,7 @@ import com.squareup.picasso.Picasso;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.bean.UserProfile;
+import in.kuari.trackall.utils.AppController;
 
 import static android.R.drawable.*;
 
@@ -38,6 +40,7 @@ public class LoginSignUp extends AppCompatActivity {
     private GoogleSignInAccount account;
     private static final String TAG = "LoginActivity";
     private ProgressDialog mProgressDialog;
+    private Tracker mTracker;
 
 
     @Override
@@ -47,7 +50,10 @@ public class LoginSignUp extends AppCompatActivity {
         activity = this;
         // Inflate the layout for this fragment
         setContentView(R.layout.fragment_login);
-
+//Google Analytics starts
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        //Google Analytics end
         //initialize GoogleApiClient
         initialize();
         SignInButton signInButton = (SignInButton) findViewById(R.id.googleSignIn);

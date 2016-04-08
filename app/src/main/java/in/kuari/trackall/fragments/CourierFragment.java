@@ -21,6 +21,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -29,6 +32,7 @@ import java.util.List;
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierListAdapter;
 import in.kuari.trackall.bean.CourierBean;
+import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.ReadData;
 
 public class CourierFragment extends Fragment {
@@ -67,6 +71,7 @@ barCodebtn.setOnClickListener(new View.OnClickListener() {
         adp=new CourierListAdapter(activity,trackingID,couriers);
         recyclerView.setAdapter(adp);
         search();
+        analytics();
         return rootView;
     }
 
@@ -138,7 +143,18 @@ final EditText courierName1=courierName;
 
         NotificationManager notificationManager= (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification.build());*/
-       IntentIntegrator.forFragment(this).initiateScan();
+       IntentIntegrator.forFragment(this).initiateScan();//Barc code scanner Intent
     }
-
+    Tracker mTracker;
+    private void analytics(){
+        AppController appController= (AppController) getActivity().getApplication();
+        mTracker=appController.getDefaultTracker();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName("HomeFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
+    }
 }

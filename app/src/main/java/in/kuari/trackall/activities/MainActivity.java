@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -44,6 +45,7 @@ import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.ECommerceFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
 import in.kuari.trackall.fragments.HomeFragment;
+import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.CircularImage;
 import in.kuari.trackall.utils.FunctionTools;
 
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInAccount account;
 private int displayFragment=1;
+    private Tracker mTracker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,12 @@ private int displayFragment=1;
 
 
         setContentView(R.layout.activity_main);
+
+        //Google Analytics starts
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        //Google Analytics end
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         activity = this;

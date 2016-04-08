@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +31,7 @@ import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.BookMarkAdapter;
 import in.kuari.trackall.bean.BookMark;
 import in.kuari.trackall.databases.SQLiteDBHandler;
+import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.NotificationHandler;
 
 /**
@@ -81,6 +86,7 @@ public class HomeFragment extends Fragment{
 
         search(activity);
         alarmSet();
+        analytics();
         return rootView;
     }
 
@@ -134,5 +140,16 @@ private void alarmSet(){
                 AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
-
+    Tracker mTracker;
+    private void analytics(){
+        AppController appController= (AppController) getActivity().getApplication();
+        mTracker=appController.getDefaultTracker();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName("HomeFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
+    }
 }

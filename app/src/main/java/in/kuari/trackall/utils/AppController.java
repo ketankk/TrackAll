@@ -6,6 +6,10 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
+import in.kuari.trackall.R;
 
 /**
  * Created by root on 2/11/16.
@@ -44,5 +48,16 @@ public class AppController extends Application {
     public void cancelPendingRequest(Object tag){
         if(mRequestQueue!=null)
         mRequestQueue.cancelAll(tag);
+    }
+    private Tracker mTracker;
+    synchronized public Tracker getDefaultTracker(){
+
+        if(mTracker==null){
+            GoogleAnalytics analytics=GoogleAnalytics.getInstance(this);
+            mTracker=analytics.newTracker(R.string.global_tracker);
+
+
+        }
+        return mTracker;
     }
 }

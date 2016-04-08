@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
@@ -33,11 +34,18 @@ public class NotificationHandler extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         this.context=context;
       //  Log.d("br","rec");
+
+        if(checkNotificationSetting())
         triggerActivity(getBookMarksFromDB());
     }
 
 
+private boolean checkNotificationSetting(){
+   SharedPreferences pref=context.getSharedPreferences("TRACKALL",Context.MODE_PRIVATE);
+    boolean loadLogo=pref.getBoolean("LoadLogo",true);
+return loadLogo;
 
+}
     public void triggerActivity(BookMark bookMark){
 
         courierName=bookMark.getName();

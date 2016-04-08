@@ -19,28 +19,46 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierListAdapter;
+import in.kuari.trackall.utils.AppController;
 
 public class AppSettings extends Fragment {
-    private ToggleButton toggle;
+    private ToggleButton toggleLogo;
+    private ToggleButton toggleNotification;
     private Activity activity;
+    private SharedPreferences pref;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         activity=getActivity();
 
         View rootView=inflater.inflate(R.layout.fragment_settings,container,false);
-        toggle= (ToggleButton) rootView.findViewById(R.id.toggle_logo);
+        toggleLogo= (ToggleButton) rootView.findViewById(R.id.toggle_logo);
+        toggleNotification= (ToggleButton) rootView.findViewById(R.id.toggle_notification);
 
-        SharedPreferences pref=activity.getSharedPreferences("TRACKALL",Context.MODE_PRIVATE);
+         pref=activity.getSharedPreferences("TRACKALL",Context.MODE_PRIVATE);
+        loadLogoSetting();
+        reminderSetting();
+
+     //   Toast.makeText(activity,"f"+loadLogo,Toast.LENGTH_SHORT).show();
+        analytics();
+        return rootView;
+    }
+
+
+    private void loadLogoSetting(){
         boolean loadLogo=pref.getBoolean("LoadLogo",true);
         if(loadLogo){
-            toggle.setChecked(true);
-        }else toggle.setChecked(false);
+            toggleLogo.setChecked(true);
+        }else toggleLogo.setChecked(false);
 
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-             SharedPreferences.Editor editor = activity.getSharedPreferences("TRACKALL", Context.MODE_PRIVATE).edit();
+        toggleLogo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            SharedPreferences.Editor editor = activity.getSharedPreferences("TRACKALL", Context.MODE_PRIVATE).edit();
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -54,9 +72,43 @@ public class AppSettings extends Fragment {
                 }
             }
         });
-     //   Toast.makeText(activity,"f"+loadLogo,Toast.LENGTH_SHORT).show();
-        return rootView;
     }
 
+    private void reminderSetting(){
+        boolean loadNoti=pref.getBoolean("LoadNoti",true);
+        if(loadNoti){
+            toggleNotification.setChecked(true);
+        }else toggleNotification.setChecked(false);
+
+        toggleNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = activity.getSharedPreferences("TRACKALL", Context.MODE_PRIVATE).edit();
+
+                if(isChecked){
+                    editor.putBoolean("LoadNoti",true);
+
+                }else {
+                    editor.putBoolean("LoadNoti",false);
+
+                }editor.apply();
+            }
+        });
+
+    }
+
+
+    Tracker mTracker;
+    private void analytics(){
+        AppController appController= (AppController) getActivity().getApplication();
+        mTracker=appController.getDefaultTracker();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName("HomeFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
+    }
 
 }

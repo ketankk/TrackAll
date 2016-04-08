@@ -16,7 +16,10 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.android.gms.analytics.Tracker;
+
 import in.kuari.trackall.R;
+import in.kuari.trackall.utils.AppController;
 
 public class ShowFlightsWeb extends AppCompatActivity {
 
@@ -25,11 +28,18 @@ public class ShowFlightsWeb extends AppCompatActivity {
     private WebView webView;
     private ProgressDialog dialog;
     private Context context;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_flights_web);
+
+        //Google Analytics starts
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        //Google Analytics end
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,6 +80,12 @@ public class ShowFlightsWeb extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override

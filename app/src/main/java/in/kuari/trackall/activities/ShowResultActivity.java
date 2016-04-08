@@ -15,12 +15,15 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.Date;
 import java.util.jar.Manifest;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.controller.CourierController;
 import in.kuari.trackall.controller.EcController;
+import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.ConstantValues;
 import in.kuari.trackall.utils.FunctionTools;
 
@@ -43,13 +46,19 @@ public class ShowResultActivity extends AppCompatActivity {
 
 
     private FloatingActionButton screenShot;
-
+private Tracker mTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webviewresult);
         activity = this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Google Analytics starts
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        //Google Analytics end
+
         Intent intent = getIntent();
         //Enable JS
         initilizeWebview();
