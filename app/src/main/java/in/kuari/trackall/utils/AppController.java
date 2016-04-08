@@ -54,7 +54,7 @@ public class AppController extends Application {
 
         if(mTracker==null){
             GoogleAnalytics analytics=GoogleAnalytics.getInstance(this);
-            mTracker=analytics.newTracker(R.string.global_tracker);
+            mTracker=analytics.newTracker(R.xml.global_tracker);
 
 
         }
