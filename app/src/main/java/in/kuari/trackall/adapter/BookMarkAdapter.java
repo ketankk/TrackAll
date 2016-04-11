@@ -55,8 +55,30 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.Search
             imgView.setVisibility(View.VISIBLE);
 */
        final BookMark bookMark = filterdeSearchHistories.get(position);
+        final SearchViewHolder holder1=holder;
+        //Check book mark type
+//1-Courier,2-Flights,3-ECommerce
+
+       switch ((int)bookMark.getbType()) {
+            case 1://Courier
+                holder.trackId.setText(bookMark.getTrackId());
+                break;
+
+            case 2://Flights
+                holder.trackId.setText(bookMark.getTrackId());
+                break;
+            case 3://Ecommerce
+                holder1.trackId.setText(bookMark.getTrackId());
+                holder1.trackId.setTextSize(15);
+               // holder1.view.setBackgroundColor(activity.getResources().getColor(android.R.color.holo_blue_light));
+
+                break;
+            default:
+                //Courier
+                holder.trackId.setText(bookMark.getTrackId());
+                break;
+        }
         holder.name.setText(bookMark.getName());
-        holder.trackId.setText(bookMark.getTrackId());
         holder.histDate.setText(bookMark.getTime());
      //  holder.bmrating.setRating(Float.parseFloat(bookMark.getRating()));
         //Log.d("d",bookMark.toString());
@@ -150,13 +172,17 @@ menu.show();
    void OnClickBookMarkitem(BookMark bookMark)
    {
        String trackID= bookMark.getTrackId();
-        long courierID=Long.parseLong(bookMark.getCourierID());
+        long courierID=Long.parseLong(bookMark.getCourierID());//courier ID for courier,flight id for flights,similarly for Ecommerce
        //Toast.makeText(activity,trackID+"hh"+courierID,Toast.LENGTH_LONG).show();
 
           Intent intent=new Intent(activity, ShowResultActivity.class);
-           intent.putExtra("trackId",trackID);
-           intent.putExtra("comingFrom",0);
+            intent.putExtra("trackId",trackID);
            intent.putExtra("courierID",courierID);
+
+//1-Courier,2-Flights,3-ECommerce
+
+           intent.putExtra("comingFrom",(int)bookMark.getbType());
+
 
        activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
@@ -189,7 +215,7 @@ menu.show();
     private void shareBookmark(BookMark bookMark){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = "Track this AWB No.: "+ bookMark.getTrackId()+" of "+ bookMark.getName()+" on trackAll!\nInstall TrackAll http://bit.ly/1R30Vtu";
+            String shareBody = "Track this AWB No.: "+ bookMark.getTrackId()+" of "+ bookMark.getName()+" on trackAll!\nInstall trackAll http://bit.ly/1R30Vtu";
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "TrackAll");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             activity.startActivity(Intent.createChooser(sharingIntent, "Share via"));

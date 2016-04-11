@@ -22,12 +22,14 @@ import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.ReadData;
 
+
 public class FlightsFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 2;
+    private static final String TAG = "FlightsFragment";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -79,7 +81,7 @@ public class FlightsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("HomeFragment");
+        mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
     }

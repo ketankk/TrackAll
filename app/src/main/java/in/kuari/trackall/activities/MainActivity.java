@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -64,7 +66,8 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInAccount account;
 private int displayFragment=1;
-    private Tracker mTracker;
+    private static final String TAG = "MainActivity";
+
 
 
     @Override
@@ -87,8 +90,7 @@ private int displayFragment=1;
         setContentView(R.layout.activity_main);
 
         //Google Analytics starts
-        AppController application = (AppController) getApplication();
-        mTracker = application.getDefaultTracker();
+        analytics();
         //Google Analytics end
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -130,6 +132,18 @@ private int displayFragment=1;
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null)
             displayFragment(displayFragment);
+    }
+    Tracker mTracker;
+    private void analytics(){
+        AppController appController= (AppController) getApplication();
+        mTracker=appController.getDefaultTracker();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        GoogleAnalytics.getInstance(this).dispatchLocalHits();
     }
 
     @Override

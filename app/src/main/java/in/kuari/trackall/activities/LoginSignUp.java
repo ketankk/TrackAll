@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,7 +42,6 @@ public class LoginSignUp extends AppCompatActivity {
     private GoogleSignInAccount account;
     private static final String TAG = "LoginActivity";
     private ProgressDialog mProgressDialog;
-    private Tracker mTracker;
 
 
     @Override
@@ -63,8 +64,20 @@ public class LoginSignUp extends AppCompatActivity {
                 SignIn();
             }
         });
+        analytics();
     }
-
+    Tracker mTracker;
+    private void analytics(){
+        AppController appController= (AppController) getApplication();
+        mTracker=appController.getDefaultTracker();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        GoogleAnalytics.getInstance(this).dispatchLocalHits();
+    }
     @Override
     protected void onStart() {
         super.onStart();

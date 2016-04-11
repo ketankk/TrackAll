@@ -32,6 +32,8 @@ public class AppSettings extends Fragment {
     private ToggleButton toggleNotification;
     private Activity activity;
     private SharedPreferences pref;
+    private static final String TAG = "AppSettings";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,7 +108,7 @@ public class AppSettings extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("HomeFragment");
+        mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
     }

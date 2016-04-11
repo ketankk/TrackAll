@@ -159,13 +159,13 @@ public CourierListAdapter(Activity activity,EditText trackingID,List<CourierBean
             bookMarkSearch(courier,trackID);
         Intent intent=new Intent(activity, ShowResultActivity.class);
         intent.putExtra("trackId",trackID);
-        intent.putExtra("comingFrom",0);
+        intent.putExtra("comingFrom",1);//1-courier,2-ecommerce,3-flights
         intent.putExtra("courierID",courier.getCourierID());
 
         ClipboardManager manager= (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip=ClipData.newPlainText("TrackingID",trackID);
         manager.setPrimaryClip(clip);
-        Toast.makeText(activity,trackID+" Copied to ClipBoard",Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity,trackID.toUpperCase()+" Copied to ClipBoard",Toast.LENGTH_SHORT).show();
         activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
     }
@@ -181,12 +181,12 @@ public CourierListAdapter(Activity activity,EditText trackingID,List<CourierBean
 */
    private void bookMarkSearch(CourierBean courier,String trackID){
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
-        BookMark history=new BookMark();
-        history.setName(courier.getCourierName());
-        history.setTrackId(trackID);
-        history.setCourierID(courier.getCourierID()+"");
-
-        handler.addSearch(history);
+        BookMark bookMark=new BookMark();
+       bookMark.setName(courier.getCourierName());
+       bookMark.setTrackId(trackID);
+       bookMark.setCourierID(courier.getCourierID()+"");
+       bookMark.setbType(1);
+        handler.addSearch(bookMark);
 
     }
 

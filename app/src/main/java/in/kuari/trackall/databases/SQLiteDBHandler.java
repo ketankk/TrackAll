@@ -21,7 +21,7 @@ import in.kuari.trackall.bean.BookMark;
  */
 public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME="track_all";
-    private static final int DB_VERSION=6;
+    private static final int DB_VERSION=7;
 
     private static final String TABLE_NAME="search_history";
     private static final String SEARCH_ID="_id";
@@ -30,6 +30,8 @@ public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String COURIER_ID="url";
     private static final String DATE="date";
     private static final String RATING="rating";
+    //Added in DB_VERSION 7
+    private static final String B_TYPE="b_type";
 
 
     private static final String CREATE_TABLE="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+
@@ -38,7 +40,8 @@ public class SQLiteDBHandler extends SQLiteOpenHelper{
                 COMPANY_NAME+" varchar(20),"+
                 COURIER_ID+" varchar(200)," +
                 RATING+" REAL, "+
-                DATE+" DATE DEFAULT CURRENT_DATE)";//Change on upgrade for alteration..not deletion
+                DATE+" DATE DEFAULT CURRENT_DATE,"+
+                B_TYPE +" integer constraint typeN default(1))";//Change on upgrade for alteration..not deletion
 private SQLiteDatabase db;
 private Context context;
 
@@ -54,22 +57,31 @@ db.execSQL(CREATE_TABLE);
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if(oldVersion>5){
+            db.execSQL("ALTER TABLE " + TABLE_NAME
+                    + " ADD COLUMN " + B_TYPE +" integer constraint typeN default(1) ");
+        }
+
+        else{
 try {
     db.execSQL("ALTER TABLE " + TABLE_NAME
             + " ADD COLUMN " + RATING + " REAL,"
-            + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE");
-}catch (SQLiteException e1){
-    try{
+            + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE,"
+            + " ADD COLUMN " + B_TYPE +" integer  constraint typeN default(1)");
+}catch (SQLiteException e1) {
+    try {
         db.execSQL("ALTER TABLE " + TABLE_NAME
-                + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE");
-    }catch (SQLiteException e2){
+                + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE,"
+                + " ADD COLUMN " + B_TYPE +" integer  constraint typeN default(1)");
+    } catch (SQLiteException e2) {
 
     }
+}
 }
         onCreate(db);
     }
 
- public boolean   addSearch(BookMark bookMark){
+ public boolean addSearch(BookMark bookMark){
      if(!ifBookMarkExist(bookMark)) {
          db = this.getWritableDatabase();
          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -81,6 +93,7 @@ try {
          values.put(COURIER_ID, bookMark.getCourierID());
          values.put(RATING, bookMark.getRating());
          values.put(DATE, date);
+         values.put(B_TYPE,bookMark.getbType());
 
          db.insert(TABLE_NAME, null, values);
          db.close();
@@ -101,7 +114,7 @@ try {
        List<BookMark> searchHistories=new ArrayList<>();
        db=this.getReadableDatabase();
 
-       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,DATE,RATING},null,null,null,null,null);
+       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,DATE,RATING,B_TYPE},null,null,null,null,null);
     while (cursor.moveToNext()){
     BookMark hist=new BookMark();
 
@@ -110,9 +123,16 @@ try {
     hist.setName(cursor.getString(2));
     hist.setCourierID(cursor.getString(3));
     hist.setTime(cursor.getString(4));
+        /*Database before version 6 */
+      if(cursor.getString(6)==null)
+          hist.setbType(1);
+        else
+    hist.setbType(Integer.parseInt(cursor.getString(6)));
+                /*Database before version 6 */
+
         float r=cursor.getFloat(5);
         hist.setRating("1.3");
-     //  Log.d("hist",hist.toString());
+       Log.d("hist",hist.toString());
     searchHistories.add(hist);
 }db.close();
        Collections.reverse(searchHistories);
@@ -127,7 +147,7 @@ try {
 
         Log.d("qry",query+cursor.getCount());
         while (cursor.moveToNext()){
-            Log.d("dbb",cursor.getColumnName(0));
+           // Log.d("dbb",cursor.getColumnName(0));
             return true;
         }db.close();
         return false;
@@ -136,7 +156,7 @@ try {
         List<BookMark> bookMarks=getAllBookMarks();
 
         Date date=new Date();
-        Log.d("date",date.toString());
+      //  Log.d("date",date.toString());
         return bookMarks;
     }
 }

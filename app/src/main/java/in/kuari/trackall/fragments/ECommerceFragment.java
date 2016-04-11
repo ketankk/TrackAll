@@ -27,6 +27,7 @@ public class ECommerceFragment extends Fragment {
     public  EditText  ECName;
     private EditText  trackingID;
     private String trackID;
+    private static final String TAG = "ECommerceFragment";
 
     public ECommerceFragment() {
     }
@@ -100,7 +101,7 @@ public class ECommerceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("HomeFragment");
+        mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
     }

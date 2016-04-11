@@ -10,10 +10,15 @@ import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -21,10 +26,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.activities.ShowFlightsWeb;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.BookMark;
 import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.ECommerce;
+import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.FunctionTools;
 import in.kuari.trackall.utils.ReadData;
@@ -72,9 +79,9 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
                 if (!FunctionTools.isConnected(activity)) {
                     Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }else {
-                    Snackbar.make(v, "This Section is not functional now", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                  //  Snackbar.make(v, "This Section is not functional now", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
-                    //ECSelected(eCommerce);
+                    inputIDEmail(eCommerce);
 
                 }
             }
@@ -123,33 +130,75 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
     }
 
 
-    void ECSelected(ECommerce eCommerce){
-        //Toast.makeText(activity,trackID+"hh",Toast.LENGTH_LONG).show();
+    private String orderID;
+    private String email;
 
-       // Log.d("trackId",trackID+"");
-       // if(trackID.length()>0)
-          //  SaveSearchHistory(courier,trackID);
-        Intent intent=new Intent(activity, ShowResultActivity.class);
-//        intent.putExtra("trackId",trackID);
-        intent.putExtra("comingFrom",2);
-       // Toast.makeText(context, "c"+eCommerce.getId(), Toast.LENGTH_SHORT).show();
+   private void  startActivity(ECommerce eCommerce){
+        if (orderID != null && email != null) {
+            Intent intent = new Intent(activity, ShowResultActivity.class);
 
-        intent.putExtra("EcID",eCommerce.getId());
+            if (email.length() > 0 && orderID.length() > 0) {
+                SaveSearchHistory(eCommerce, email, orderID);
+                intent.putExtra("trackId", orderID+"|"+email);//orderid
+              //  intent.putExtra("email", email);
+            }
 
-        ClipboardManager manager= (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip=ClipData.newPlainText("TrackingID","trackID");
-        manager.setPrimaryClip(clip);
 
-        activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
+            intent.putExtra("comingFrom", 3); //1-courier,2-flights,3- ecommerce
+            intent.putExtra("courierID", eCommerce.getId());
 
-    }
 
-    void SaveSearchHistory(CourierBean courier,String trackID){
+            ClipboardManager manager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("TrackingID", "trackID");
+            manager.setPrimaryClip(clip);
+            Log.d("KK", eCommerce.toString() + orderID + "g" + email);
+            activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
+
+        }        }
+
+
+    private void inputIDEmail(final ECommerce ecommName){
+            Activity activity= (Activity) context;
+            final EditText inputOrderID=new EditText(activity);
+        inputOrderID.setHint("Order ID");
+        final EditText inputEmail=new EditText(activity);
+        inputEmail.setHint("Email id used for order");
+        LinearLayout layout=new LinearLayout(activity);
+
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(inputOrderID);
+        layout.addView(inputEmail);
+
+
+        android.app.AlertDialog.Builder dialog=new android.app.AlertDialog.Builder(activity);
+            dialog.setMessage(ecommName.getName()).setView(layout)
+                    .setPositiveButton("Go", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    orderID=inputOrderID.getText().toString();
+                    email=inputEmail.getText().toString();
+                    Log.d("KK",""+orderID+"g"+email);
+
+                    startActivity(ecommName);
+                }
+            }).setNegativeButton("Cancel",null);
+
+            dialog.show();
+            //Toast.makeText(context,flight.getFlightName()+pnrTrain, Toast.LENGTH_LONG).show();
+
+        }
+
+
+
+
+
+    void SaveSearchHistory(ECommerce eCommerce,String email,String orderID){
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
         BookMark history=new BookMark();
-        history.setName(courier.getCourierName());
-        history.setTrackId(trackID);
-        history.setCourierID(courier.getCourierID()+"");
+        history.setName(eCommerce.getName());
+        history.setTrackId(orderID+"|"+ email);
+        history.setCourierID(eCommerce.getId()+"");
+        history.setbType(3);//1-courier,2-flights,3- ecommerce
 
         handler.addSearch(history);
 

@@ -22,6 +22,7 @@ import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowFlightsWeb;
+import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.utils.Colors;
 import in.kuari.trackall.utils.FunctionTools;
@@ -89,10 +90,10 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
             getPNR(flight);
         }else {
 
-            Intent intent = new Intent(context, ShowFlightsWeb.class);
+            Intent intent = new Intent(context, ShowResultActivity.class);
             intent.putExtra("webURL", flight.getFlightWebsite() + pnrTrain);
             intent.putExtra("flightName", flight.getFlightName());
-            intent.putExtra("comingFrom", 3);
+            intent.putExtra("comingFrom", 2);
 
             //Toast.makeText(context,flight.getFlightName()+pnrTrain, Toast.LENGTH_LONG).show();
 
@@ -107,7 +108,7 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
         inputPnr.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
 
-        final Intent intent=new Intent(context, ShowFlightsWeb.class);
+        final Intent intent=new Intent(context, ShowResultActivity.class);
         intent.putExtra("flightName",flight.getFlightName());
         intent.putExtra("comingFrom",3);
 

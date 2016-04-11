@@ -7,9 +7,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
@@ -28,6 +33,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
+import java.util.jar.Manifest;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierListAdapter;
@@ -43,6 +49,12 @@ public class CourierFragment extends Fragment {
     private EditText  trackingID;
     private String trackID;
     private Button barCodebtn;
+    private static final String TAG = "CourierFragment";
+    private String[] permissions = {android.Manifest.permission.CAMERA};
+
+
+    private static final int REQUST_CAMERA_PERMISSION_CODE=115;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,23 +139,19 @@ final EditText courierName1=courierName;
 
 
     public void scanSomething() {
-       /* PendingIntent pendingIntent=PendingIntent.getActivity(getActivity(),0, new Intent(), 0);
-
-        Notification.Builder notification = new Notification.Builder(getActivity());
-        notification.setContentTitle("trackAll")
-                .setContentText("Track your consignment from " + courierName + " AwbNo: ")
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
-                .setOnlyAlertOnce(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            notification.setColor(getResources().getColor(android.R.color.white));
-
-        }
-
-        NotificationManager notificationManager= (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification.build());*/
+       if(checkCameraPermission())
        IntentIntegrator.forFragment(this).initiateScan();//Barc code scanner Intent
+        else
+       checkForPermission();
+        if(!checkCameraPermission())
+            Toast.makeText(activity, "Can't access camera", Toast.LENGTH_SHORT).show();
+    }
+    private boolean checkCameraPermission()
+    {
+
+        String permission = "android.permission.CAMERA";
+        int res = activity.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
     Tracker mTracker;
     private void analytics(){
@@ -153,8 +161,30 @@ final EditText courierName1=courierName;
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("HomeFragment");
+        mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
+    }
+    private boolean checkForPermission() {
+
+        if (ContextCompat.checkSelfPermission(activity, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, permissions, REQUST_CAMERA_PERMISSION_CODE);
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case REQUST_CAMERA_PERMISSION_CODE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    break;
+                }
+
+
+        }
     }
 }

@@ -44,6 +44,8 @@ public class HomeFragment extends Fragment{
     private BookMarkAdapter adp;
     private LinearLayout noHist;
     private Activity activity;
+    private static final String TAG = "HomeFragment";
+
     public HomeFragment() {
     }
 
@@ -148,7 +150,7 @@ private void alarmSet(){
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("HomeFragment");
+        mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
     }

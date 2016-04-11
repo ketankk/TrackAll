@@ -16,6 +16,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import in.kuari.trackall.R;
@@ -24,35 +26,56 @@ import in.kuari.trackall.utils.AppController;
 public class ShowFlightsWeb extends AppCompatActivity {
 
     private String FLIGHT_NAME;
+    private String ECOMM_NAME;
+
     private String webURl;
     private WebView webView;
     private ProgressDialog dialog;
     private Context context;
-    private Tracker mTracker;
+    private static final String TAG = "ShowFlightsWeb";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_flights_web);
 
-        //Google Analytics starts
-        AppController application = (AppController) getApplication();
-        mTracker = application.getDefaultTracker();
-        //Google Analytics end
+      analytics();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         context=this;
+
+        webView= (WebView) findViewById(R.id.flightsweb);
+        initilizeWebview();
     Intent  intent=getIntent();
         if(intent!=null){
-            webURl=intent.getStringExtra("webURL");
-            FLIGHT_NAME=intent.getStringExtra("flightName");
-        }
-        webView= (WebView) findViewById(R.id.flightsweb);
-       initilizeWebview();
-        webView.loadUrl(webURl);
+            String from =intent.getStringExtra("from");
+            if(from.equals("flights")) {
+                webURl = intent.getStringExtra("webURL");
+                FLIGHT_NAME = intent.getStringExtra("flightName");
+                webView.loadUrl(webURl);
+                setWebViewFlight();
 
+            }
+            if(from.equals("ecommerce")){
+                webURl = intent.getStringExtra("orderId");
+                ECOMM_NAME = intent.getStringExtra("email");
+
+                webView.loadUrl(webURl);
+              //  setWebViewEcomm();
+
+
+            }
+
+        }
+
+
+
+
+    }
+
+    private void setWebViewFlight(){
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -81,13 +104,18 @@ public class ShowFlightsWeb extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    Tracker mTracker;
+    private void analytics(){
+        AppController appController= (AppController) getApplication();
+        mTracker=appController.getDefaultTracker();
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        GoogleAnalytics.getInstance(this).dispatchLocalHits();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

@@ -59,4 +59,14 @@ public class ECommerce {
             return name1.compareTo(name2);
         }
     };
+
+    @Override
+    public String toString() {
+        return "ECommerce{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", URL='" + URL + '\'' +
+                ", ImgPath='" + ImgPath + '\'' +
+                '}';
+    }
 }

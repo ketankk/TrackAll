@@ -9,6 +9,16 @@ public class BookMark {
     private String trackId;
     private String courierID;
     private String rating;
+    private long bType;//1-Courier,2-Flights,3-ECommerce
+
+    public long getbType() {
+        return bType;
+    }
+
+    public void setbType(long bType) {
+        this.bType = bType;
+    }
+
 
     public String getRating() {
         return rating;
@@ -69,7 +79,8 @@ public class BookMark {
                 ", name='" + name + '\'' +
                 ", trackId='" + trackId + '\'' +
                 ", courierID='" + courierID + '\'' +
-                ", rating=" + rating +
+                ", rating='" + rating + '\'' +
+                ", bType=" + bType +
                 ", time='" + time + '\'' +
                 '}';
     }
