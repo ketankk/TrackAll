@@ -68,8 +68,8 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.Search
                 holder.trackId.setText(bookMark.getTrackId());
                 break;
             case 3://Ecommerce
-                holder1.trackId.setText(bookMark.getTrackId());
-                holder1.trackId.setTextSize(15);
+                holder.trackId.setText(bookMark.getTrackId());
+                holder.trackId.setTextSize(15);
                // holder1.view.setBackgroundColor(activity.getResources().getColor(android.R.color.holo_blue_light));
 
                 break;
@@ -84,7 +84,6 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.Search
         //Log.d("d",bookMark.toString());
        // Toast.makeText(activity,"g"+bookMark.getRating(), Toast.LENGTH_SHORT).show();
 
-        // holder.view.setBackgroundColor(Colors.getRandomColor());
 
 
         holder.view.setOnClickListener(new View.OnClickListener() {

@@ -132,7 +132,7 @@ try {
 
         float r=cursor.getFloat(5);
         hist.setRating("1.3");
-       Log.d("hist",hist.toString());
+      // Log.d("hist",hist.toString());
     searchHistories.add(hist);
 }db.close();
        Collections.reverse(searchHistories);

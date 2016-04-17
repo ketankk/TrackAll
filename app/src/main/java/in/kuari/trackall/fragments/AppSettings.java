@@ -79,8 +79,8 @@ public class AppSettings extends Fragment {
     private void reminderSetting(){
         boolean loadNoti=pref.getBoolean("LoadNoti",true);
         if(loadNoti){
-            toggleNotification.setChecked(true);
-        }else toggleNotification.setChecked(false);
+            toggleNotification.setChecked(false);
+        }else toggleNotification.setChecked(true);
 
         toggleNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

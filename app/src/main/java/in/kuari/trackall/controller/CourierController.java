@@ -7,27 +7,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
-import android.util.Xml;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.prefs.BackingStoreException;
 
 import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.bean.CourierBean;
-import in.kuari.trackall.utils.ConstantValues;
 import in.kuari.trackall.utils.ReadData;
 
 /**
@@ -58,7 +50,6 @@ public class CourierController{
     public CourierController(WebView webView, Context context) {
         this.webView = webView;
         this.context=context;
-        trackId= ConstantValues.TRACKID.toUpperCase();
     }
 
     /**
@@ -99,7 +90,8 @@ public class CourierController{
         };
         //Volley.newRequestQueue(context).add(request);
     }
-    public void PopulateView(long id) {
+    public void PopulateView(long id,String trackID) {
+        trackId=trackID.toUpperCase();
         final int i = (int) id;
        initializeURL(i);
 

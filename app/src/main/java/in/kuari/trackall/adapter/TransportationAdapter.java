@@ -13,21 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.activities.ShowFlightsWeb;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.FlightBean;
-import in.kuari.trackall.utils.Colors;
 import in.kuari.trackall.utils.FunctionTools;
-
-import static android.widget.LinearLayout.LayoutParams.*;
 
 
 public class TransportationAdapter extends RecyclerView.Adapter<TransportationAdapter.ViewHolder> {
@@ -53,7 +46,7 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
 
         final FlightBean flight=flights.get(position);
 
-        holder.mView.setBackgroundColor(Colors.getRandomColor());
+        holder.mView.setBackgroundColor(FunctionTools.getRandomColor());
         holder.flightName.setText(flight.getFlightName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

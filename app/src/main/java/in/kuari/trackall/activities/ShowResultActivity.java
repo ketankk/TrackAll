@@ -1,7 +1,6 @@
 package in.kuari.trackall.activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,14 +20,12 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.Date;
-import java.util.jar.Manifest;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.controller.CourierController;
 import in.kuari.trackall.controller.EcController;
 import in.kuari.trackall.controller.FlightController;
 import in.kuari.trackall.utils.AppController;
-import in.kuari.trackall.utils.ConstantValues;
 import in.kuari.trackall.utils.FunctionTools;
 
 /**
@@ -151,10 +148,9 @@ private void chooseIntent(Intent intent){
     }
 
     private void onCourierTrack() {
-        ConstantValues.TRACKID = trackID;
           Log.d("TrackID", trackID + "vv" + courierID);
         CourierController controller = new CourierController(webView, this);
-        controller.PopulateView(courierID);
+        controller.PopulateView(courierID,trackID);
     }
 private void loadFlightWeb(){
     FlightController controller=new FlightController(webView,activity);

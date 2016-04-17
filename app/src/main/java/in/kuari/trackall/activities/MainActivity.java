@@ -34,9 +34,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.squareup.picasso.Picasso;
 
 import in.kuari.trackall.R;
@@ -59,7 +61,8 @@ public class MainActivity extends AppCompatActivity
     private TextView loginBtn;
     private static final int REQUEST_LOGIN = 1000;
     private String accName;
-    private String urlDP;
+    private String urlDP="https://lh3.googleusercontent.com/-nW_UEE8QEN4/AAAAAAAAAAI/AAAAAAAAAAA/_AVZs4E6WjQ/photo.jpg";//Default image url ifuser has no profile picture
+    private String tokenID;
     private TextView profileName;
     private ImageView profileImage;
     private TextView loginText;
@@ -109,6 +112,7 @@ private int displayFragment=1;
             if (comingFrom != null && comingFrom.equals("login")) {
                 accName = UserProfile.getDisplayName();
                 urlDP = UserProfile.getImageURL();
+                tokenID=UserProfile.getTokenId();
                 updateUiInfo();
             }else  if (comingFrom != null && comingFrom.equals("notification")) {
                 displayFragment=1;
@@ -158,7 +162,7 @@ private int displayFragment=1;
      protected void onStart() {
          if (mGoogleApiClient != null)
              mGoogleApiClient.connect();
-initialize();
+initialize();//initialize google signin variables
       silentSignIn();
         super.onStart();
          /*initialize();
@@ -182,8 +186,12 @@ initialize();
     private void initialize() {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .requestProfile()
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
+                .requestScopes(new Scope(Scopes.PLUS_ME))
+
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -397,7 +405,7 @@ initialize();
      * Update name and profile picture of logged in user
      */
     private void updateUiInfo() {
-        Log.d("ff",accName+urlDP);
+       // Log.d("ff",accName+urlDP);
 
         initializeUIComponent();
          if (profileImage != null && profileName != null && loginText != null) {
@@ -405,8 +413,11 @@ initialize();
             loginText.setText("Signout");
             loginText.setVisibility(View.INVISIBLE);
             Picasso.with(this).load(urlDP).transform(new CircularImage()).into(profileImage);
+             FunctionTools tools=new FunctionTools(activity);
+           //  Log.d("acc",account.toString());
+             tools.backendAuth(tokenID);
         }
-        Log.d("UI", "Updated");
+//        Log.d("UI", "Updated");
 
     }
     void silentSignIn(){
@@ -427,7 +438,10 @@ Log.d("silent","sl");
         }
 if(account!=null) {
     accName = account.getDisplayName();
+    if(account.getPhotoUrl()!=null)
     urlDP = account.getPhotoUrl().toString();
+    tokenID=account.getIdToken();
+    Log.d("ss",accName+" "+urlDP+" "+tokenID);
     updateUiInfo();
 }
 

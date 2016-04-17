@@ -49,6 +49,10 @@ public class AppController extends Application {
         if(mRequestQueue!=null)
         mRequestQueue.cancelAll(tag);
     }
+
+    /**
+     * Tracker used in google analytics
+     */
     private Tracker mTracker;
     synchronized public Tracker getDefaultTracker(){
 

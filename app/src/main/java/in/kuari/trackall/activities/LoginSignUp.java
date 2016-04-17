@@ -20,10 +20,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.squareup.picasso.Picasso;
 
@@ -137,6 +139,9 @@ public class LoginSignUp extends AppCompatActivity {
     private void initialize() {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
+                .requestScopes(new Scope(Scopes.PLUS_ME))
                 .requestEmail()
                 .requestProfile()
                 .build();
@@ -162,7 +167,7 @@ public class LoginSignUp extends AppCompatActivity {
         // Log.d("req",requestCode+"cc");
         switch (requestCode) {
             case GP_SIGN_IN:
-                Log.d("data", data.toString());
+                Log.d("data", requestCode+" "+resultCode);
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 handleSignInResult(result);
                 break;
@@ -171,17 +176,18 @@ public class LoginSignUp extends AppCompatActivity {
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d("req1", result.getStatus() + "");
+        Log.d("req1", result.getStatus() + ""+result.isSuccess());
         if (result.isSuccess()) {
+         //   Log.d("resSuc",result.getSignInAccount().toString());
             //SignedIn Successfully
             account = result.getSignInAccount();
             if(account!=null)
                 goBackToHomePage();            //Toast.makeText(activity,account.getDisplayName()+account.getId(),Toast.LENGTH_SHORT).show();
-        } else {
+       } else {
             //Signed Out
             if(signOut())
             goBackToHomePage();
-        }
+      }
     }
 
     private boolean signOut() {
@@ -193,7 +199,7 @@ public class LoginSignUp extends AppCompatActivity {
 
                 }
             });
-        return true;
+        return false;
     }
 
     private void revokeAccess() {
@@ -206,15 +212,26 @@ public class LoginSignUp extends AppCompatActivity {
             });
     }
     private void goBackToHomePage() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("comingFrom", "login");
-        if (account != null) {
-            UserProfile.setDisplayName(account.getDisplayName());
-            UserProfile.setImageURL(account.getPhotoUrl().toString());
-            Log.d("img", account.getPhotoUrl() + "dd");
+         String urlDP="https://lh3.googleusercontent.com/-nW_UEE8QEN4/AAAAAAAAAAI/AAAAAAAAAAA/_AVZs4E6WjQ/photo.jpg";//Default image url ifuser has no profile picture
 
-            startActivity(intent);
+        Intent intent = new Intent(this, MainActivity.class);
+        if (account != null) {
+            intent.putExtra("comingFrom", "login");
+            UserProfile.setDisplayName(account.getDisplayName());
+            if(account.getPhotoUrl()!=null)
+            UserProfile.setImageURL(account.getPhotoUrl().toString());
+            else
+                UserProfile.setImageURL(urlDP);//Default url
+
+            UserProfile.setTokenId(account.getIdToken());
+            //Log.d("img", account.getPhotoUrl() + "dd");
+
+        }else {
+            intent.putExtra("comingFrom", "signout");
+
         }
+        startActivity(intent);
+
     }
 
 }

@@ -6,6 +6,15 @@ package in.kuari.trackall.bean;
 public class UserProfile {
     private static String displayName;
     private static String imageURL;
+    private static String tokenId;
+
+    public static String getTokenId() {
+        return tokenId;
+    }
+
+    public static void setTokenId(String tokenId) {
+        UserProfile.tokenId = tokenId;
+    }
 
     public static String getDisplayName() {
         return displayName;
