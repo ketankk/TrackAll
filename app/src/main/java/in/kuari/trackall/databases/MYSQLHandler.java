@@ -2,6 +2,7 @@ package in.kuari.trackall.databases;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,15 +25,15 @@ import in.kuari.trackall.utils.AppController;
  */
 public class MYSQLHandler {
     private String TAG="FEEDBACK";
-    private Activity activity;
-    private String URL="http://trackall.kuari.in/connection.php";
-    public MYSQLHandler(Activity activity){
-        this.activity=activity;
+    private Context context;
+    public MYSQLHandler(Context context){
+        this.context=context;
     }
     public void SendMail(final String msg){
-        /*Map<String,String>params=new HashMap<>();
-        params.put("msg",msg);
-        */final ProgressDialog dialog=new ProgressDialog(activity);
+
+         String URL="http://trackall.kuari.in/connection.php";
+
+        final ProgressDialog dialog=new ProgressDialog(context);
         dialog.setMessage("Sending Message....");
         dialog.show();
         StringRequest request=new StringRequest(Request.Method.POST,URL,
@@ -62,5 +63,32 @@ public class MYSQLHandler {
 
         AppController.getmInstance().addToRequestQueue(request,TAG);
     }
+    public void sendgcmtokentoserver(final String token){
+         String URL="http://trackall.kuari.in/gcmtoken_server.php";
 
+        StringRequest request=new StringRequest(Request.Method.POST,URL,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("g",response);
+                        //  Toast.makeText(activity,response,Toast.LENGTH_SHORT).show();
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //  Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
+
+            }
+        }){@Override
+        protected Map<String,String> getParams(){
+            Map<String,String> params = new HashMap<String, String>();
+            params.put("gcmtoken", token);
+            return params;
+        }
+
+        };
+
+        AppController.getmInstance().addToRequestQueue(request,TAG);
+    }
 }

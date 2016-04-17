@@ -49,6 +49,7 @@ import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.ECommerceFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
 import in.kuari.trackall.fragments.HomeFragment;
+import in.kuari.trackall.gcm.GCM;
 import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.CircularImage;
 import in.kuari.trackall.utils.FunctionTools;
@@ -139,12 +140,15 @@ private int displayFragment=1;
     }
     Tracker mTracker;
     private void analytics(){
+        new GCM(this).start();
         AppController appController= (AppController) getApplication();
         mTracker=appController.getDefaultTracker();
     }
     @Override
     public void onResume() {
         super.onResume();
+        new GCM(this).start();
+
         mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(this).dispatchLocalHits();
@@ -432,6 +436,7 @@ Log.d("silent","sl");
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
                     account=googleSignInResult.getSignInAccount();
+
 
                 }
             });

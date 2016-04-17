@@ -102,7 +102,7 @@ public class CourierController{
                 || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128||id==135||id==139||id==140
                 ||id==141||id==146 ||id==147||id==153||id==157||id==163||id==165||id==182||id==178
                 ||id==186||id==188||id==193||id==196||id==199||id==203||id==205||id==206||id==207
-                ||id==208||id==209||id==213||id==218) {
+                ||id==208||id==209||id==213||id==218||id==221||id==223) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -1265,9 +1265,9 @@ public class CourierController{
             //209,sure post
            // 210,Old Dominion,
             case 210:
-                webView.loadUrl("javascript:var x=document.getElementsByName('traceForm:j_idt31').value='"+trackId +"'");
+                webView.loadUrl("javascript:var x=document.getElementsByName('traceForm:j_idt31')[0].value='"+trackId +"'");
                 //chk
-                webView.loadUrl("javascript:document.getElementsByName('traceForm:j_idt32').click();");
+                webView.loadUrl("javascript:document.getElementsByName('traceForm:j_idt32')[0].click();");
                 break;
 
              //       211,echo,
@@ -1288,7 +1288,7 @@ public class CourierController{
 
                 webView.loadUrl("javascript:var x=document.getElementById('track').value='"+trackId +"'");
             //chk
-            webView.loadUrl("javascript:document.getElementsByName('Submit').click();");
+            webView.loadUrl("javascript:document.getElementsByName('Submit')[0].click();");
             break;
                //     215,Despatch Bay,
             case 215:
@@ -1315,7 +1315,7 @@ public class CourierController{
                     //219,Send From China,
             case 219:
 
-                webView.loadUrl("javascript:var x=document.getElementsByName('tracknumbers').value='"+trackId +"'");
+                webView.loadUrl("javascript:var x=document.getElementsByName('tracknumbers')[0].value='"+trackId +"'");
             //chk
             webView.loadUrl("javascript:document.getElementById('showData').click();");
             break;
@@ -1325,9 +1325,51 @@ public class CourierController{
                 //chk
                 webView.loadUrl("javascript:track();");
                 break;
+//221,Leopards,
+            //222,Flytexpress
+            case 222:
 
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_TextBox1').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('ctl00$Button1')[0].click();");
+                break;
+            //223,Overseas Logistics
+            //224,Tyrone Telen
+            case 223:
 
+                webView.loadUrl("javascript:var x=document.getElementById('textarea').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByClassName('btn1_mouseout')[0].click();");
+                break;
+            //226,Dart on Dot
+            case 226:
 
+                webView.loadUrl("javascript:var x=document.getElementsByName('conid')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('Submit')[0].click();");
+                break;
+         //   227,GD Express-Malaysia,
+
+            case 227:
+
+                webView.loadUrl("javascript:var x=document.getElementById('capture').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('Submit')[0].click();");
+                break;
+            //228,GD Express-Singapore
+            case 228:
+
+                webView.loadUrl("javascript:var x=document.getElementById('capture').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('Submit')[0].click();");
+                break;
+            //safe choice courier
+            case 229:
+
+                webView.loadUrl("javascript:var x=document.getElementById('ConsignmentTracking').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('clickMe').click();");
+                break;
         }
 
     }
