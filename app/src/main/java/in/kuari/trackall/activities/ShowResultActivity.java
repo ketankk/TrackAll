@@ -121,6 +121,8 @@ private void chooseIntent(Intent intent){
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(this).dispatchLocalHits();
     }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

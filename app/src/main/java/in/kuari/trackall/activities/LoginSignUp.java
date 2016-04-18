@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +55,8 @@ public class LoginSignUp extends AppCompatActivity {
         activity = this;
         // Inflate the layout for this fragment
         setContentView(R.layout.fragment_login);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 //Google Analytics starts
         AppController application = (AppController) getApplication();
         mTracker = application.getDefaultTracker();
@@ -80,6 +84,23 @@ public class LoginSignUp extends AppCompatActivity {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(this).dispatchLocalHits();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mProgressDialog.dismiss();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
