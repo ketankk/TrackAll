@@ -89,6 +89,6 @@ public class MYSQLHandler {
 
         };
 
-        AppController.getmInstance().addToRequestQueue(request,TAG);
+     //   AppController.getmInstance().addToRequestQueue(request,TAG);
     }
 }

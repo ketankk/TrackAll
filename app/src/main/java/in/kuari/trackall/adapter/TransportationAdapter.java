@@ -7,19 +7,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneNumberUtils;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
+import in.kuari.trackall.bean.BookMark;
+import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.FlightBean;
+import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.FunctionTools;
 
 
@@ -96,6 +104,7 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
     private void getPNR(final FlightBean flight){
         Activity activity= (Activity) context;
         final EditText inputPnr=new EditText(activity);
+        inputPnr.setHint("10-digit pnr");
         inputPnr.setMaxEms(10);
         inputPnr.setInputType(InputType.TYPE_CLASS_PHONE);
         inputPnr.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
@@ -103,22 +112,69 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
 
         final Intent intent=new Intent(context, ShowResultActivity.class);
         intent.putExtra("flightName",flight.getFlightName());
-        intent.putExtra("comingFrom",3);
+        intent.putExtra("comingFrom",2);
 
-        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
-        dialog.setMessage("Enter PNR no.").setView(inputPnr).setPositiveButton("Go", new DialogInterface.OnClickListener() {
+        final AlertDialog alertDialog=new AlertDialog.Builder(activity)
+                .setMessage("Enter PNR no.")
+                .setView(inputPnr)
+                .setPositiveButton("Go", null)
+                .setNegativeButton("Cancel",null)
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                pnr=inputPnr.getText().toString();
-                intent.putExtra("webURL",flight.getFlightWebsite()+pnr);
-                context.startActivity(intent);
-
-
+            public void onShow(DialogInterface dialog) {
+Button posBtn=alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                posBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pnr=inputPnr.getText().toString();
+                        if(validatePnr(pnr)) {
+                            alertDialog.dismiss();
+                            intent.putExtra("webURL", flight.getFlightWebsite() + pnr);
+                            bookMarkPNR(flight,pnr);
+                            context.startActivity(intent);
+                        }else inputPnr.setError("Please Enter valid pnr");
+                    }
+                });
             }
-        }).setNegativeButton("Cancel",null);
+        });
 
-dialog.show();
+
+alertDialog.show();
         //Toast.makeText(context,flight.getFlightName()+pnrTrain, Toast.LENGTH_LONG).show();
 
+    }
+    private boolean validatePnr(String PNR){
+
+
+        String regex="^[0-9]{10}$";
+        Log.d("valid",PNR.matches(regex)+"");
+       return PNR.matches(regex);
+    }
+    private void bookMarkPNR(FlightBean flight, String trackID) {
+        SQLiteDBHandler handler = new SQLiteDBHandler(context);
+        BookMark bookMark = new BookMark();
+        bookMark.setName(flight.getFlightName());
+        bookMark.setTrackId(trackID);
+        bookMark.setCourierID("1");
+        bookMark.setbType(2);
+        handler.addSearch(bookMark);
+
+    }
+    void popup(final FlightBean flight, final String trackingID) {
+        new android.support.v7.app.AlertDialog.Builder(context)
+                .setTitle("No Internet Connection")
+                .setMessage("BookMark -" + trackingID.toUpperCase() + " with " + flight.getFlightName())
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        bookMarkPNR(flight, trackingID);
+                    }
+                }).setNegativeButton("No", null)
+                .show();
     }
 }

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,7 +32,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
@@ -44,7 +42,6 @@ import com.squareup.picasso.Picasso;
 import in.kuari.trackall.R;
 import in.kuari.trackall.bean.UserProfile;
 import in.kuari.trackall.databases.MYSQLHandler;
-import in.kuari.trackall.fragments.AppSettings;
 import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.ECommerceFragment;
 import in.kuari.trackall.fragments.FlightsFragment;
@@ -163,6 +160,11 @@ private int displayFragment=1;
     }
 
     @Override
+    public void supportInvalidateOptionsMenu() {
+        super.supportInvalidateOptionsMenu();
+    }
+
+    @Override
      protected void onStart() {
          if (mGoogleApiClient != null)
              mGoogleApiClient.connect();
@@ -216,7 +218,7 @@ initialize();//initialize google signin variables
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -229,10 +231,14 @@ initialize();//initialize google signin variables
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            openSettingsActivity();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void openSettingsActivity(){
+        startActivity(new Intent(this,SettingsActivity.class));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -288,9 +294,7 @@ initialize();//initialize google signin variables
                 ShareAppDownloadLink();
                 break;
 
-            case 7:
-                fragment = new AppSettings();
-                break;
+
 
             default:
                 fragment = new HomeFragment();
@@ -346,10 +350,7 @@ initialize();//initialize google signin variables
             SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
             editor.putBoolean("FirstTime", false);
             editor.commit();
-        /*pref=getSharedPreferences("TRACKALL",MODE_PRIVATE);
-        frsttime=pref.getBoolean("FirstTime",true);
-       */
-            LoadLogoDialog();
+
         }
         //Log.d("loj",frsttime+"");
     }
@@ -419,7 +420,7 @@ initialize();//initialize google signin variables
             Picasso.with(this).load(urlDP).transform(new CircularImage()).into(profileImage);
              FunctionTools tools=new FunctionTools(activity);
            //  Log.d("acc",account.toString());
-             tools.backendAuth(tokenID);
+         //    tools.backendAuth(tokenID);
         }
 //        Log.d("UI", "Updated");
 
@@ -451,5 +452,7 @@ if(account!=null) {
 }
 
     }
+
+
 }
 

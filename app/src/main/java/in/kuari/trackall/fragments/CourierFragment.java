@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -72,19 +74,24 @@ barCodebtn.setOnClickListener(new View.OnClickListener() {
         scanSomething();
     }
 });
+        recyclerView= (RecyclerView) rootView.findViewById(R.id.rc_all_courier);
 
-            recyclerView= (RecyclerView) rootView.findViewById(R.id.rc_all_courier);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-         List<CourierBean> couriers= populatelists();
-
-
-        adp=new CourierListAdapter(activity,trackingID,couriers);
-        recyclerView.setAdapter(adp);
+        setAdapter();
         search();
         analytics();
         return rootView;
+    }
+
+    private void setAdapter(){
+        List<CourierBean> couriers= populatelists();
+
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
+       GridLayoutManager gridLayoutManager= new GridLayoutManager(getActivity(),3);
+        recyclerView.setLayoutManager(layoutManager);
+
+//couriers.clear();//Todo change
+        adp=new CourierListAdapter(activity,trackingID,couriers);
+        recyclerView.setAdapter(adp);
     }
 
     /**
@@ -94,6 +101,10 @@ barCodebtn.setOnClickListener(new View.OnClickListener() {
      *     */
 
     private List<CourierBean> populatelists(){
+        //TODO check if prefrence is working
+      boolean temp=  PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("notifications_reminder",true);
+
+        Log.d("notifications_reminder",temp+"");
         ReadData readData=new ReadData(activity);
 
         return readData.getAllCourier();

@@ -23,8 +23,9 @@ public class FlightController {
         this.context=context;
     }
 
-    public void ProgressDialog(String name,String URL){
+    public void ProgressDialog(String name,String URL, ProgressDialog dialog1){
 
+        this.dialog=dialog1;
         AirLineName=name;
         webView.loadUrl(URL);
 

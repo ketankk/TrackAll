@@ -1,19 +1,26 @@
 package in.kuari.trackall.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +34,7 @@ import in.kuari.trackall.utils.FunctionTools;
 /**
  * Created by root on 1/31/16.
  */
-public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.SearchViewHolder>{
+public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMarkViewHolder>{
 
     private List<BookMark> searchHistories;
     private List<BookMark> filterdeSearchHistories;
@@ -41,21 +48,21 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.Search
     }
 
     @Override
-    public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookMarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_row,parent,false);
 //if(getItemCount()==0)
    // imgView.setVisibility(View.VISIBLE);
 
-        return new SearchViewHolder(view);
+        return new BookMarkViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SearchViewHolder holder, final int position) {
+    public void onBindViewHolder(final BookMarkViewHolder holder, final int position) {
         /*if(getItemCount()==0)
             imgView.setVisibility(View.VISIBLE);
 */
        final BookMark bookMark = filterdeSearchHistories.get(position);
-        final SearchViewHolder holder1=holder;
+        final BookMarkViewHolder holder1=holder;
         //Check book mark type
 //1-Courier,2-Flights,3-ECommerce
 
@@ -120,7 +127,7 @@ menu.show();
         return filterdeSearchHistories.size();
     }
 
-    static class SearchViewHolder extends RecyclerView.ViewHolder{
+    static class BookMarkViewHolder extends RecyclerView.ViewHolder{
 
         TextView trackId;
         TextView name;
@@ -128,14 +135,14 @@ menu.show();
         ImageView menuBtn;
         TextView histDate;
         RatingBar bmrating;
-        public SearchViewHolder(View itemView) {
+        public BookMarkViewHolder(View itemView) {
             super(itemView);
             view=itemView;
             trackId= (TextView) itemView.findViewById(R.id.hist_id);
             name= (TextView) itemView.findViewById(R.id.hist_name);
             menuBtn= (ImageView) itemView.findViewById(R.id.bookmarkMenu);
             histDate= (TextView) itemView.findViewById(R.id.hist_date);
-           // bmrating= (RatingBar) itemView.findViewById(R.id.bm_rating);
+            bmrating= (RatingBar) itemView.findViewById(R.id.bm_rating);
         }
     }
     private  void SelectItem(int id,BookMark bookMark,int pos){
@@ -168,20 +175,25 @@ menu.show();
     }
 
 
-   void OnClickBookMarkitem(BookMark bookMark)
+  private void OnClickBookMarkitem(BookMark bookMark)
    {
        String trackID= bookMark.getTrackId();
         long courierID=Long.parseLong(bookMark.getCourierID());//courier ID for courier,flight id for flights,similarly for Ecommerce
-       //Toast.makeText(activity,trackID+"hh"+courierID,Toast.LENGTH_LONG).show();
-
+       Log.d("Bookmark",bookMark.toString());
           Intent intent=new Intent(activity, ShowResultActivity.class);
+       int bmType=(int)bookMark.getbType();
             intent.putExtra("trackId",trackID);
            intent.putExtra("courierID",courierID);
 
 //1-Courier,2-Flights,3-ECommerce
+//TODO use parcelbale for passing bookmark
+           intent.putExtra("comingFrom",bmType);
+       if(bmType==2){
+           //this is just for PNR,which can be searched direclty by url;
+           intent.putExtra("railway","http://erail.in/indian-railway-pnr-status?pnr="+bookMark.getTrackId());
+           intent.putExtra("comingFrom",4);
 
-           intent.putExtra("comingFrom",(int)bookMark.getbType());
-
+       }
 
        activity.startActivity(intent);//, ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle());
 
@@ -206,10 +218,29 @@ menu.show();
 
         }
     }
-    private void rateBookmark(BookMark bookMark){
-        SQLiteDBHandler handler=new SQLiteDBHandler(activity);
-        Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content),"Coming Soon..",Snackbar.LENGTH_SHORT).show();
+    private void rateBookmark(final BookMark bookMark){
+LayoutInflater layoutInflater= (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        View view=layoutInflater.inflate(R.layout.rating_bar,null);
+
+
+         final RatingBar ratingBar= (RatingBar) view.findViewById(R.id.bm_rating_input);
+             AlertDialog alertDialog=new AlertDialog.Builder(activity)
+                                    .setTitle("Enter rating for "+bookMark.getName().toUpperCase())
+                                    .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            submitRating(bookMark,ratingBar.getRating());
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel",null)
+                                    .setView(view)
+                                    .create();
+alertDialog.show();
+
+    }
+    private void submitRating(BookMark bookMark,float rating){
+        Toast.makeText(activity,rating+"--",Toast.LENGTH_LONG).show();
     }
     private void shareBookmark(BookMark bookMark){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -222,6 +253,10 @@ menu.show();
 
     }
 
+    @Override
+    public void onBindViewHolder(BookMarkViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+    }
 
     public void filter(String input){
         filterdeSearchHistories.clear();

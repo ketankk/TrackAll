@@ -11,6 +11,24 @@ public class CourierBean {
     private String  courierImagePath;
     private String  courierWebsite;
     private String  courierTrackLink;
+    private String courierEmail="ketank90@gmail.com";
+    private String courierContact="+918802879629";
+
+    public String getCourierEmail() {
+        return courierEmail;
+    }
+
+    public void setCourierEmail(String courierEmail) {
+        this.courierEmail = courierEmail;
+    }
+
+    public String getCourierContact() {
+        return courierContact;
+    }
+
+    public void setCourierContact(String courierContact) {
+        this.courierContact = courierContact;
+    }
 
     public String getCourierTrackLink() {
         return courierTrackLink;
@@ -60,8 +78,11 @@ public class CourierBean {
                 ", courierImagePath='" + courierImagePath + '\'' +
                 ", courierWebsite='" + courierWebsite + '\'' +
                 ", courierTrackLink='" + courierTrackLink + '\'' +
+                ", courierEmail='" + courierEmail + '\'' +
+                ", courierContact='" + courierContact + '\'' +
                 '}';
     }
+
     //For sorting the list according to name of company
     public static Comparator<CourierBean> courierNameComp=new Comparator<CourierBean>() {
         @Override

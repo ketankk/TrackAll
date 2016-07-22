@@ -39,7 +39,8 @@ public class EcController {
         this.webView=webView;
         this.context=context;
     }
-    public void PopulateView(long ECId,String orderEmail,String orderID){
+    public void PopulateView(long ECId,String orderEmail,String orderID,ProgressDialog progressDialog){
+        dialog=progressDialog;
        // Toast.makeText(context,ECId+"ju"+orderEmail+orderID,Toast.LENGTH_SHORT).show();
         trackId=orderID;
         email=orderEmail;

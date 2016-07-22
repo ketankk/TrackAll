@@ -6,13 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
@@ -21,7 +17,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,13 +24,11 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
-import com.squareup.picasso.Picasso;
+import com.google.android.gms.drive.Drive;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.bean.UserProfile;
 import in.kuari.trackall.utils.AppController;
-
-import static android.R.drawable.*;
 
 
 public class LoginSignUp extends AppCompatActivity {
@@ -169,6 +162,8 @@ public class LoginSignUp extends AppCompatActivity {
 
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)
                 .build();
 
     }

@@ -1,9 +1,12 @@
 package in.kuari.trackall.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by root on 1/31/16.
  */
-public class BookMark {
+public class BookMark implements Parcelable {
     private long id;
     private String name;
     private String trackId;
@@ -83,5 +86,15 @@ public class BookMark {
                 ", bType=" + bType +
                 ", time='" + time + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

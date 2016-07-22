@@ -90,7 +90,8 @@ public class CourierController{
         };
         //Volley.newRequestQueue(context).add(request);
     }
-    public void PopulateView(long id,String trackID) {
+    public void PopulateView(long id,String trackID,ProgressDialog progressDialog) {
+        dialog=progressDialog;
         trackId=trackID.toUpperCase();
         final int i = (int) id;
        initializeURL(i);
@@ -1369,6 +1370,13 @@ public class CourierController{
                 webView.loadUrl("javascript:var x=document.getElementById('ConsignmentTracking').value='"+trackId +"'");
                 //chk
                 webView.loadUrl("javascript:document.getElementById('clickMe').click();");
+                break;
+            //Girnar logistics
+            case 233:
+
+                webView.loadUrl("javascript:var x=document.getElementsByName('tracking_lrno')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
                 break;
         }
 

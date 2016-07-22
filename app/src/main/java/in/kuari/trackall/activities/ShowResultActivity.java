@@ -1,6 +1,7 @@
 package in.kuari.trackall.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class ShowResultActivity extends AppCompatActivity {
     private static final int REQUST_WRITE_EXT_PERMISSION_CODE = 117;
     private static final String TAG = "ShowResultActivity";
 
+    private ProgressDialog dialog;
 
     private FloatingActionButton screenShot;
     @Override
@@ -83,7 +85,15 @@ private void chooseIntent(Intent intent){
             trackID = intent.getStringExtra("trackId");
             courierID = intent.getLongExtra("courierID", 2);
             onCourierTrack();
-        } else if (flag == 3) {
+        }
+        else if (flag == 2) {
+            //coming from flights fragmanet
+
+            FLIGHT_URL = intent.getStringExtra("webURL");
+            FLIGHT_NAME = intent.getStringExtra("flightName");
+            loadFlightWeb();
+
+        }else if (flag == 3) {
             //coming from Ecoomerce fragmanet
             EcId = intent.getLongExtra("courierID", 0);
             String z=intent.getStringExtra("trackId");
@@ -94,14 +104,12 @@ private void chooseIntent(Intent intent){
             }
             onECTrack();
 
-        } else if (flag == 2) {
-            //coming from flights fragmanet
-
-            FLIGHT_URL = intent.getStringExtra("webURL");
-            FLIGHT_NAME = intent.getStringExtra("flightName");
-            loadFlightWeb();
-
-        } else {
+        }
+        //open direct URL like pnr
+        else if(flag==4){
+loadUrlDirectly(intent.getStringExtra("railway"));
+        }
+        else {
             courierWebURL = intent.getStringExtra("courierWeb");
 
         }
@@ -152,17 +160,35 @@ private void chooseIntent(Intent intent){
     private void onCourierTrack() {
           Log.d("TrackID", trackID + "vv" + courierID);
         CourierController controller = new CourierController(webView, this);
-        controller.PopulateView(courierID,trackID);
+        controller.PopulateView(courierID,trackID,dialog);
     }
 private void loadFlightWeb(){
     FlightController controller=new FlightController(webView,activity);
-controller.ProgressDialog(FLIGHT_NAME,FLIGHT_URL);
+controller.ProgressDialog(FLIGHT_NAME,FLIGHT_URL,dialog);
 }
     private void onECTrack() {
         EcController controller = new EcController(webView, activity);
-        controller.PopulateView(EcId,orderEmail,orderID);
+        controller.PopulateView(EcId,orderEmail,orderID,dialog);
+    }
+    //spacl case for pnrof railway
+
+private void loadUrlDirectly(String url){
+    webView.loadUrl(url);
+}
+    @Override
+    protected void onStop() {
+
+        if(dialog!=null)
+            dialog.dismiss();
+        super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        if(dialog!=null)
+            dialog.dismiss();
+        super.onDestroy();
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

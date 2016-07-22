@@ -1,0 +1,96 @@
+{
+  "project_info": {
+    "project_id": "trackall-1232",
+    "project_number": "182815940105",
+    "name": "trackAll"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182815940105:android:27d689d63f1b7a06",
+        "client_id": "android:com.google.samples.quickstart.signin",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.google.samples.quickstart.signin",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182815940105-6qh26besbhqa8taao3p0j4pct2qp9dn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182815940105:android:ca671081acbe44ac",
+        "client_id": "android:in.kuari.trackall",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "in.kuari.trackall",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182815940105-qp7aae04411ge0pkmn09i9f7uumjqlas.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.kuari.trackall",
+            "certificate_hash": "858882F64639FCCBC84B3F2FBACB2F97761FC2C2"
+          }
+        },
+        {
+          "client_id": "182815940105-6qh26besbhqa8taao3p0j4pct2qp9dn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-76081005-2"
+          }
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

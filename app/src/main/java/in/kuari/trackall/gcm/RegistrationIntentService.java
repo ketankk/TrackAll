@@ -52,6 +52,7 @@ public class RegistrationIntentService extends IntentService {
             // [START get_token]
             InstanceID instanceID = InstanceID.getInstance(this);
             String token = instanceID.getToken(getString(R.string.google_app_id),
+
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             // [END get_token]
           //  Log.i(TAG, "GCM Registration Token: " + token);
