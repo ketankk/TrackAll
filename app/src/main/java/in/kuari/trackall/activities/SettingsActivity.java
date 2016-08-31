@@ -137,7 +137,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            startActivity(new Intent(this, MainActivity.class));
+            Intent intent=new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            finish();
+            onBackPressed();
+          //  startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -194,9 +198,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
+                goBack();
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+        private void goBack(){
+            Intent intent=new Intent(getActivity(), SettingsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
     }
@@ -233,15 +243,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         private void goBack(){
             Intent intent=new Intent(getActivity(), SettingsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+
+          //  startActivity(intent);
     }
 
 }
-    @Override
-    public void onBackPressed() {
-        Intent intent=new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        super.onBackPressed();
-    }
+
+
+
 }

@@ -1,3 +1,4 @@
+package in.kuari.trackall.databases;/*
 package in.kuari.trackall.databases;
 
 import android.app.Activity;
@@ -20,9 +21,26 @@ import java.util.Map;
 
 import in.kuari.trackall.utils.AppController;
 
+*/
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import in.kuari.trackall.utils.AppController;
+
 /**
  * Created by root on 2/11/16.
  */
+
 public class MYSQLHandler {
     private String TAG="FEEDBACK";
     private Context context;

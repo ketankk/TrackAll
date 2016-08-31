@@ -1,18 +1,14 @@
 package in.kuari.trackall.activities;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,44 +24,20 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
 import com.squareup.picasso.Picasso;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.adapter.PagerAdapter;
 import in.kuari.trackall.bean.UserProfile;
 import in.kuari.trackall.databases.MYSQLHandler;
-import in.kuari.trackall.fragments.CourierFragment;
-import in.kuari.trackall.fragments.ECommerceFragment;
-import in.kuari.trackall.fragments.FlightsFragment;
-import in.kuari.trackall.fragments.HomeFragment;
 import in.kuari.trackall.gcm.GCM;
 import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.CircularImage;
 import in.kuari.trackall.utils.FunctionTools;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private Activity activity;
-    private NavigationView navigationView;
-    private TextView loginBtn;
-    private static final int REQUEST_LOGIN = 1000;
-    private String accName;
-    private String urlDP="https://lh3.googleusercontent.com/-nW_UEE8QEN4/AAAAAAAAAAI/AAAAAAAAAAA/_AVZs4E6WjQ/photo.jpg";//Default image url ifuser has no profile picture
-    private String tokenID;
-    private TextView profileName;
-    private ImageView profileImage;
-    private TextView loginText;
-    private GoogleApiClient mGoogleApiClient;
-    private GoogleSignInAccount account;
 private int displayFragment=1;
     private static final String TAG = "MainActivity";
 
@@ -96,45 +68,20 @@ private int displayFragment=1;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         activity = this;
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        ViewPager viewPager= (ViewPager) findViewById(R.id.viewpager);
 
+        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(),MainActivity.this));
+        TabLayout tabLayout= (TabLayout) findViewById(R.id.sliding_tabs);
+tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_star_white_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_ecart);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_cart);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_flight_white_24dp);
         CheckSharedPreferance();
 
-//Calling after login/signup
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            String comingFrom = "";
-            comingFrom = bundle.getString("comingFrom");
-            Log.d("cmng", comingFrom + "c");
-            if (comingFrom != null && comingFrom.equals("login")) {
-                accName = UserProfile.getDisplayName();
-                urlDP = UserProfile.getImageURL();
-                tokenID=UserProfile.getTokenId();
-                updateUiInfo();
-            }else  if (comingFrom != null && comingFrom.equals("notification")) {
-                displayFragment=1;
-            }
-        }
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FeedBackSuggestions();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
-        if (savedInstanceState == null)
-            displayFragment(displayFragment);
-    }
+}
     Tracker mTracker;
     private void analytics(){
         new GCM(this).start();
@@ -151,89 +98,44 @@ private int displayFragment=1;
         GoogleAnalytics.getInstance(this).dispatchLocalHits();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-    }
 
     @Override
     public void supportInvalidateOptionsMenu() {
         super.supportInvalidateOptionsMenu();
     }
 
-    @Override
-     protected void onStart() {
-         if (mGoogleApiClient != null)
-             mGoogleApiClient.connect();
-initialize();//initialize google signin variables
-      silentSignIn();
-        super.onStart();
-         /*initialize();
-         if(mGoogleApiClient!=null) {
-             OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
 
-         if (opr.isDone()) {
-             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-             // and the GoogleSignInResult will be available instantly.
-             // Log.d(TAG, "Got cached sign-in");
-             GoogleSignInResult result = opr.get();
-             account = result.getSignInAccount();
-             if (account != null) {
-                 UserProfile.setDisplayName(account.getDisplayName());
-                 UserProfile.setImageURL(account.getPhotoUrl().toString());
-                 //Log.d("img",account.getPhotoUrl()+"dd");
-             }
-         }
-         }*/
-     }
-    private void initialize() {
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
-                .requestEmail()
-                .requestProfile()
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-                .requestScopes(new Scope(Scopes.PLUS_ME))
-
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                                .build();
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the HomeFragment/Up button, so long
+        // automatically handle clicks on the BookMarkFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            openSettingsActivity();
-            return true;
+        switch (id){
+            case R.id.action_settings:
+                openSettingsActivity();
+                break;
+
+            case R.id.action_feedback:
+                sendFeedback();
+                break;
+            case R.id.action_share:
+                ShareAppDownloadLink();
+                break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -241,7 +143,7 @@ initialize();//initialize google signin variables
         startActivity(new Intent(this,SettingsActivity.class));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+  /*  @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -270,12 +172,12 @@ initialize();//initialize google signin variables
         return true;
 
     }
-
-    private void displayFragment(int id) {
+*/
+   /* private void displayFragment(int id) {
         Fragment fragment = null;
         switch (id) {
             case 1:
-                fragment = new HomeFragment();
+                fragment = new BookMarkFragment();
                 break;
 
             case 2:
@@ -297,14 +199,14 @@ initialize();//initialize google signin variables
 
 
             default:
-                fragment = new HomeFragment();
+                fragment = new BookMarkFragment();
         }
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.inc, fragment).commit();
         }
 
-    }
+    }*/
 
     /**
      * A method to handle the feedback suggestion functionlity
@@ -381,77 +283,29 @@ initialize();//initialize google signin variables
                 .show();
     }
 
+    private void sendFeedback() {
+        String emailId="sultanmirzadev@gmail.com";
+
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for trackAll");
+
+        Uri uri=Uri.parse("mailto:"+emailId);
+        intent.setData(uri);
+        activity.startActivity(intent);
+
+    }
+
     private void ShareAppDownloadLink() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Hey! Download this amazing app trackAll and keep track of everything \n http://bit.ly/1R30Vtu";
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Track All");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "trackAll");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
-    public void loginSignup(View view) {
-
-        String txt = ((TextView) view).getText().toString();
-        if (txt != null && txt.equals("Signup/Login")) {
-            Intent intent = new Intent(MainActivity.this, LoginSignUp.class);
-            startActivity(intent);
-        }
-    }
-
-    private void initializeUIComponent(){
-        View inflatedView = navigationView.getHeaderView(0);
-        profileName = (TextView) inflatedView.findViewById(R.id.profileName);
-        profileImage = (ImageView) inflatedView.findViewById(R.id.profileImage);
-        loginText = (TextView) inflatedView.findViewById(R.id.login_txt);
-
-    }
-    /**
-     * Update name and profile picture of logged in user
-     */
-    private void updateUiInfo() {
-       // Log.d("ff",accName+urlDP);
-
-        initializeUIComponent();
-         if (profileImage != null && profileName != null && loginText != null) {
-            profileName.setText(accName);
-            loginText.setText("Signout");
-            loginText.setVisibility(View.INVISIBLE);
-            Picasso.with(this).load(urlDP).transform(new CircularImage()).into(profileImage);
-             FunctionTools tools=new FunctionTools(activity);
-           //  Log.d("acc",account.toString());
-         //    tools.backendAuth(tokenID);
-        }
-//        Log.d("UI", "Updated");
-
-    }
-    void silentSignIn(){
-Log.d("silent","sl");
-        OptionalPendingResult<GoogleSignInResult> pendingResult=Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-
-        if(pendingResult.isDone()){
-          account =pendingResult.get().getSignInAccount();
-
-        }else {
-            pendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    account=googleSignInResult.getSignInAccount();
-
-
-                }
-            });
-        }
-if(account!=null) {
-    accName = account.getDisplayName();
-    if(account.getPhotoUrl()!=null)
-    urlDP = account.getPhotoUrl().toString();
-    tokenID=account.getIdToken();
-    Log.d("ss",accName+" "+urlDP+" "+tokenID);
-    updateUiInfo();
-}
-
-    }
 
 
 }

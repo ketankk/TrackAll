@@ -32,7 +32,7 @@ public class SQLiteDBHandler extends SQLiteOpenHelper{
     private static final String RATING="rating";
     //Added in DB_VERSION 7
     private static final String B_TYPE="b_type";
-
+    private static final String BM_TAG = "tag";
 
     private static final String CREATE_TABLE="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+
             "("+SEARCH_ID + " integer primary key autoincrement,"+
@@ -41,6 +41,7 @@ public class SQLiteDBHandler extends SQLiteOpenHelper{
                 COURIER_ID+" varchar(200)," +
                 RATING+" REAL, "+
                 DATE+" DATE DEFAULT CURRENT_DATE,"+
+                BM_TAG+" varchar(50),"+
                 B_TYPE +" integer constraint typeN default(1))";//Change on upgrade for alteration..not deletion
 private SQLiteDatabase db;
 private Context context;
@@ -57,9 +58,14 @@ db.execSQL(CREATE_TABLE);
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion>5){
-            db.execSQL("ALTER TABLE " + TABLE_NAME
-                    + " ADD COLUMN " + B_TYPE +" integer constraint typeN default(1) ");
+        if(oldVersion>5) {
+            switch (oldVersion) {
+                case 6:
+                db.execSQL("ALTER TABLE " + TABLE_NAME +
+                        " ADD COLUMN " + B_TYPE + " integer constraint typeN default(1) " +
+                        "ADD COLUMN " + BM_TAG + " varchar(50) ");
+                    break;
+            }
         }
 
         else{
@@ -67,12 +73,14 @@ try {
     db.execSQL("ALTER TABLE " + TABLE_NAME
             + " ADD COLUMN " + RATING + " REAL,"
             + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE,"
-            + " ADD COLUMN " + B_TYPE +" integer  constraint typeN default(1)");
+            + " ADD COLUMN " + B_TYPE +" integer  constraint typeN default(1)"
+            + " ADD COLUMN " + BM_TAG +" varchar(50)");
 }catch (SQLiteException e1) {
     try {
         db.execSQL("ALTER TABLE " + TABLE_NAME
                 + " ADD COLUMN " + DATE + " DATE DEFAULT CURRENT_DATE,"
-                + " ADD COLUMN " + B_TYPE +" integer  constraint typeN default(1)");
+                + " ADD COLUMN " + B_TYPE +" integer  constraint typeN default(1)"
+                + " ADD COLUMN " + BM_TAG +" varchar(50)");
     } catch (SQLiteException e2) {
 
     }
@@ -94,13 +102,33 @@ try {
          values.put(RATING, bookMark.getRating());
          values.put(DATE, date);
          values.put(B_TYPE,bookMark.getbType());
-
+         values.put(BM_TAG,bookMark.getBmTag());
+Log.d("ll",bookMark.toString());
          db.insert(TABLE_NAME, null, values);
          db.close();
          return true;
      }
      return false;
  }
+    public boolean   updateBookmark(BookMark bookMark){
+        db=this.getReadableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TRACK_ID, bookMark.getTrackId().toUpperCase());
+        values.put(COMPANY_NAME, bookMark.getName());
+        values.put(COURIER_ID, bookMark.getCourierID());
+        values.put(RATING, bookMark.getRating());
+        values.put(B_TYPE,bookMark.getbType());
+        values.put(BM_TAG,bookMark.getBmTag());
+        Log.d("BM",bookMark.toString());
+
+        int count=db.update(TABLE_NAME,values,SEARCH_ID+"="+bookMark.getId(),null);
+        Log.d("BM",bookMark.toString());
+        db.close();
+        if(count>0)
+            return true;
+        return false;
+    }
     public boolean   deleteBookmark(String id){
         db=this.getReadableDatabase();
 
@@ -114,7 +142,7 @@ try {
        List<BookMark> searchHistories=new ArrayList<>();
        db=this.getReadableDatabase();
 
-       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,DATE,RATING,B_TYPE},null,null,null,null,null);
+       Cursor cursor=db.query(TABLE_NAME,new String[]{SEARCH_ID,TRACK_ID,COMPANY_NAME,COURIER_ID,DATE,RATING,B_TYPE,BM_TAG},null,null,null,null,null);
     while (cursor.moveToNext()){
     BookMark hist=new BookMark();
 
@@ -123,6 +151,7 @@ try {
     hist.setName(cursor.getString(2));
     hist.setCourierID(cursor.getString(3));
     hist.setTime(cursor.getString(4));
+        hist.setBmTag(cursor.getString(7));
         /*Database before version 6 */
       if(cursor.getString(6)==null)
           hist.setbType(1);

@@ -2,9 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/bm_menu_share"
+        android:icon="@drawable/ic_menu_share"
       android:title="Share"/>
     <item android:id="@+id/bm_menu_delete"
         android:title="Delete"/>
-    <item android:id="@+id/bm_menu_rate"
-        android:title="Rate"/>
+    <item android:id="@+id/bm_menu_tag"
+        android:title="Tag"/>
 </menu>

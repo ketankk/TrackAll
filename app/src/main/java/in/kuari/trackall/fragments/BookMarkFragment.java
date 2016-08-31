@@ -2,18 +2,27 @@ package in.kuari.trackall.fragments;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -28,6 +37,7 @@ import java.util.List;
 import java.util.Random;
 
 import in.kuari.trackall.R;
+import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.adapter.BookMarkAdapter;
 import in.kuari.trackall.bean.BookMark;
 import in.kuari.trackall.databases.SQLiteDBHandler;
@@ -37,16 +47,47 @@ import in.kuari.trackall.utils.NotificationHandler;
 /**
  * Created by sultan_mirza on 1/18/16.
  */
-public class HomeFragment extends Fragment{
+public class BookMarkFragment extends Fragment {
 
     private EditText trackID;
     private RecyclerView  recyclerView;
     private BookMarkAdapter adp;
     private LinearLayout noHist;
     private Activity activity;
-    private static final String TAG = "HomeFragment";
+    private static final String TAG = "BookMarkFragment";
 
-    public HomeFragment() {
+    public BookMarkFragment() {
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.main,menu);
+
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        ActionBar actionBar=((AppCompatActivity)getActivity()).getSupportActionBar();
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView sv = new SearchView(actionBar.getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("search query submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("tap");
+                return false;
+            }
+        });
+
     }
 
     @Nullable
@@ -153,5 +194,14 @@ private void alarmSet(){
         mTracker.setScreenName(TAG);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
+    }
+
+    public static BookMarkFragment newInstance(int position) {
+        BookMarkFragment fragment = new BookMarkFragment();
+        Bundle args = new Bundle();
+       // args.putInt(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 }

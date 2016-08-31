@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -14,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +46,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
 
     @Override
     public BookMarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_row,parent,false);
+      View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_bookmark_row,parent,false);
 //if(getItemCount()==0)
    // imgView.setVisibility(View.VISIBLE);
 
@@ -62,6 +59,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
             imgView.setVisibility(View.VISIBLE);
 */
        final BookMark bookMark = filterdeSearchHistories.get(position);
+        Log.d("BMAdp",bookMark.toString());
         final BookMarkViewHolder holder1=holder;
         //Check book mark type
 //1-Courier,2-Flights,3-ECommerce
@@ -87,6 +85,10 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
         }
         holder.name.setText(bookMark.getName());
         holder.histDate.setText(bookMark.getTime());
+        if(bookMark.getBmTag()==null)
+            bookMark.setBmTag("");
+        Log.d("bmtag",bookMark.getBmTag());
+        holder.bmTag.setText(bookMark.getBmTag());
      //  holder.bmrating.setRating(Float.parseFloat(bookMark.getRating()));
         //Log.d("d",bookMark.toString());
        // Toast.makeText(activity,"g"+bookMark.getRating(), Toast.LENGTH_SHORT).show();
@@ -134,7 +136,7 @@ menu.show();
         View view;
         ImageView menuBtn;
         TextView histDate;
-        RatingBar bmrating;
+TextView bmTag;
         public BookMarkViewHolder(View itemView) {
             super(itemView);
             view=itemView;
@@ -142,7 +144,7 @@ menu.show();
             name= (TextView) itemView.findViewById(R.id.hist_name);
             menuBtn= (ImageView) itemView.findViewById(R.id.bookmarkMenu);
             histDate= (TextView) itemView.findViewById(R.id.hist_date);
-            bmrating= (RatingBar) itemView.findViewById(R.id.bm_rating);
+            bmTag= (TextView) itemView.findViewById(R.id.bm_tag);
         }
     }
     private  void SelectItem(int id,BookMark bookMark,int pos){
@@ -152,7 +154,7 @@ menu.show();
                 break;
             case R.id.bm_menu_delete:bookMarkDeleteConf(bookMark,pos);
                 break;
-            case R.id.bm_menu_rate:rateBookmark(bookMark);
+            case R.id.bm_menu_tag:tagBookmark(bookMark);
                 break;
             default:
         }
@@ -218,29 +220,34 @@ menu.show();
 
         }
     }
-    private void rateBookmark(final BookMark bookMark){
+    private void tagBookmark(final BookMark bookMark){
 LayoutInflater layoutInflater= (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        final EditText  editText=new EditText(activity);
         View view=layoutInflater.inflate(R.layout.rating_bar,null);
 
 
          final RatingBar ratingBar= (RatingBar) view.findViewById(R.id.bm_rating_input);
+
              AlertDialog alertDialog=new AlertDialog.Builder(activity)
-                                    .setTitle("Enter rating for "+bookMark.getName().toUpperCase())
+                                    .setTitle("Enter tag for "+bookMark.getName().toUpperCase()+" AwbNo."+bookMark.getTrackId())
                                     .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            submitRating(bookMark,ratingBar.getRating());
+                                            addTag(bookMark,editText.getText().toString());
                                         }
                                     })
                                     .setNegativeButton("Cancel",null)
-                                    .setView(view)
+                                    .setView(editText)
                                     .create();
 alertDialog.show();
 
     }
-    private void submitRating(BookMark bookMark,float rating){
-        Toast.makeText(activity,rating+"--",Toast.LENGTH_LONG).show();
+    private void addTag(BookMark bookMark,String tag){
+
+        SQLiteDBHandler handler=new SQLiteDBHandler(activity);
+        bookMark.setBmTag(tag+"");
+        handler.updateBookmark(bookMark);
+        Toast.makeText(activity,tag+"--",Toast.LENGTH_LONG).show();
     }
     private void shareBookmark(BookMark bookMark){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -267,8 +274,8 @@ alertDialog.show();
         else
         {
             for(BookMark s:searchHistories){
-
-                if((s.getTrackId().toLowerCase().contains(input)||s.getName().toLowerCase().contains(input))){
+Log.d("searching",s.getBmTag());
+                if((s.getTrackId().toLowerCase().contains(input)||s.getName().toLowerCase().contains(input))||s.getBmTag().toLowerCase().contains(input)){
                     filterdeSearchHistories.add(s);
 
                 }

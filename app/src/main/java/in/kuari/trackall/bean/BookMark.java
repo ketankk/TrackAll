@@ -13,6 +13,39 @@ public class BookMark implements Parcelable {
     private String courierID;
     private String rating;
     private long bType;//1-Courier,2-Flights,3-ECommerce
+    private String bmTag="";
+
+    public BookMark(){}
+    protected BookMark(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        trackId = in.readString();
+        courierID = in.readString();
+        rating = in.readString();
+        bType = in.readLong();
+        bmTag = in.readString();
+        time = in.readString();
+    }
+
+    public static final Creator<BookMark> CREATOR = new Creator<BookMark>() {
+        @Override
+        public BookMark createFromParcel(Parcel in) {
+            return new BookMark(in);
+        }
+
+        @Override
+        public BookMark[] newArray(int size) {
+            return new BookMark[size];
+        }
+    };
+
+    public String getBmTag() {
+        return bmTag;
+    }
+
+    public void setBmTag(String bmTag) {
+        this.bmTag = bmTag;
+    }
 
     public long getbType() {
         return bType;
@@ -84,6 +117,7 @@ public class BookMark implements Parcelable {
                 ", courierID='" + courierID + '\'' +
                 ", rating='" + rating + '\'' +
                 ", bType=" + bType +
+                ", bmTag='" + bmTag + '\'' +
                 ", time='" + time + '\'' +
                 '}';
     }
@@ -95,6 +129,13 @@ public class BookMark implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(trackId);
+        dest.writeString(courierID);
+        dest.writeString(rating);
+        dest.writeLong(bType);
+        dest.writeString(bmTag);
+        dest.writeString(time);
     }
 }

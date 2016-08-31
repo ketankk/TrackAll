@@ -42,12 +42,20 @@ public class ReadData {
             while((str=reader.readLine())!=null){//Log.d("reader",str);
                 String[] rows=str.split(",");
 
+                Log.d("Count",rows[0]+""+rows.length);
             CourierBean courier=new CourierBean();
                 courier.setCourierID(Long.parseLong(rows[0]));
                 courier.setCourierName(rows[1]);
                 courier.setCourierTrackLink(rows[2]);
                 courier.setCourierWebsite(rows[3]);
                 courier.setCourierImagePath(rows[4]);
+                    //check if contact number and email-id is there
+                    if (rows.length>5&&rows[5] != null && rows[5].length() > 0)
+                        courier.setCourierContact(rows[5]);
+                    if (rows.length>6&&rows[6] != null && rows[6].length() > 0)
+                        courier.setCourierEmail(rows[6]);
+
+                Log.d("Couriers",courier.toString());
                 couriers.add(courier);
 
             } is.close();

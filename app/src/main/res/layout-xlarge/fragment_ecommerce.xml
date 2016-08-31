@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/ec_logo"
         android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:src="@drawable/ic_ecart"
         android:scaleType="fitCenter"
         />
@@ -22,9 +22,9 @@
         <TextView
             android:id="@+id/ec_name"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:text="EC"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:layout_marginLeft="50dp"
             />

@@ -11,8 +11,8 @@ public class CourierBean {
     private String  courierImagePath;
     private String  courierWebsite;
     private String  courierTrackLink;
-    private String courierEmail="ketank90@gmail.com";
-    private String courierContact="+918802879629";
+    private String courierEmail="";
+    private String courierContact="";
 
     public String getCourierEmail() {
         return courierEmail;

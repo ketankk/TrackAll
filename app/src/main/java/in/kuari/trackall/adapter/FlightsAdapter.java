@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.PhoneNumberUtils;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
@@ -16,28 +15,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.BookMark;
-import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.FunctionTools;
 
 
-public class TransportationAdapter extends RecyclerView.Adapter<TransportationAdapter.ViewHolder> {
+public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHolder> {
 
     private final List<FlightBean> flights;
     private final Context context;
     private String pnr;
 
-    public TransportationAdapter(List<FlightBean> flights, Context context) {
+    public FlightsAdapter(List<FlightBean> flights, Context context) {
         this.flights = flights;
         this.context =context;
     }
@@ -45,7 +42,7 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_flights, parent, false);
+                .inflate(R.layout.fragment_ecommerce, parent, false);
         return new ViewHolder(view);
     }
 
@@ -54,10 +51,10 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
 
         final FlightBean flight=flights.get(position);
 
-        holder.mView.setBackgroundColor(FunctionTools.getRandomColor());
+       // holder.mView.setBackgroundColor(FunctionTools.getRandomColor());
         holder.flightName.setText(flight.getFlightName());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!FunctionTools.isConnected(context)) {
@@ -75,13 +72,18 @@ public class TransportationAdapter extends RecyclerView.Adapter<TransportationAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView flightName;
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            flightName = (TextView) view.findViewById(R.id.flightname);
+        private TextView flightName;
+        private View view;
+        private ImageView flightLogo;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            flightName= (TextView) itemView.findViewById(R.id.ec_name);
+            flightLogo = (ImageView)itemView.findViewById(R.id.ec_logo);
+            this.view=itemView;
+
+
         }
+
 
     }
     void loadFlightWeb(FlightBean flight){

@@ -10,8 +10,6 @@ import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +24,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.activities.ShowFlightsWeb;
 import in.kuari.trackall.activities.ShowResultActivity;
 import in.kuari.trackall.bean.BookMark;
-import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.bean.ECommerce;
-import in.kuari.trackall.bean.FlightBean;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.FunctionTools;
 import in.kuari.trackall.utils.ReadData;
@@ -72,7 +67,7 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
         boolean ff=pref.getBoolean("FirstTime",true);
         //Log.d("logo",loadLogo+" "+ff);
         if(loadLogo)
-            Picasso.with(activity).load(eCommerce.getImgPath()).error(R.drawable.ic_menu_ecom).into(holder.ECLogo);
+            Picasso.with(activity).load(eCommerce.getImgPath()).error(R.drawable.ic_cart).into(holder.ECLogo);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

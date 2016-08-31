@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 package in.kuari.trackall.gcm;
 
 import android.app.IntentService;
@@ -78,7 +79,7 @@ public class RegistrationIntentService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    /**
+/**
      * Persist registration to third-party servers.
      *
      * Modify this method to associate the user's GCM registration token with any server-side account
@@ -86,6 +87,7 @@ public class RegistrationIntentService extends IntentService {
      *
      * @param token The new token.
      */
+
     private void sendRegistrationToServer(String token) {
         MYSQLHandler handler=new MYSQLHandler(this);
 handler.sendgcmtokentoserver(token);
@@ -94,3 +96,4 @@ handler.sendgcmtokentoserver(token);
 
 
 }
+

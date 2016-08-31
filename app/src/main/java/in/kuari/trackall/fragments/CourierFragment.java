@@ -1,19 +1,15 @@
 package in.kuari.trackall.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,7 +31,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
-import java.util.jar.Manifest;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierListAdapter;
@@ -136,7 +131,8 @@ final EditText courierName1=courierName;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
+        Log.d("scanner",requestCode+"-"+resultCode);
  switch (requestCode){
             case IntentIntegrator.REQUEST_CODE:
                IntentResult result=IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -150,8 +146,14 @@ final EditText courierName1=courierName;
 
 
     public void scanSomething() {
-       if(checkCameraPermission())
-       IntentIntegrator.forFragment(this).initiateScan();//Barc code scanner Intent
+       if(checkCameraPermission()) {
+
+           FragmentIntentIntegrator intentIntegrator=new FragmentIntentIntegrator(this);
+           Log.d("scanner","requestCode+resultCode");
+           intentIntegrator.initiateScan();//Barc code scanner Intent
+
+
+       }
         else
        checkForPermission();
         if(!checkCameraPermission())
@@ -197,5 +199,13 @@ final EditText courierName1=courierName;
 
 
         }
+    }
+    public static CourierFragment newInstance(int position) {
+        CourierFragment fragment = new CourierFragment();
+        Bundle args = new Bundle();
+        // args.putInt(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 }

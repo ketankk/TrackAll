@@ -106,6 +106,20 @@ public class ShowFlightsWeb extends AppCompatActivity {
         AppController appController= (AppController) getApplication();
         mTracker=appController.getDefaultTracker();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(dialog!=null)
+            dialog.dismiss();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();

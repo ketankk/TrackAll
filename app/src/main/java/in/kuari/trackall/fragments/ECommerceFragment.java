@@ -1,8 +1,10 @@
 package in.kuari.trackall.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.os.Bundle;
+
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;

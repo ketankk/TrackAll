@@ -10,7 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.Image;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -40,13 +40,11 @@ import in.kuari.trackall.bean.CourierBean;
 import in.kuari.trackall.databases.SQLiteDBHandler;
 import in.kuari.trackall.utils.FunctionTools;
 import in.kuari.trackall.utils.ReadData;
-
-import static in.kuari.trackall.R.drawable.ic_flight;
-import static in.kuari.trackall.R.drawable.ic_guest;
 /**
  * Created by sultan_mirza on 1/18/16.
  */
 public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.CourierViewHolder> {
+    private static final int REQUST_CALL_PERMISSION_CODE = 301;
     private List<CourierBean> couriers;
     private List<CourierBean> filteredCouriers;
 
@@ -64,6 +62,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
 
 //readSMS();
     }*/
+
     void populatelists(List<CourierBean> couriers1) {
         ReadData readData = new ReadData(activity);
 
@@ -96,8 +95,19 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
         final CourierBean courier = filteredCouriers.get(position);
 
         holder.courierName.setText(courier.getCourierName());
-        holder.courierEmail.setText(courier.getCourierEmail());
-        holder.courierContact.setText(courier.getCourierContact());
+        String courierContact=courier.getCourierContact();
+        String courierEmail=courier.getCourierEmail();
+        if(courierContact==null||courierContact.length()==0) {
+            courierContact = "Contact Not Available";
+            holder.callButton.setVisibility(View.GONE);
+        }
+        if(courierEmail==null||courierEmail.length()==0) {
+            courierEmail = "Email Not Available";
+            holder.emailButton.setVisibility(View.GONE);
+
+        }
+        holder.courierEmail.setText(courierEmail);
+        holder.courierContact.setText(courierContact);
 
 
         holder.view.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +136,7 @@ showHidePanel(holder);
         boolean ff = pref.getBoolean("FirstTime", true);
         //Log.d("logo",loadLogo+" "+ff);
         if (loadLogo)
-            Picasso.with(activity).load(courier.getCourierImagePath()).placeholder(R.drawable.ic_menu_courier).error(R.drawable.ic_menu_courier).into(holder.courierLogo);
+            Picasso.with(activity).load(courier.getCourierImagePath()).placeholder(R.drawable.ic_ecart).error(R.drawable.ic_cart).into(holder.courierLogo);
 
         holder.courierName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,11 +245,15 @@ showHidePanel(holder);
     }
 
     private void showHidePanel(CourierViewHolder viewHolder){
+
         if(viewHolder.hiddenLayout.getVisibility()==View.VISIBLE) {
-            viewHolder.showHideButton.setImageDrawable(ContextCompat.getDrawable(activity, android.R.drawable.arrow_down_float));
+            viewHolder.view.setBackgroundColor(Color.parseColor("#ffffff"));
+            viewHolder.showHideButton.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_keyboard_arrow_down_black_24dp));
             viewHolder.hiddenLayout.setVisibility(View.GONE);
         }else {
-            viewHolder.showHideButton.setImageDrawable(ContextCompat.getDrawable(activity, android.R.drawable.arrow_up_float));
+            viewHolder.view.setBackgroundColor(Color.parseColor("#eff5f4"));
+
+            viewHolder.showHideButton.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_keyboard_arrow_up_black_24dp));
             viewHolder.hiddenLayout.setVisibility(View.VISIBLE);
 
         }
@@ -264,9 +278,12 @@ showHidePanel(holder);
 
 
     private void callCourier(String number) {
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Log.d("cal","calling");
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + number));
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(activity,"Please permit app for making calls or click on number",Toast.LENGTH_LONG).show();
+
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -297,7 +314,7 @@ showHidePanel(holder);
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
             courierLogo = (ImageView)itemView.findViewById(R.id.courier_logo);
-            ratingCourier= (RatingBar) itemView.findViewById(R.id.courier_rating);
+           // ratingCourier= (RatingBar) itemView.findViewById(R.id.courier_rating);
             courierContact= (TextView) itemView.findViewById(R.id.courier_contact_no);
             courierEmail= (TextView) itemView.findViewById(R.id.courier_email);
             callButton= (ImageView) itemView.findViewById(R.id.courier_call);
