@@ -66,7 +66,7 @@ public class BookMarkFragment extends Fragment {
 
     }
 
-    @Override
+   /* @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         ActionBar actionBar=((AppCompatActivity)getActivity()).getSupportActionBar();
@@ -88,7 +88,7 @@ public class BookMarkFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
     @Nullable
     @Override

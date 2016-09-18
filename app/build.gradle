@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "in.kuari.trackall"
         minSdkVersion 12
         targetSdkVersion 24
-        versionCode 12
-        versionName "1.6.6"
+        versionCode 13
+        versionName "2.0"
     }
     buildTypes {
         release {

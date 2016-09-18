@@ -47,7 +47,7 @@ public class FlightController {
                 super.onPageStarted(view, url, favicon);
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Hang on buddy..\nLoading..." + AirLineName , true, true,
+                    dialog = ProgressDialog.show(context, "", "Loading..." + AirLineName , true, true,
                             null);
             }
 

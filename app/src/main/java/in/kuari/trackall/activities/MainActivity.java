@@ -72,7 +72,7 @@ private int displayFragment=1;
         activity = this;
         ViewPager viewPager= (ViewPager) findViewById(R.id.viewpager);
 
-        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(),MainActivity.this));
+        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         TabLayout tabLayout= (TabLayout) findViewById(R.id.sliding_tabs);
 tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_star_white_24dp);

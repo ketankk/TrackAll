@@ -51,9 +51,9 @@ public class ReadData {
                 courier.setCourierImagePath(rows[4]);
                     //check if contact number and email-id is there
                     if (rows.length>5&&rows[5] != null && rows[5].length() > 0)
-                        courier.setCourierContact(rows[5]);
+                        courier.setCourierContact(rows[5].trim());
                     if (rows.length>6&&rows[6] != null && rows[6].length() > 0)
-                        courier.setCourierEmail(rows[6]);
+                        courier.setCourierEmail(rows[6].trim());
 
                 Log.d("Couriers",courier.toString());
                 couriers.add(courier);

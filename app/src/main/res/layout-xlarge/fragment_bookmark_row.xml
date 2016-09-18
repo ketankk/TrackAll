@@ -53,6 +53,16 @@
         android:layout_margin="2dp"
         android:textSize="12sp"
         />
+    <TextView
+        android:id="@+id/bm_tag"
+        android:text="tag"
+        android:layout_below="@+id/hist_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:singleLine="true"
+        android:textStyle="bold"
+        />
 
 </RelativeLayout>
 

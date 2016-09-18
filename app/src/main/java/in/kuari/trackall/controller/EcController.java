@@ -71,7 +71,7 @@ ProgressDialog(id);
                 COUNT++;
                 webViewPreviousState = PAGE_STARTED;
                 if (dialog == null || !dialog.isShowing())
-                    dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n" + ECommerceName + "-" + trackId.toUpperCase(), true, true,
+                    dialog = ProgressDialog.show(context, "", "Loading....\n" + ECommerceName + "-" + trackId.toUpperCase(), true, true,
                             null);
             }
 

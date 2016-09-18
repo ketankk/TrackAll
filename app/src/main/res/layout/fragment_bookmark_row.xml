@@ -54,7 +54,7 @@
         />
     <TextView
         android:id="@+id/bm_tag"
-        android:text="bmmm"
+        android:text="tag"
         android:layout_below="@+id/hist_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

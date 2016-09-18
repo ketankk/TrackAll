@@ -24,12 +24,9 @@ import in.kuari.trackall.fragments.FlightsFragment;
 public class PagerAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT = 4;
-    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
-    private Context context;
 
-    public PagerAdapter(FragmentManager fm, Context context) {
+    public PagerAdapter(FragmentManager fm) {
         super(fm);
-        this.context = context;
     }
 
     @Override

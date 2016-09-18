@@ -103,7 +103,9 @@ public class CourierController{
                 || i == 75|| i == 86|| i == 88|| i == 95||id==122||id==128||id==135||id==139||id==140
                 ||id==141||id==146 ||id==147||id==153||id==157||id==163||id==165||id==182||id==178
                 ||id==186||id==188||id==193||id==196||id==199||id==203||id==205||id==206||id==207
-                ||id==208||id==209||id==213||id==218||id==221||id==223) {
+                ||id==208||id==209||id==213||id==218||id==221||id==223||id==236||id==243||id==244
+                ||id==246||id==252||id==255||id==256||id==257||id==262||id==263||id==264||id==265
+                ||id==266||id==267||id==268||id==269||id==278) {
            // fillForm(i);
             if(i==56){
                 //Vichare courier
@@ -139,7 +141,7 @@ public class CourierController{
                     COUNT++;
                     webViewPreviousState = PAGE_STARTED;
                     if (dialog == null || !dialog.isShowing())
-                        dialog = ProgressDialog.show(context, COURIER_NAME + "-" + trackId.toUpperCase(), "Hang on buddy..retrieving\n", true, true,
+                        dialog = ProgressDialog.show(context, COURIER_NAME + "-" + trackId.toUpperCase(), "Loading....\n", true, true,
                                 null);
                 }
 
@@ -1378,6 +1380,201 @@ public class CourierController{
                 //chk
                 webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
                 break;
+            //234,4PX
+            case 234:
+
+                webView.loadUrl("javascript:var x=document.getElementsByName('trackNums')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            //seven horses
+            case 235:
+
+                webView.loadUrl("javascript:var x=document.getElementById('awb_num').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByClassName('button')[0].click();");
+                break;
+            //A-1
+            //237,A3
+            //238,ABT
+            case 238:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtwbnum')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('frmtrack')[0].submit();");
+                break;
+            //ABF
+            case 239:
+
+                webView.loadUrl("javascript:var x=document.getElementById('txtRefnos').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            //ACS
+            case 240:
+
+                webView.loadUrl("javascript:var x=document.getElementById('AWBNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            //AN Post:
+            case 241:
+
+                webView.loadUrl("javascript:var x=document.getElementsByName('ctl00$MainContent$TrackingNumber')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            //APC postal
+            case 242:
+                webView.loadUrl("javascript:var x=document.getElementsByName('txtTrackingNbr')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('btnTrack').click();");
+                break;
+            //243 Arrow XL
+            //244,Asendia USA
+            //Bonds Logistics Courier
+            case 245:
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_txtAwbno').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('ctl00_ContentPlaceHolder1_btnShow').click();");
+                break;
+            //246,Chronopost
+            //248,Connect India
+            case 248:
+                webView.loadUrl("javascript:var x=document.getElementsByName('shipmentid')[0].value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('cf-submitted')[0].click();");
+                break;
+            //249,Correios Brasil
+            case 249 :
+                webView.loadUrl("javascript:var x=document.getElementById('objetos').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('btnPesq').click();");
+                break;
+            //250 Courier Guy
+
+            case 250 :
+                webView.loadUrl("javascript:var x=document.getElementById('waybillBox').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementByForm('trackingForm').submit();");
+                break;
+            //Courier IT
+            case 251 :
+                webView.loadUrl("javascript:var x=document.getElementById('WaybillNumber').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementByForm('trackingForm').submit();");
+                break;
+            //Criticalog
+            case 253 :
+                webView.loadUrl("javascript:var x=document.getElementById('doc_number').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByClassName('Track_button')[0].submit();");
+                break;
+            //Deltec Courier
+            case 254 :
+                webView.loadUrl("javascript:var x=document.getElementById('txtSearchTrackConnoteList').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('submit').click();");
+                break;
+
+
+
+//252,Collect+
+            //255,DHL Global
+            //256,DPD UK
+            //257,Eagle Courier
+
+            //258,Eagle Logistics
+            case 258 :
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ClientPlaceHolder_ctlAWB').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('ctl00_ClientPlaceHolder_ctlTrack').click();");
+                break;
+
+            //Expressit Courier
+            case 259 :
+                webView.loadUrl("javascript:var x=document.getElementById('txtAwbno').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('IMG1').click();");
+                break;
+            //Estes
+            case 260 :
+                webView.loadUrl("javascript:var x=document.getElementById('searchedCriteria').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:submitSearchForm();");
+                break;
+            //Fastway Ireland
+            case 261 :
+                webView.loadUrl("javascript:var x=document.getElementById('label_number').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('trace_button').click();");
+                break;
+
+//262,FedEx UK
+            //263,First Connections
+            //264,Greyhound
+            //265,i-parcel
+            //266,Interlink Express
+            //267,Mettur Transport
+            //268, Metro Maruti Courier
+            //269,my Hermes
+            //270,Kenya Post
+            //271,LaserShip
+            case 271:
+
+                webView.loadUrl("javascript:var x=document.getElementById('mod-shipment-word').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+
+//272,Universal Worldwide
+            case 272:
+
+                webView.loadUrl("javascript:var x=document.getElementById('ctl00_ContentPlaceHolder1_txtAWBNo').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('ctl00_ContentPlaceHolder1_btnGo').click();");
+                break;
+
+            //273,UPS
+            case 273:
+                webView.loadUrl("javascript:var x=document.getElementById('trackNums').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('track.x')[0].click();");
+                break;
+            //274,UPS Freight
+            case 274:
+                webView.loadUrl("javascript:var x=document.getElementById('app_ctl00_tracking_txtProNumber').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementById('app_ctl00_tracking_btnTrackbyPro').click();");
+                break;
+            //not done
+            //275,Velex,
+            case 275:
+
+                webView.loadUrl("javascript:var x=document.getElementById('mod-shipment-word').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            //not done
+
+            //276,Vietnam Post
+            case 276:
+
+                webView.loadUrl("javascript:var x=document.getElementById('mod-shipment-word').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            ////not done
+
+            //277,YRC
+            case 277:
+
+                webView.loadUrl("javascript:var x=document.getElementById('mod-shipment-word').value='"+trackId +"'");
+                //chk
+                webView.loadUrl("javascript:document.getElementsByName('tracking_sub')[0].click();");
+                break;
+            //278,XDP Express
+
+
         }
 
     }
@@ -1409,7 +1606,7 @@ void ProgressDialog(){
             COUNT++;
             webViewPreviousState = PAGE_STARTED;
             if (dialog == null || !dialog.isShowing())
-                dialog = ProgressDialog.show(context, "", "Hang on buddy..retrieving\n" + COURIER_NAME + "-" + trackId.toUpperCase(), true, true,
+                dialog = ProgressDialog.show(context, "", "Loading....\n" + COURIER_NAME + "-" + trackId.toUpperCase(), true, true,
                         null);
         }
 
