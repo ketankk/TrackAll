@@ -11,24 +11,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -101,7 +88,7 @@ public class FunctionTools {
         return Color.argb(255,rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255));
 
     }
-    public void backendAuth(final String token){
+   /* public void backendAuth(final String token){
 
         final String android_id=Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d("token",token);
@@ -138,7 +125,7 @@ public class FunctionTools {
 
 
         Volley.newRequestQueue(context).add(request);
-    }
+    }*/
 
 }
 

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +18,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import in.kuari.trackall.utils.ReadData;
 
 /**
  * Created by root on 2/14/16.
  */
 public class EcController {
+    private static final String TAG = "EcController";
     private WebView webView;
     private Context context;
 
@@ -34,6 +38,7 @@ public class EcController {
     int COUNT;
     private String ECommerceName;
     private ProgressDialog dialog;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public EcController(WebView webView, Context context){
         this.webView=webView;
@@ -48,6 +53,7 @@ public class EcController {
         int id=(int)(ECId);
         initializeURL(id);
         webView.loadUrl(URL);
+        analytics("PopulateView: Ecid= "+ECId+" orderEmail "+orderEmail+" orderId "+orderID);
 ProgressDialog(id);
     }
     void ProgressDialog(final int i){
@@ -105,6 +111,7 @@ ProgressDialog(id);
 
 private void fillForm(int i)
     {
+        analytics("fillForm "+i);
         Log.d("ID"+i,email+" "+trackId);
         switch (i){
            // 1,Amazon
@@ -187,5 +194,12 @@ private void fillForm(int i)
                 })
                 .show();
     }
+    private void analytics(String from){
 
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
 }

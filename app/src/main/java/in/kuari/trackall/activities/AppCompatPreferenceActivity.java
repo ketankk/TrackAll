@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 /**
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
  * to be used with AppCompat.
@@ -19,18 +21,22 @@ import android.view.ViewGroup;
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     private AppCompatDelegate mDelegate;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private final String TAG="AppCompatPreferenceActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+        analytics("oncreate");
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         getDelegate().onPostCreate(savedInstanceState);
+        analytics("onpostcreate");
     }
 
     public ActionBar getSupportActionBar() {
@@ -105,5 +111,13 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
             mDelegate = AppCompatDelegate.create(this, null);
         }
         return mDelegate;
+    }
+    private void analytics(String from){
+
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 }

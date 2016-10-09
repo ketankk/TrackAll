@@ -3,21 +3,27 @@ package in.kuari.trackall.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 /**
  * Created by root on 4/12/16.
  */
 public class FlightController {
 
+    private static final String TAG = "FlightController";
     private Context context;
     private WebView webView;
     private ProgressDialog dialog;
     private String AirLineName;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     public FlightController(WebView webView, Context context){
         this.webView=webView;
         this.context=context;
@@ -25,6 +31,7 @@ public class FlightController {
 
     public void ProgressDialog(String name,String URL, ProgressDialog dialog1){
 
+        analytics("ProgressDialog: name="+name+" url "+URL);
         this.dialog=dialog1;
         AirLineName=name;
         webView.loadUrl(URL);
@@ -76,5 +83,12 @@ public class FlightController {
         });
 
     }
+    private void analytics(String from){
 
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
 }

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -28,6 +29,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,25 +47,17 @@ import in.kuari.trackall.utils.ReadData;
  */
 public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.CourierViewHolder> {
     private static final int REQUST_CALL_PERMISSION_CODE = 301;
+    private static final String TAG ="CourierListAdapter" ;
     private List<CourierBean> couriers;
     private List<CourierBean> filteredCouriers;
 
     private Activity activity;
     private EditText trackingID;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
-    //  private CourierBean ic_courier;
-    /*public CourierListAdapter(Activity activity)
 
-    {  this.activity=activity;
-        couriers = new ArrayList<>();
-        filteredCouriers=new ArrayList<>();
 
-        populatelists();
-
-//readSMS();
-    }*/
-
-    void populatelists(List<CourierBean> couriers1) {
+   private void populatelists(List<CourierBean> couriers1) {
         ReadData readData = new ReadData(activity);
 
         couriers = new ArrayList<>();
@@ -87,6 +81,7 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
     public CourierViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.courier_row, parent, false);
         CourierListAdapter.CourierViewHolder vh = new CourierViewHolder(v);
+        analytics("onCreateViewHolder");
         return vh;
     }
 
@@ -207,17 +202,9 @@ showHidePanel(holder);
 
     }
 
-    /*void CourierDetailPage(CourierBean courier){
-        Log.d("gg",courier.toString());
-        Intent intent=new Intent(activity, ShowResultActivity.class);
 
-        intent.putExtra("comingFrom",1);
-        intent.putExtra("courierWeb",courier.getCourierWebsite());
-
-        activity.startActivity(intent);
-    }
-*/
     private void bookMarkSave(CourierBean courier, String trackID) {
+        analytics("bookMarkSave");
         SQLiteDBHandler handler = new SQLiteDBHandler(activity);
         BookMark bookMark = new BookMark();
         bookMark.setName(courier.getCourierName());
@@ -268,6 +255,7 @@ showHidePanel(holder);
         Uri uri=Uri.parse("mailto:"+toEmail);
         intent.setData(uri);
         activity.startActivity(intent);
+        analytics("openMail");
 
     }
 
@@ -279,6 +267,7 @@ showHidePanel(holder);
 
     private void callCourier(String number) {
         Log.d("cal","calling");
+        analytics("callCourier");
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + number));
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -328,5 +317,13 @@ hiddenLayout= (LinearLayout) itemView.findViewById(R.id.hidden_panel);
 
         }
 
+    }
+    private void analytics(String from){
+
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(activity);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 }

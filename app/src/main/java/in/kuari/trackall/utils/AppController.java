@@ -1,13 +1,7 @@
 package in.kuari.trackall.utils;
 
 import android.app.Application;
-import android.text.TextUtils;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 
 import in.kuari.trackall.R;
 
@@ -17,7 +11,7 @@ import in.kuari.trackall.R;
 public class AppController extends Application {
 
     private static final Object TAG =AppController.class.getSimpleName() ;
-    private RequestQueue mRequestQueue;
+    /*private RequestQueue mRequestQueue;
     private static AppController mInstance;
     @Override
     public void onCreate() {
@@ -48,20 +42,10 @@ public class AppController extends Application {
     public void cancelPendingRequest(Object tag){
         if(mRequestQueue!=null)
         mRequestQueue.cancelAll(tag);
-    }
+    }*/
 
     /**
      * Tracker used in google analytics
      */
-    private Tracker mTracker;
-    synchronized public Tracker getDefaultTracker(){
 
-        if(mTracker==null){
-            GoogleAnalytics analytics=GoogleAnalytics.getInstance(this);
-            mTracker=analytics.newTracker(R.xml.global_tracker);
-
-
-        }
-        return mTracker;
-    }
 }

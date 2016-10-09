@@ -1,17 +1,11 @@
 package in.kuari.trackall.adapter;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
-import android.util.Log;
 
-import in.kuari.trackall.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import in.kuari.trackall.fragments.BookMarkFragment;
 import in.kuari.trackall.fragments.CourierFragment;
 import in.kuari.trackall.fragments.ECommerceFragment;
@@ -23,7 +17,9 @@ import in.kuari.trackall.fragments.FlightsFragment;
  */
 public class PagerAdapter extends FragmentPagerAdapter {
 
+    private static final String TAG = "PagerAdapter";
     final int PAGE_COUNT = 4;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
@@ -36,8 +32,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
-        Fragment fragment= BookMarkFragment.newInstance(position);
+       Fragment fragment= BookMarkFragment.newInstance(position);
         switch (position){
             case 0:
                 fragment=BookMarkFragment.newInstance(position);

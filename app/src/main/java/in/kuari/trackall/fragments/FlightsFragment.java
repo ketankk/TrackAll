@@ -8,16 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.List;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.FlightsAdapter;
 import in.kuari.trackall.bean.FlightBean;
-import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.ReadData;
 
 
@@ -77,23 +72,10 @@ public class FlightsFragment extends Fragment {
 
         recyclerView.setAdapter(new FlightsAdapter(flights,getActivity()));
 
-        analytics();
         return view;
     }
 
 
-    Tracker mTracker;
-    private void analytics(){
-        AppController appController= (AppController) getActivity().getApplication();
-        mTracker=appController.getDefaultTracker();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
-    }
 
 
 

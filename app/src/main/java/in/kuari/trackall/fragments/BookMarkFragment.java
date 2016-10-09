@@ -7,41 +7,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.adapter.BookMarkAdapter;
 import in.kuari.trackall.bean.BookMark;
 import in.kuari.trackall.databases.SQLiteDBHandler;
-import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.NotificationHandler;
 
 /**
@@ -129,7 +115,6 @@ public class BookMarkFragment extends Fragment {
 
         search(activity);
         alarmSet();
-        analytics();
         return rootView;
     }
 
@@ -183,18 +168,6 @@ private void alarmSet(){
                 AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
-    Tracker mTracker;
-    private void analytics(){
-        AppController appController= (AppController) getActivity().getApplication();
-        mTracker=appController.getDefaultTracker();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
-    }
 
     public static BookMarkFragment newInstance(int position) {
         BookMarkFragment fragment = new BookMarkFragment();

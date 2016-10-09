@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
@@ -18,6 +19,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import in.kuari.trackall.R;
@@ -30,9 +34,11 @@ import in.kuari.trackall.utils.FunctionTools;
 
 public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHolder> {
 
+    private static final String TAG = "FlightsAdapter";
     private final List<FlightBean> flights;
     private final Context context;
     private String pnr;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public FlightsAdapter(List<FlightBean> flights, Context context) {
         this.flights = flights;
@@ -43,6 +49,7 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_ecommerce, parent, false);
+        analytics("onCreateViewHolder");
         return new ViewHolder(view);
     }
 
@@ -53,7 +60,7 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
 
        // holder.mView.setBackgroundColor(FunctionTools.getRandomColor());
         holder.flightName.setText(flight.getFlightName());
-
+        Picasso.with(context).load(flight.getFlightLogo()).into(holder.flightLogo);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +94,7 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
 
     }
     void loadFlightWeb(FlightBean flight){
+        analytics("loadFlightWeb");
         String pnrTrain="";
         //Toast.makeText(context,flight.getFlightName(),Toast.LENGTH_LONG).show();
         if(flight.getFlightID()==1){
@@ -145,7 +153,7 @@ Button posBtn=alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
 
 alertDialog.show();
         //Toast.makeText(context,flight.getFlightName()+pnrTrain, Toast.LENGTH_LONG).show();
-
+analytics("getPNR");
     }
     private boolean validatePnr(String PNR){
 
@@ -178,5 +186,13 @@ alertDialog.show();
                     }
                 }).setNegativeButton("No", null)
                 .show();
+    }
+    private void analytics(String from){
+
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 }

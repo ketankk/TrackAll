@@ -1,41 +1,19 @@
-package in.kuari.trackall.databases;/*
 package in.kuari.trackall.databases;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import in.kuari.trackall.utils.AppController;
-
-*/
-
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import in.kuari.trackall.utils.AppController;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by root on 2/11/16.
@@ -43,52 +21,24 @@ import in.kuari.trackall.utils.AppController;
 
 public class MYSQLHandler {
     private String TAG="FEEDBACK";
-    private Context context;
+   private Context context;
     public MYSQLHandler(Context context){
         this.context=context;
     }
-    public void SendMail(final String msg){
-
-         String URL="http://trackall.kuari.in/connection.php";
-
-        final ProgressDialog dialog=new ProgressDialog(context);
-        dialog.setMessage("Sending Message....");
-        dialog.show();
-        StringRequest request=new StringRequest(Request.Method.POST,URL,
-                new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("g",response);
-                      //  Toast.makeText(activity,response,Toast.LENGTH_SHORT).show();
-
-                        dialog.hide();
-                    }
-                }, new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                     //  Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
-
-                        dialog.hide();
-                    }
-                }){@Override
-        protected Map<String,String> getParams(){
-            Map<String,String> params = new HashMap<String, String>();
-            params.put("msg", msg);
-            return params;
-        }
-
-        };
-
-        AppController.getmInstance().addToRequestQueue(request,TAG);
-    }
-    public void sendgcmtokentoserver(final String token){
+    public void sendfcmtokentoserver(final String token){
          String URL="http://trackall.kuari.in/gcmtoken_server.php";
+        Log.d(TAG,"sendFCM");
 
         StringRequest request=new StringRequest(Request.Method.POST,URL,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
-                        Log.d("g",response);
+                        Log.d(TAG,response);
+                        if(response.equals("1")){
+                            SharedPreferences.Editor editor =context.getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
+                            editor.putBoolean("FCMreg", true);
+                            editor.apply();
+                        }
                         //  Toast.makeText(activity,response,Toast.LENGTH_SHORT).show();
 
                     }
@@ -100,13 +50,13 @@ public class MYSQLHandler {
             }
         }){@Override
         protected Map<String,String> getParams(){
-            Map<String,String> params = new HashMap<String, String>();
-            params.put("gcmtoken", token);
+            Map<String,String> params = new HashMap<>();
+            params.put("fcmtoken", token);
             return params;
         }
 
         };
 
-     //   AppController.getmInstance().addToRequestQueue(request,TAG);
+   Volley.newRequestQueue(context).add(request);
     }
 }

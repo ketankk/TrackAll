@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +13,9 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import in.kuari.trackall.activities.MainActivity;
 import in.kuari.trackall.bean.CourierBean;
@@ -30,6 +29,7 @@ import in.kuari.trackall.utils.ReadData;
  */
 public class CourierController{
 
+    private static final String TAG = "CourierController";
     private static  String COURIER_NAME;
     private String trackId;
 
@@ -40,6 +40,7 @@ public class CourierController{
     private int COUNT;
     private String URL;
     private String resData;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     /**
      *
@@ -52,49 +53,13 @@ public class CourierController{
         this.context=context;
     }
 
-    /**
-     *
-     * @param id id of the courier as defined in first column of courier detail
-     *           it loads the url in webview
-     */
 
-    private void postData(long id){
-
-        Log.d("post", "" + trackId);
-        String data="strCnno="+trackId+"&strCnno2="+trackId+"&TrkType2=awb_no"+"&Ttype:awb_no&action:track&sec=tr&ctlActiveVal:1";
-        webView.postUrl(URL, Base64.encode(data.getBytes(), Base64.DEFAULT));
-
-        StringRequest request=new StringRequest(Request.Method.POST,"http://dtdc.in/tracking/tracking_results.asp",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        resData=response;
-                        Log.d("res",response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    Log.d("err",error.toString());
-                    }
-                }){
-
-            /*@Override
-            public Map<String, String> getParams() {
-                Map<String,String> params=new HashMap<>();
-                params.put("strCnno",trackId);
-                params.put("strCnno2",trackId);
-                params.put("TrkType2","awb_no");
-                return params;
-            }*/
-        };
-        //Volley.newRequestQueue(context).add(request);
-    }
     public void PopulateView(long id,String trackID,ProgressDialog progressDialog) {
         dialog=progressDialog;
         trackId=trackID.toUpperCase();
         final int i = (int) id;
        initializeURL(i);
+        analytics("PopulateView");
 
 //        Toast.makeText(context, URL + "-" + i + "--" + id + COURIER_NAME, Toast.LENGTH_LONG).show();
         //Couriers which directly gives result from URL+trackID,like posting on php page
@@ -185,6 +150,7 @@ public class CourierController{
      */
 
     public void fillForm(int id){
+        analytics("fillForm "+id);
         //Toast.makeText(context,"D1q"+id,Toast.LENGTH_SHORT).show();
         switch (id) {
             //DTDC
@@ -1586,6 +1552,7 @@ public class CourierController{
 
     }
 void ProgressDialog(){
+    analytics("ProgressDialog");
     webView.setWebViewClient(new WebViewClient() {
         private int webViewPreviousState;
         private final int PAGE_STARTED = 0x1;
@@ -1635,6 +1602,13 @@ void ProgressDialog(){
     });
 
 }
+    private void analytics(String from){
 
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
 
 }

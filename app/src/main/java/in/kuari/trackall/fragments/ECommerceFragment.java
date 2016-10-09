@@ -14,9 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.ECommerceAdapter;
@@ -67,7 +64,6 @@ public class ECommerceFragment extends Fragment {
 
         adp=new ECommerceAdapter(activity);
         recyclerView.setAdapter(adp);
-        analytics();
         return rootView;
     }
 
@@ -95,16 +91,5 @@ public class ECommerceFragment extends Fragment {
     }
 
 
-    Tracker mTracker;
-    private void analytics(){
-        AppController appController= (AppController) getActivity().getApplication();
-        mTracker=appController.getDefaultTracker();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
-    }
+
 }

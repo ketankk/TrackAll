@@ -1,14 +1,12 @@
 package in.kuari.trackall.fragments;
 
 import android.app.Activity;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,9 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -35,7 +30,6 @@ import java.util.List;
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.CourierListAdapter;
 import in.kuari.trackall.bean.CourierBean;
-import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.ReadData;
 
 public class CourierFragment extends Fragment {
@@ -73,7 +67,6 @@ barCodebtn.setOnClickListener(new View.OnClickListener() {
 
         setAdapter();
         search();
-        analytics();
         return rootView;
     }
 
@@ -166,18 +159,7 @@ final EditText courierName1=courierName;
         int res = activity.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
     }
-    Tracker mTracker;
-    private void analytics(){
-        AppController appController= (AppController) getActivity().getApplication();
-        mTracker=appController.getDefaultTracker();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(getActivity()).dispatchLocalHits();
-    }
+
     private boolean checkForPermission() {
 
         if (ContextCompat.checkSelfPermission(activity, permissions[0]) != PackageManager.PERMISSION_GRANTED) {

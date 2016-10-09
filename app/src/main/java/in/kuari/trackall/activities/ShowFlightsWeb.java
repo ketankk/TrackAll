@@ -13,12 +13,9 @@ import android.view.MotionEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import in.kuari.trackall.R;
-import in.kuari.trackall.utils.AppController;
 
 public class ShowFlightsWeb extends AppCompatActivity {
 
@@ -30,13 +27,14 @@ public class ShowFlightsWeb extends AppCompatActivity {
     private ProgressDialog dialog;
     private Context context;
     private static final String TAG = "ShowFlightsWeb";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_flights_web);
 
-      analytics();
+      analytics("onCreate");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.flighttoolbar);
         setSupportActionBar(toolbar);
@@ -101,12 +99,14 @@ public class ShowFlightsWeb extends AppCompatActivity {
             }
         });
     }
-    Tracker mTracker;
-    private void analytics(){
-        AppController appController= (AppController) getApplication();
-        mTracker=appController.getDefaultTracker();
-    }
+    private void analytics(String from){
 
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -123,9 +123,7 @@ public class ShowFlightsWeb extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(this).dispatchLocalHits();
+       analytics("onResume");
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

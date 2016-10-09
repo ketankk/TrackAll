@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -17,7 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +35,11 @@ import in.kuari.trackall.utils.FunctionTools;
  */
 public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMarkViewHolder>{
 
+    private static final String TAG = "BookMarkAdapter";
     private List<BookMark> searchHistories;
     private List<BookMark> filterdeSearchHistories;
     private Activity activity;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public BookMarkAdapter(Activity activity, List<BookMark> searchHistories) {
         this.activity=activity;
@@ -49,6 +53,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
       View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_bookmark_row,parent,false);
 //if(getItemCount()==0)
    // imgView.setVisibility(View.VISIBLE);
+        analytics("onCreateViewHolder");
 
         return new BookMarkViewHolder(view);
     }
@@ -88,7 +93,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.BookMa
         if(bookMark.getBmTag()==null)
             bookMark.setBmTag("");
         Log.d("bmtag",bookMark.getBmTag());
-        holder.bmTag.setText(bookMark.getBmTag());
+        holder.bmTag.setText("<"+bookMark.getBmTag()+">");
      //  holder.bmrating.setRating(Float.parseFloat(bookMark.getRating()));
         //Log.d("d",bookMark.toString());
        // Toast.makeText(activity,"g"+bookMark.getRating(), Toast.LENGTH_SHORT).show();
@@ -244,12 +249,15 @@ alertDialog.show();
     }
     private void addTag(BookMark bookMark,String tag){
 
+        analytics("addTag");
         SQLiteDBHandler handler=new SQLiteDBHandler(activity);
         bookMark.setBmTag(tag+"");
         handler.updateBookmark(bookMark);
-        Toast.makeText(activity,tag+"--",Toast.LENGTH_LONG).show();
+        notifyDataSetChanged();
+        //Toast.makeText(activity,tag+"--",Toast.LENGTH_LONG).show();
     }
     private void shareBookmark(BookMark bookMark){
+        analytics("shareBookmark");
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             String shareBody = "Track this AWB No.: "+ bookMark.getTrackId()+" of "+ bookMark.getName()+" on trackAll!\nInstall trackAll http://bit.ly/1R30Vtu";
@@ -283,5 +291,13 @@ Log.d("searching",s.getBmTag());
         }
 
         notifyDataSetChanged();
+    }
+    private void analytics(String from){
+
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(activity);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 }

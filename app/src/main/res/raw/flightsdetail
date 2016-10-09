@@ -1,9 +1,8 @@
-1,Indian Railway,http://erail.in/indian-railway-pnr-status?pnr=
-2,Jet Airways,http://www.jetairways.com/en/in/planyourtravel/pnr-status.aspx
-3,Spice Jet,https://book.spicejet.com/RetrieveBooking.aspx
-4,Go Air,https://www.goair.in/manage/manage-booking
-5,Air Costa PNR,http://www.aircosta.in/ebooking/Booking/Retrieve-Booking.aspx
-6,Air Costa Web-check-in,http://www.aircosta.in/webcheckin/searchpax.aspx
-7,Air Asia WebCheckIn,https://checkin.airasia.com/?culture=en
-8,Air India,https://fastcheck.sita.aero/cce-presentation-web-ai/entryUpdate.do
-9,Indigo,https://book.goindigo.in/Flight/Info
+1,Indian Railway,http://erail.in/indian-railway-pnr-status?pnr=,https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Indian_Railway.svg/1024px-Indian_Railway.svg.png
+2,Jet Airways,http://www.jetairways.com/en/in/planyourtravel/pnr-status.aspx,http://www.abudhabi2.com/wp-content/uploads/2015/01/Jet-Airways-Logo-Pardaphash-943211.jpg
+3,Spice Jet,https://book.spicejet.com/RetrieveBooking.aspx,https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/SpiceJet_logo.svg/1280px-SpiceJet_logo.svg.png
+4,Go Air,https://www.goair.in/manage/manage-booking,http://www.travelshopee.in/logo/GoAir.jpg
+6,Air Costa Web-check-in,http://www.aircosta.in/webcheckin/searchpax.aspx,http://synapse.daiict.ac.in/wp-content/uploads/2015/12/Air-Costa-Logo.jpg
+7,Air Asia WebCheckIn,https://checkin.airasia.com/?culture=en,https://lh3.googleusercontent.com/-VJeC7yJYwJ0/TYFxgif_4UI/AAAAAAAAE8s/tSC-gaOACyk/s1600/Air+Asia+new+b.png
+8,Air India,https://fastcheck.sita.aero/cce-presentation-web-ai/entryUpdate.do,http://www.jobsplane.com/wp-content/uploads/2016/02/airindia.png
+9,Indigo,https://book.goindigo.in/Flight/Info,http://www.fetchlogos.com/wp-content/uploads/2015/10/IndiGo-Airlines-Logo.gif

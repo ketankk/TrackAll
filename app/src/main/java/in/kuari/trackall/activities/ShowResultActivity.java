@@ -16,9 +16,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Date;
 
@@ -26,7 +24,6 @@ import in.kuari.trackall.R;
 import in.kuari.trackall.controller.CourierController;
 import in.kuari.trackall.controller.EcController;
 import in.kuari.trackall.controller.FlightController;
-import in.kuari.trackall.utils.AppController;
 import in.kuari.trackall.utils.FunctionTools;
 
 /**
@@ -53,6 +50,8 @@ public class ShowResultActivity extends AppCompatActivity {
     private ProgressDialog dialog;
 
     private FloatingActionButton screenShot;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +60,7 @@ public class ShowResultActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Google Analytics starts
-       analytics();
+       analytics("onCreate");
         //Google Analytics end
 
         Intent intent = getIntent();
@@ -117,19 +116,21 @@ loadUrlDirectly(intent.getStringExtra("railway"));
     }
 }
 
-    Tracker mTracker;
-    private void analytics(){
-        AppController appController= (AppController) getApplication();
-        mTracker=appController.getDefaultTracker();
-    }
+
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(this).dispatchLocalHits();
-    }
+        analytics("resume");
 
+    }
+    private void analytics(String from){
+
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -167,7 +167,7 @@ Log.d("ll",bookMark.toString());
        Collections.reverse(searchHistories);
        return searchHistories;
     }
-    public  boolean ifBookMarkExist(BookMark bookMark){
+    private   boolean ifBookMarkExist(BookMark bookMark){
         db=this.getReadableDatabase();
         String query="SELECT * FROM "+TABLE_NAME+" WHERE "+TRACK_ID+"='"+bookMark.getTrackId().toUpperCase()+"' and "+COURIER_ID+"='"+bookMark.getCourierID()+"'";
 

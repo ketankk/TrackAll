@@ -2,9 +2,6 @@ package in.kuari.trackall.utils;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
-import android.webkit.WebView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +52,7 @@ public class ReadData {
                     if (rows.length>6&&rows[6] != null && rows[6].length() > 0)
                         courier.setCourierEmail(rows[6].trim());
 
-                Log.d("Couriers",courier.toString());
+              //  Log.d("Couriers",courier.toString());
                 couriers.add(courier);
 
             } is.close();
@@ -83,6 +80,7 @@ public class ReadData {
                 flight.setFlightID(Long.parseLong(rows[0]));
                 flight.setFlightName(rows[1]);
                 flight.setFlightWebsite(rows[2]);
+                flight.setFlightLogo(rows[3]);
                 flights.add(flight);
 
             }

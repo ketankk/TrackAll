@@ -1,39 +1,32 @@
 package in.kuari.trackall.activities;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.adapter.PagerAdapter;
-import in.kuari.trackall.bean.UserProfile;
 import in.kuari.trackall.databases.MYSQLHandler;
-import in.kuari.trackall.gcm.GCM;
-import in.kuari.trackall.utils.AppController;
-import in.kuari.trackall.utils.CircularImage;
-import in.kuari.trackall.utils.FunctionTools;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,23 +42,29 @@ private int displayFragment=1;
 
         //if coming from on clicking URL open directly courier fragment
         Uri data=getIntent().getData();
-        if(data!=null){
+        if(data!=null)
             displayFragment=2;
-           /* String scheme = data.getScheme();
-            String host = data.getHost();
-            List<String> params = data.getPathSegments();
-            String first = params.get(0);
-//            String second = params.get(1);
-            Log.d("s",scheme+"-"+host+"-"+first+"-");*/
-        }
+
 
 
         setContentView(R.layout.activity_main);
+        //just to check if notifcation is working or not
 
+findViewById(R.id.qwer).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        //sendNotification("mdd","pop");
+    }
+});
+        //
+
+        //checkGooglePlayServices();
         //Google Analytics starts
-        analytics();
+        analytics("oncreate");
         //Google Analytics end
-
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d("fcmToken",token+"");
+registerToken(token);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -74,7 +73,7 @@ private int displayFragment=1;
 
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         TabLayout tabLayout= (TabLayout) findViewById(R.id.sliding_tabs);
-tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_star_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_ecart);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_cart);
@@ -82,31 +81,36 @@ tabLayout.setupWithViewPager(viewPager);
         CheckSharedPreferance();
 
 }
-    Tracker mTracker;
-    private void analytics(){
-        new GCM(this).start();
-        AppController appController= (AppController) getApplication();
-        mTracker=appController.getDefaultTracker();
+
+    /*private void checkGooglePlayServices() {
+            GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+            int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
+            if(status != ConnectionResult.SUCCESS) {
+                if(googleApiAvailability.isUserResolvableError(status)) {
+                    googleApiAvailability.getErrorDialog(activity, status, 2404).show();
+                }
+            }
+        }*/
+
+    FirebaseAnalytics mFirebaseAnalytics;
+    private void analytics(String from){
+
+       mFirebaseAnalytics= FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
     @Override
     public void onResume() {
         super.onResume();
-        new GCM(this).start();
 
-        mTracker.setScreenName(TAG);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        GoogleAnalytics.getInstance(this).dispatchLocalHits();
-    }
-
-
-    @Override
-    public void supportInvalidateOptionsMenu() {
-        super.supportInvalidateOptionsMenu();
+analytics("resume");
     }
 
 
 
-    @Override
+      @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -143,105 +147,20 @@ tabLayout.setupWithViewPager(viewPager);
         startActivity(new Intent(this,SettingsActivity.class));
     }
 
-  /*  @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        // Toast.makeText(activity,"j1j",Toast.LENGTH_SHORT).show();
-
-        if (id == R.id.nav_home) {
-            displayFragment(1);
-        } else if (id == R.id.list_all_courier) {
-            displayFragment(2);
-        } else if (id == R.id.list_all_flights) {
-            displayFragment(3);
-
-        } else if (id == R.id.nav_ecommerce) {
-            displayFragment(4);
-
-        } else if (id == R.id.nav_share) {
-            displayFragment(6);
-        } else if (id == R.id.nav_set) {
-            displayFragment(7);
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        item.setChecked(true);
-        setTitle(item.getTitle());
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-
-    }
-*/
-   /* private void displayFragment(int id) {
-        Fragment fragment = null;
-        switch (id) {
-            case 1:
-                fragment = new BookMarkFragment();
-                break;
-
-            case 2:
-                fragment = new CourierFragment();
-
-                break;
-            case 3:
-                fragment = new FlightsFragment();
-                break;
-
-            case 4:
-                fragment = new ECommerceFragment();
-                break;
-
-            case 6:
-                ShareAppDownloadLink();
-                break;
-
-
-
-            default:
-                fragment = new BookMarkFragment();
-        }
-        if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.inc, fragment).commit();
-        }
-
-    }*/
-
-    /**
-     * A method to handle the feedback suggestion functionlity
-     */
-    private void FeedBackSuggestions() {
-
-        final EditText suggestion = new EditText(activity);
-        if (!FunctionTools.isConnected(activity)) {
-            Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            //Change toast to option for switching internet connection
-        } else {
-            new AlertDialog.Builder(activity)
-                    .setTitle("FeedBack/Suggestions")
-                    .setView(suggestion)
-                    .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String msg = suggestion.getText().toString();
-                            if (msg.length() == 0) {
-                                suggestion.setError("Type your message here");
-                                Toast.makeText(activity, "Message not sent", Toast.LENGTH_SHORT).show();
-                            } else
-                                SendFeedback(msg);
-                        }
-                    })
-                    .setNegativeButton("Cancel", null)
-                    .show();
+    private void registerToken(String token){
+        if(!ifFCMReg()){
+            MYSQLHandler handler=new MYSQLHandler(this);
+            handler.sendfcmtokentoserver(token);
         }
     }
+    private boolean ifFCMReg() {
+Log.d(TAG,"iffcmreg");
+        SharedPreferences pref = getSharedPreferences("TRACKALL", MODE_PRIVATE);
+boolean is=pref.getBoolean("FCMreg", false);
+        Log.d(TAG,"iffcmreg "+is);
 
-    //Call MySql sync
-    void SendFeedback(String msg) {
+        return is;
 
-        MYSQLHandler handler = new MYSQLHandler(activity);
-        handler.SendMail(msg);
     }
 
     void CheckSharedPreferance() {
@@ -251,37 +170,13 @@ tabLayout.setupWithViewPager(viewPager);
         if (frsttime) {
             SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
             editor.putBoolean("FirstTime", false);
-            editor.commit();
+            editor.apply();
 
         }
         //Log.d("loj",frsttime+"");
     }
 
-    private void LoadLogoDialog() {
-        new AlertDialog.Builder(activity)
-                .setTitle("Select if you want to load Logos also")
-                .setMessage("You can also change the settings later")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
-                        editor.putBoolean("LoadLogo", true);
-                        editor.commit();
 
-
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor = getSharedPreferences("TRACKALL", MODE_PRIVATE).edit();
-                        editor.putBoolean("LoadLogo", false);
-                        editor.commit();
-
-                    }
-                })
-                .show();
-    }
 
     private void sendFeedback() {
         String emailId="sultanmirzadev@gmail.com";

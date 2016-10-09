@@ -50,5 +50,10 @@
         android:layout_weight="1"
         android:background="@android:color/white" />
 
-</LinearLayout>
+</LinearLayout><Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/qwer"
+android:visibility="invisible"
+    />
 </android.support.design.widget.CoordinatorLayout>

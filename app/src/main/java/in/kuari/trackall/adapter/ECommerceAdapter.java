@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,10 +36,13 @@ import in.kuari.trackall.utils.ReadData;
 
 public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.ViewHolder> {
 
+    private static final String TAG = "ECommerceAdapter";
     private Activity activity;
     private List<ECommerce> eCommerces;
     private List<ECommerce> filteredEC;
     private Context context;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     public ECommerceAdapter(Activity activity) {
         this.activity = activity;
         context=activity;
@@ -47,6 +52,7 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
        ReadData data=new ReadData(context);
        eCommerces=data.getAllECommerce();
        filteredEC=data.getAllECommerce();
+       analytics("populateList");
     }
 
     @Override
@@ -153,6 +159,7 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
 
 
     private void inputIDEmail(final ECommerce ecommName){
+        analytics("inputIDEmail");
             Activity activity= (Activity) context;
             final EditText inputOrderID=new EditText(activity);
         inputOrderID.setHint("Order ID");
@@ -194,7 +201,7 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
         history.setTrackId(orderID+"|"+ email);
         history.setCourierID(eCommerce.getId()+"");
         history.setbType(3);//1-courier,2-flights,3- ecommerce
-
+analytics("SaveSearchHistory");
         handler.addSearch(history);
 
     }
@@ -213,5 +220,13 @@ public class ECommerceAdapter extends RecyclerView.Adapter<ECommerceAdapter.View
                     }
                 }).setNegativeButton("No",null)
                 .show();
+    }
+    private void analytics(String from){
+
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(activity);
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,from);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 }
