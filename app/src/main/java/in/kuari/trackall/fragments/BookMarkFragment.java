@@ -35,21 +35,23 @@ import in.kuari.trackall.utils.NotificationHandler;
  */
 public class BookMarkFragment extends Fragment {
 
+    private static final String TAG = "BookMarkFragment";
     private EditText trackID;
     private RecyclerView  recyclerView;
     private BookMarkAdapter adp;
     private LinearLayout noHist;
     private Activity activity;
-    private static final String TAG = "BookMarkFragment";
 
     public BookMarkFragment() {
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public static BookMarkFragment newInstance(int position) {
+        BookMarkFragment fragment = new BookMarkFragment();
+        Bundle args = new Bundle();
+        // args.putInt(ARG_PARAM1, param1);
+        fragment.setArguments(args);
 
-        inflater.inflate(R.menu.main,menu);
-
+        return fragment;
     }
 
    /* @Override
@@ -75,6 +77,13 @@ public class BookMarkFragment extends Fragment {
         });
 
     }*/
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.main, menu);
+
+    }
 
     @Nullable
     @Override
@@ -139,7 +148,8 @@ public class BookMarkFragment extends Fragment {
             }
         });
     }
-private void alarmSet(){
+
+    private void alarmSet(){
     Intent myIntent = new Intent(activity , NotificationHandler.class);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, myIntent, 0);
 
@@ -168,13 +178,4 @@ private void alarmSet(){
                 AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
-
-    public static BookMarkFragment newInstance(int position) {
-        BookMarkFragment fragment = new BookMarkFragment();
-        Bundle args = new Bundle();
-       // args.putInt(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
 }

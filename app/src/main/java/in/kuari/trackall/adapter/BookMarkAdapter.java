@@ -129,29 +129,13 @@ menu.show();
                    }
         });
 
-    } @Override
+    }
+
+    @Override
     public int getItemCount() {
         return filterdeSearchHistories.size();
     }
 
-    static class BookMarkViewHolder extends RecyclerView.ViewHolder{
-
-        TextView trackId;
-        TextView name;
-        View view;
-        ImageView menuBtn;
-        TextView histDate;
-TextView bmTag;
-        public BookMarkViewHolder(View itemView) {
-            super(itemView);
-            view=itemView;
-            trackId= (TextView) itemView.findViewById(R.id.hist_id);
-            name= (TextView) itemView.findViewById(R.id.hist_name);
-            menuBtn= (ImageView) itemView.findViewById(R.id.bookmarkMenu);
-            histDate= (TextView) itemView.findViewById(R.id.hist_date);
-            bmTag= (TextView) itemView.findViewById(R.id.bm_tag);
-        }
-    }
     private  void SelectItem(int id,BookMark bookMark,int pos){
         //Toast.makeText(activity,id+"",Toast.LENGTH_SHORT).show();
         switch (id){
@@ -164,6 +148,7 @@ TextView bmTag;
             default:
         }
     }
+
 //Alert Dialog for confirming if user want to delete BookMark
     private void bookMarkDeleteConf(final BookMark bookMark, final int pos){
         String id= bookMark.getTrackId();
@@ -180,7 +165,6 @@ TextView bmTag;
                 .setNegativeButton("No",null)
                 .show();
     }
-
 
   private void OnClickBookMarkitem(BookMark bookMark)
    {
@@ -225,6 +209,7 @@ TextView bmTag;
 
         }
     }
+
     private void tagBookmark(final BookMark bookMark){
 LayoutInflater layoutInflater= (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final EditText  editText=new EditText(activity);
@@ -247,6 +232,7 @@ LayoutInflater layoutInflater= (LayoutInflater) activity.getSystemService(Contex
 alertDialog.show();
 
     }
+
     private void addTag(BookMark bookMark,String tag){
 
         analytics("addTag");
@@ -256,6 +242,7 @@ alertDialog.show();
         notifyDataSetChanged();
         //Toast.makeText(activity,tag+"--",Toast.LENGTH_LONG).show();
     }
+
     private void shareBookmark(BookMark bookMark){
         analytics("shareBookmark");
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -292,6 +279,7 @@ Log.d("searching",s.getBmTag());
 
         notifyDataSetChanged();
     }
+
     private void analytics(String from){
 
         mFirebaseAnalytics= FirebaseAnalytics.getInstance(activity);
@@ -299,5 +287,25 @@ Log.d("searching",s.getBmTag());
         bundle.putString(TAG,from);
 
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    static class BookMarkViewHolder extends RecyclerView.ViewHolder {
+
+        TextView trackId;
+        TextView name;
+        View view;
+        ImageView menuBtn;
+        TextView histDate;
+        TextView bmTag;
+
+        public BookMarkViewHolder(View itemView) {
+            super(itemView);
+            view = itemView;
+            trackId = (TextView) itemView.findViewById(R.id.hist_id);
+            name = (TextView) itemView.findViewById(R.id.hist_name);
+            menuBtn = (ImageView) itemView.findViewById(R.id.bookmarkMenu);
+            histDate = (TextView) itemView.findViewById(R.id.hist_date);
+            bmTag = (TextView) itemView.findViewById(R.id.bm_tag);
+        }
     }
 }

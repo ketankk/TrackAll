@@ -8,19 +8,15 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Map;
 
 import in.kuari.trackall.R;
 import in.kuari.trackall.activities.MainActivity;
@@ -51,21 +47,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
+        Map<String, String> data = remoteMessage.getData();
+        try {
+            Log.d("json", data.toString());
 
-            String body= remoteMessage.getData().toString();
-            try {
-                JSONObject data = new JSONObject(body);
+            String title = data.get("title");
+            String message = data.get("message");
+            Log.d("json", data.toString());
 
-                String title = data.getString("title");
-                String message = data.getString("message");
+            String link = data.get("url").trim();
+            Log.d("tit", title + " -" + message + " link" + link);
+            sendNotification(title, message, link);
 
-                String link = data.getString("url").trim();
-                Log.d("tit",title+" -"+message);
-                sendNotification(title,message,link);
-
-            } catch (Exception e) {
-                Log.e(TAG, "Exception: " + e.getMessage());
-            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
 
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -78,18 +74,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String title,String messageBody,String link) {
-       Intent intent = new Intent(this, MainActivity.class);
-        if(link!=null &&!link.equals("-")) {
+    private void sendNotification(String title, String messageBody, String link) {
+        Intent intent = new Intent(this, MainActivity.class);
+        if (link != null && !link.equals("-")) {
             //if fcm contains link
             intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("http://"+link));
+            intent.setData(Uri.parse(link));
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.trans)
                 .setContentTitle(title)

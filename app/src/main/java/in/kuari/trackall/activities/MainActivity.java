@@ -1,17 +1,11 @@
 package in.kuari.trackall.activities;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -30,11 +23,20 @@ import in.kuari.trackall.databases.MYSQLHandler;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+    FirebaseAnalytics mFirebaseAnalytics;
     private Activity activity;
 private int displayFragment=1;
-    private static final String TAG = "MainActivity";
 
-
+    /*private void checkGooglePlayServices() {
+            GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+            int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
+            if(status != ConnectionResult.SUCCESS) {
+                if(googleApiAvailability.isUserResolvableError(status)) {
+                    googleApiAvailability.getErrorDialog(activity, status, 2404).show();
+                }
+            }
+        }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,17 +84,6 @@ registerToken(token);
 
 }
 
-    /*private void checkGooglePlayServices() {
-            GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
-            int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
-            if(status != ConnectionResult.SUCCESS) {
-                if(googleApiAvailability.isUserResolvableError(status)) {
-                    googleApiAvailability.getErrorDialog(activity, status, 2404).show();
-                }
-            }
-        }*/
-
-    FirebaseAnalytics mFirebaseAnalytics;
     private void analytics(String from){
 
        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this);

@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/lin_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:id="@+id/lin_home"
         android:orientation="vertical"
 
         >
@@ -15,9 +15,9 @@
             android:id="@+id/input_trackID_or_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter Tracking ID/Name/Tag"
-            android:layout_weight="70"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="70"
+            android:hint="Enter Tracking ID/Name/Tag"
 
             />
         <LinearLayout
@@ -25,36 +25,36 @@
             android:layout_width="250dp"
             android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:background="#c7f5f2"
             android:layout_marginTop="20dp"
+            android:background="#c7f5f2"
+            android:orientation="vertical"
+            android:visibility="visible"
             >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:text="Hey! Welcome"
-            android:textStyle="bold"
             android:textSize="30sp"
-            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
 
             />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You don't have any ID bookmarked!!"
                 android:layout_gravity="end|bottom"
                 android:layout_marginTop="30dp"
-                android:textSize="15sp"
+                android:text="You don't have any ID bookmarked!!"
                 android:textColor="#d10808"
+                android:textSize="15sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*Click on Menu Button and Track Your Courier"
                 android:layout_gravity="end"
                 android:layout_marginTop="40dp"
+                android:text="*Swipe left and Track Your Consignment"
                 android:textColor="#d10808"
                 />
         </LinearLayout>

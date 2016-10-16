@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "in.kuari.trackall"
-        minSdkVersion 21
+        minSdkVersion 12
         targetSdkVersion 24
-        versionCode 14
+        versionCode 16
         versionName "2.0"
     }
     buildTypes {
