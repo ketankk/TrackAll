@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +45,6 @@ import in.kuari.trackall.utils.ReadData;
  * Created by sultan_mirza on 1/18/16.
  */
 public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.CourierViewHolder> {
-    private static final int REQUST_CALL_PERMISSION_CODE = 301;
     private static final String TAG ="CourierListAdapter" ;
     private List<CourierBean> couriers;
     private List<CourierBean> filteredCouriers;
@@ -58,8 +56,6 @@ public class CourierListAdapter extends RecyclerView.Adapter<CourierListAdapter.
 
 
    private void populatelists(List<CourierBean> couriers1) {
-        ReadData readData = new ReadData(activity);
-
         couriers = new ArrayList<>();
         couriers.addAll(couriers1);
         filteredCouriers = new ArrayList<>();
@@ -128,7 +124,6 @@ showHidePanel(holder);
 
         SharedPreferences pref = activity.getSharedPreferences("TRACKALL", Context.MODE_PRIVATE);
         boolean loadLogo = pref.getBoolean("LoadLogo", true);
-        boolean ff = pref.getBoolean("FirstTime", true);
         //Log.d("logo",loadLogo+" "+ff);
         if (loadLogo)
             Picasso.with(activity).load(courier.getCourierImagePath()).placeholder(R.drawable.ic_ecart).error(R.drawable.ic_cart).into(holder.courierLogo);
@@ -164,7 +159,6 @@ showHidePanel(holder);
 
     public void filter(String courierName) {
         filteredCouriers.clear();
-        int i = 0;
 
         if (courierName.length() == 0)
             filteredCouriers.addAll(couriers);
@@ -182,7 +176,7 @@ showHidePanel(holder);
     }
 
 
-    void CourierSelected(CourierBean courier) {
+    private void CourierSelected(CourierBean courier) {
         String trackID = trackingID.getText().toString();
         //Toast.makeText(activity,trackID+"hh",Toast.LENGTH_LONG).show();
 
@@ -215,7 +209,7 @@ showHidePanel(holder);
 
     }
 
-    void popup(final CourierBean courierBean, final String trackingID) {
+    private void popup(final CourierBean courierBean, final String trackingID) {
         new AlertDialog.Builder(activity)
                 .setTitle("No Internet Connection")
                 .setMessage("BookMark -" + trackingID.toUpperCase() + " with " + courierBean.getCourierName())
@@ -247,7 +241,7 @@ showHidePanel(holder);
     }
     /**
      * call this method when user wants to send email to courier,open
-     * @param toEmail
+     * @param toEmail receivers emailid
      */
     private void openMail(String toEmail){
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -261,7 +255,7 @@ showHidePanel(holder);
 
     /**
      * call this method when user clicks on dialer button in front of contact no.
-     * @param number
+     * @param number courier contact number
      */
 
 
@@ -290,20 +284,17 @@ showHidePanel(holder);
 
         private TextView courierName;
         private View view;
-        private  ImageView courierLogo;
-        private RatingBar ratingCourier;
-        private TextView courierContact;
+        private  ImageView courierLogo;private TextView courierContact;
         private TextView courierEmail;
         private ImageView callButton;
         private ImageView emailButton;
         private ImageView showHideButton;
         private LinearLayout hiddenLayout;
 
-        public CourierViewHolder(View itemView) {
+        private  CourierViewHolder(View itemView) {
             super(itemView);
             courierName= (TextView) itemView.findViewById(R.id.courier_name);
             courierLogo = (ImageView)itemView.findViewById(R.id.courier_logo);
-           // ratingCourier= (RatingBar) itemView.findViewById(R.id.courier_rating);
             courierContact= (TextView) itemView.findViewById(R.id.courier_contact_no);
             courierEmail= (TextView) itemView.findViewById(R.id.courier_email);
             callButton= (ImageView) itemView.findViewById(R.id.courier_call);

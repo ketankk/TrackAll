@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             android:background="#c7f5f2"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             >
         <TextView
             android:layout_width="wrap_content"

@@ -8,7 +8,7 @@ android {
         applicationId "in.kuari.trackall"
         minSdkVersion 12
         targetSdkVersion 24
-        versionCode 16
+        versionCode 17
         versionName "2.0"
     }
     buildTypes {
